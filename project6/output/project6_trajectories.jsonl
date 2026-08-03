@@ -2,7 +2,7 @@
 {"bug_id": "gcd", "system": "repair_loop", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}
 {"bug_id": "get_factors", "system": "one_shot", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}
 {"bug_id": "get_factors", "system": "repair_loop", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}
-{"bug_id": "hanoi", "system": "one_shot", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}
+{"bug_id": "hanoi", "system": "one_shot", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "reject_patch", "rollback"]}
 {"bug_id": "hanoi", "system": "repair_loop", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}
 {"bug_id": "is_valid_parenthesization", "system": "one_shot", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}
 {"bug_id": "is_valid_parenthesization", "system": "repair_loop", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}
@@ -12,5 +12,5 @@
 {"bug_id": "lis", "system": "repair_loop", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "reject_patch", "rollback", "plan_patch", "reject_patch", "rollback", "plan_patch", "reject_patch", "rollback"]}
 {"bug_id": "mergesort", "system": "one_shot", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}
 {"bug_id": "mergesort", "system": "repair_loop", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}
-{"bug_id": "quicksort", "system": "one_shot", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "reject_patch", "rollback"]}
+{"bug_id": "quicksort", "system": "one_shot", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}
 {"bug_id": "quicksort", "system": "repair_loop", "trajectory": ["map_repository", "run_public_tests", "localize_failure", "plan_patch", "apply_patch", "public_tests", "hidden_tests", "accept"]}

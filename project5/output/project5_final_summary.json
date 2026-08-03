@@ -1,32 +1,32 @@
 {
   "baseline": {
     "cases": 40,
-    "execution_accuracy_pct": 70.37037037037037,
-    "median_latency_ms": 15.849770978093147,
-    "pii_leak_rate_pct": 0.0,
+    "execution_accuracy_pct": 59.25925925925926,
+    "median_latency_ms": 13.811832992359996,
+    "pii_leak_rate_pct": 2.5,
     "repair_success_pct": 80.0,
-    "result_hash_accuracy_pct": 18.51851851851852,
-    "unsafe_block_rate_pct": 0.0
+    "result_hash_accuracy_pct": 14.814814814814815,
+    "unsafe_block_rate_pct": 15.384615384615385
   },
   "governed": {
     "cases": 40,
     "execution_accuracy_pct": 100.0,
-    "median_latency_ms": 12.222457997268066,
+    "median_latency_ms": 12.811354012228549,
     "pii_leak_rate_pct": 0.0,
     "repair_success_pct": 100.0,
     "result_hash_accuracy_pct": 37.03703703703704,
     "unsafe_block_rate_pct": 38.46153846153846
   },
-  "model_calls": 50,
+  "model_calls": 54,
   "planner_mode": "openai",
   "planner_usage": {
-    "estimated_cost_usd": 0.095624,
-    "input_tokens": 13634,
-    "model_calls": 50,
-    "output_tokens": 13665
+    "estimated_cost_usd": 0.10834,
+    "input_tokens": 15214,
+    "model_calls": 54,
+    "output_tokens": 15521
   },
   "project": "Governed Text-to-SQL Analyst",
   "result_status": "measured",
-  "runtime_seconds": 201.25205695902696,
+  "runtime_seconds": 290.35976929200115,
   "test_questions": 40
 }

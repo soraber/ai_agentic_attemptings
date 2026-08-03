@@ -6,18 +6,18 @@ documentation pattern used in `ai_project_artifacts`: portfolio summary,
 repository map, methods, compute settings, results and judgment, future work, and
 debugging notes.
 
-> **Version:** ver 0.5: add A100 local-model comparison paths<br>
-> **Updated:** 2026-08-03 02:03 EDT
+> **Version:** ver 0.6: reconcile measured runs and A100-ready paths<br>
+> **Updated:** 2026-08-03 02:13 EDT
 
 ## Portfolio Summary
 
 | Project | Primary goal | Main comparison | Current result | Judgment |
 | --- | --- | --- | --- | --- |
 | 4. Durable Incident-Response Agent | Build a recoverable, approval-gated agent for simulated service incidents | Stateless linear loop vs. checkpointed LangGraph workflow | Measured API run: 32 paired observations per system, 64 model calls, and 13 final local tests passed | The durable path preserved task quality, eliminated duplicate effects and unsafe allows, and recovered every executed crash, at roughly 10x workflow latency |
-| 5. Governed Text-to-SQL Analyst | Answer analytics questions while enforcing database policy | One-shot SQL vs. schema-grounded governed repair | Measured API run complete; A100 comparison adds dense schema retrieval and local code-model planning | Governance doubled result-hash accuracy, improved repair, and blocked unsafe cases; the prepared GPU run will test whether local inference improves the still-limited absolute SQL accuracy |
-| 6. Test-Driven Code-Repair Agent | Repair compact Python defects without accepting unsafe or overfit patches | One-shot patch vs. bounded test-driven repair loop | Measured API run complete; A100 comparison adds a shared local code-model patch backend | Iterative public-test feedback recovered one additional defect while hidden tests and exact rollback constrained acceptance; the same harness can now compare local and API planners |
+| 5. Governed Text-to-SQL Analyst | Answer analytics questions while enforcing database policy | One-shot SQL vs. schema-grounded governed repair | Measured API run: 40 held-out questions, 54 calls, and 10 tests; A100 comparison ready | Governance improved result-hash accuracy, repair, and PII safety; the prepared GPU run will test whether local inference improves the still-limited absolute SQL accuracy |
+| 6. Test-Driven Code-Repair Agent | Repair compact Python defects without accepting unsafe or overfit patches | One-shot patch vs. bounded test-driven repair loop | Measured API run: 8 defects per system, 18 calls, and 9 tests; A100 comparison ready | Iterative public-test feedback recovered one additional defect while hidden tests and exact rollback constrained acceptance; the same harness can now compare local and API planners |
 | 7. Secure Interoperable Agent Gateway | Preserve utility while blocking protocol-layer attacks | Undefended vs. defended A2A/MCP-style workflow | Measured API run: 32 held-out cases, 32 review calls, and 8 final tests passed | The local controls eliminated included attacks without reducing benign utility; structured review was useful but correctly remained non-authoritative |
-| 8. Long-Term Memory Agent | Retrieve useful cross-session facts while honoring corrections, conflicts, and deletion | Recent window vs. episodic vs. hybrid memory | Measured API run complete; A100 comparison adds dense event retrieval and a cached local answerer | Episodic retrieval beat the original lexical hybrid weighting; the prepared GPU run tests dense retrieval and local grounded answering while preserving lifecycle controls |
+| 8. Long-Term Memory Agent | Retrieve useful cross-session facts while honoring corrections, conflicts, and deletion | Recent window vs. episodic vs. hybrid memory | Measured API run: 240 cached answers and 12 tests; A100 comparison ready | Episodic retrieval beat the original lexical hybrid weighting; the prepared GPU run tests dense retrieval and local grounded answering while preserving lifecycle controls |
 
 ## Repository Map
 
@@ -292,24 +292,24 @@ row limits, PII masking, bounded repair, and approval before export.
 | Measured API evaluation | Local macOS CPU with isolated Python dependencies; API generation dominated the model work |
 | Prepared A100 comparison | One NVIDIA A100; `Qwen/Qwen2.5-Coder-7B-Instruct` in BF16 plus `sentence-transformers/all-MiniLM-L6-v2`, deterministic decoding, 500 new-token limit, schema top-k 5 |
 | GPU execution status | Source, notebook, dependency, and CPU interface validation complete; end-to-end A100 metrics are not yet claimed because no controllable Colab browser/Jupyter session was available |
-| Measured evaluation time | 201.55 seconds for the 40-case API comparison; report generation and validation completed afterward |
+| Measured evaluation time | 290.70 seconds for the final 40-case API comparison; report generation and validation completed afterward |
 | Final verification | 10 deterministic tests passed in 0.91 seconds, including local-model fallback contracts |
 | Dataset | 50 synthetic questions: 10 development and 40 held-out; checksum `8d861b67fb259c81ab830446d9f75ccd325942088c8b49413dc3c64e7144e11a` |
 | Query limits | Two repair attempts, 100 result rows, read-only local DuckDB, authorized region `NA` |
 | API planner | `gpt-5.6-luna`, low reasoning effort, strict Pydantic query plans |
 | API limits | 180 calls, 500 output tokens per call, two retries, USD 6.00 estimated cost |
-| Measured API use | 50 calls, 13,634 input tokens, 13,665 output tokens, USD 0.095624 estimated cost |
+| Measured API use | 54 calls, 15,214 input tokens, 15,521 output tokens, USD 0.108340 estimated cost |
 
 ### Results and Judgment
 
 | Metric | One-shot | Governed | Judgment |
 | --- | ---: | ---: | --- |
-| Execution accuracy | 70.37% | 100.00% | Policy plus repair recovered executable plans for every safe case |
-| Result-hash accuracy | 18.52% | 37.04% | Governance doubled semantic execution accuracy, but absolute model quality remains limited |
-| Unsafe-query block rate | 0.00% | 38.46% | The policy stopped a meaningful subset that one-shot execution would allow |
-| PII leak rate | 0.00% | 0.00% | Neither measured path emitted a PII column in this model run |
+| Execution accuracy | 59.26% | 100.00% | Policy plus repair recovered executable plans for every safe case |
+| Result-hash accuracy | 14.81% | 37.04% | Governance substantially improved semantic execution accuracy, but absolute model quality remains limited |
+| Unsafe-query block rate | 15.38% | 38.46% | The governed policy stopped more unsafe cases than one-shot failures alone |
+| PII leak rate | 2.50% | 0.00% | AST and column policy removed the measured one-shot PII exposure |
 | Repair success | 80.00% | 100.00% | Bounded feedback recovered every included repair case |
-| Median execution latency | 15.85 ms | 12.22 ms | This timer covers local execution after the shared frozen plan, not API generation |
+| Median execution latency | 13.81 ms | 12.81 ms | This timer covers local execution after the shared frozen plan, not API generation |
 
 The measured result supports the safety and repair design, but not a claim of high
 general text-to-SQL accuracy. Result hashes remain strict and expose many
@@ -386,13 +386,13 @@ restores the exact starting state after every rejected attempt.
 | Measured API evaluation | Local macOS CPU with subprocess-isolated tests; API generation supplied patch proposals |
 | Prepared A100 comparison | One NVIDIA A100; `Qwen/Qwen2.5-Coder-7B-Instruct` in BF16, deterministic decoding, one shared model instance, and a 900 new-token limit |
 | GPU execution status | Source, notebook, dependency, and CPU interface validation complete; end-to-end A100 metrics are not yet claimed because no controllable Colab browser/Jupyter session was available |
-| Measured evaluation time | 114.63 seconds for both repair modes over 8 held-out defects; report generation and validation completed afterward |
+| Measured evaluation time | 138.92 seconds for both repair modes over 8 held-out defects; report generation and validation completed afterward |
 | Final verification | 9 deterministic tests passed in 4.22 seconds, including local patch-planner contracts |
 | Dataset | Twelve QuixBugs Python cases: four development and eight held-out, pinned to one commit |
 | Repair limits | Three attempts, 30 changed lines, one declared source file, 20-second tests, 12,000 output characters |
 | API planner | `gpt-5.6-sol`, medium reasoning effort, strict Pydantic patch proposals |
 | API limits | 220 calls, 900 output tokens per call, two retries, USD 8.00 estimated cost |
-| Measured API use | 18 calls, 22,988 input tokens, 4,436 output tokens, USD 0.248020 estimated cost |
+| Measured API use | 18 calls, 22,988 input tokens, 4,324 output tokens, USD 0.244660 estimated cost |
 
 ### Results and Judgment
 
@@ -403,7 +403,7 @@ restores the exact starting state after every rejected attempt.
 | Overfit detected | 0.00% | 0.00% | No public-only candidate reached the hidden-test rejection state in this run |
 | Rollback success | 100.00% | 100.00% | Every rejected attempt restored the exact source snapshot |
 | Mean changed lines | 2.0 | 2.0 | The loop improved success without increasing average patch size |
-| Median latency | 5.07 s | 5.98 s | Additional feedback added modest end-to-end latency on this compact suite |
+| Median latency | 6.57 s | 8.27 s | Additional feedback added modest end-to-end latency on this compact suite |
 
 The measured comparison favors the bounded loop on this small pinned suite, while
 the result remains too small for a universal coding-agent claim. The hidden tests
@@ -559,8 +559,8 @@ consolidation, evidence retrieval, abstention, and verifiable deletion.
 | Prepared A100 comparison | One NVIDIA A100; `Qwen/Qwen2.5-7B-Instruct` in BF16 plus `sentence-transformers/all-MiniLM-L6-v2`, deterministic decoding, and a 300 new-token limit |
 | Dense hybrid settings | Normalized cosine similarity with fusion weights 0.70 dense, 0.25 lexical, and 0.05 recency; answer cache keyed by question and evidence context |
 | GPU execution status | Source, notebook, dependency, and CPU interface validation complete; end-to-end A100 metrics are not yet claimed because no controllable Colab browser/Jupyter session was available |
-| Measured evaluation time | 424.10 seconds for 80 QA items across 3 retrieval systems; report generation and validation completed afterward |
-| Final verification | 11 deterministic tests passed in 0.07 seconds, including local embedding/answerer contracts; lifecycle evaluation completed in under one second |
+| Measured evaluation time | 424.10 seconds to populate 240 API answers; a fully cached reevaluation completed in 0.56 seconds before report generation |
+| Final verification | 12 deterministic tests passed in 0.07 seconds, including local embedding/answerer and cache-accounting contracts; lifecycle evaluation completed in under one second |
 | Dataset | LoCoMo samples 0 and 1, 40 QA per sample, plus deterministic lifecycle fixtures |
 | Memory settings | Working window 6 events, episodic top-k 5, SQLite facts/events/tombstones, evidence-cited retrieval |
 | API answerer | `gpt-5.6-luna`, low reasoning effort, strict grounded-answer schema and per-context cache |

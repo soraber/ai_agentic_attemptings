@@ -35,5 +35,5 @@ verification, and preservation notes.
 - **Symptom:** The 240-answer run completed, but `P08-C10` scanned the full upstream clone and flagged a token-shaped public-data string; the saved error output also contained an absolute local path. A first targeted rerun could not open a kernel socket inside the sandbox
 - **Root cause:** The privacy validator did not distinguish the external source checkout from project-owned artifacts, and notebook subprocess output used absolute paths
 - **Fix:** Continued scanning the extracted subset and all outputs while excluding only the pinned raw clone, sanitized notebook paths, added cache/retry/cost controls, and reran `P08-C10` with local-kernel permission without an API key
-- **Verification:** The final expanded suite passed 11 tests; 240 answers completed and were cached; final privacy validation passed; the measured summary retained original token/cost usage; the revised one-page report rendered without clipping or overlap
+- **Verification:** The final expanded suite passed 12 tests; 240 answers completed and were cached; final privacy validation passed; the measured summary retained original token/cost usage during a zero-call cached rerun; the revised one-page report rendered without clipping or overlap
 - **Preservation:** LoCoMo selection, lifecycle fixtures, and memory-store behavior were unchanged

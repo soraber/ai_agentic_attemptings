@@ -1,5 +1,5 @@
 {
-  "cache_hits": 0,
+  "cache_hits": 240,
   "deletion_compliance_pct": 100.0,
   "episodic": {
     "exact_match_pct": 0.0,
@@ -23,14 +23,14 @@
       "mean_context_tokens": 2.5,
       "mean_evidence_recall": 0.875,
       "mean_token_f1": 0.75,
-      "median_latency_ms": 0.07745847688056529
+      "median_latency_ms": 0.08037549559958279
     },
     "hybrid": {
       "exact_match_pct": 100.0,
       "mean_context_tokens": 2.5,
       "mean_evidence_recall": 0.75,
       "mean_token_f1": 1.0,
-      "median_latency_ms": 0.1314370019827038
+      "median_latency_ms": 0.15533299301750958
     },
     "project": "Long-Term Memory Agent",
     "result_status": "measured",
@@ -44,7 +44,7 @@
       "mean_context_tokens": 12.0,
       "mean_evidence_recall": 0.875,
       "mean_token_f1": 0.75,
-      "median_latency_ms": 0.09972898988053203
+      "median_latency_ms": 0.10133348405361176
     }
   },
   "model": "gpt-5.6-luna",
@@ -53,6 +53,8 @@
   "project": "Long-Term Memory Agent",
   "qa_items": 80,
   "result_status": "measured",
+  "retrieval_model": "lexical",
+  "usage_source": "cumulative measured cache population",
   "window": {
     "exact_match_pct": 0.0,
     "mean_context_tokens": 90.5,

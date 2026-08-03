@@ -19,7 +19,7 @@ verification, and preservation of prior user edits.
 - **Symptom:** The first one-case smoke command could not import `project5_agent`; no API request was made
 - **Root cause:** The smoke-test process omitted the project `src` directory from `PYTHONPATH`
 - **Fix:** Added the source path for local execution, added a skip-install guard in `P05-C01`, enabled the measured run in `P05-C02`, and added bounded retries plus token/cost accounting
-- **Verification:** Live smoke request succeeded; the final expanded suite passed 10 tests; 40 test questions completed with 50 model calls; report and privacy validation passed; rendered PDF had no visible clipping or overlap
+- **Verification:** Live smoke request succeeded; the final expanded suite passed 10 tests; the reconciled 40-question run completed with 54 model calls; report and privacy validation passed; rendered PDF had no visible clipping or overlap
 - **Preservation:** Retained VS Code's existing `Python 3 (ipykernel)` metadata and changed no dataset-preparation logic
 
 ## 2026-08-03 - A100 Local Planner Extension
