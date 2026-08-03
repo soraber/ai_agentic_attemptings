@@ -1,11 +1,11 @@
 # AI Agentic Attemptings
 
-Compact, evaluation-driven AI agent engineering projects that extend an existing
-portfolio in workflow reliability, governed data access, coding agents, protocol
+Compact, evaluation-driven AI agent engineering projects spanning workflow
+reliability, governed data access, coding agents, protocol
 security, and long-term memory.
 
-> **Version:** ver 0.1: add five compact AI agent engineering project ideas<br>
-> **Updated:** 2026-08-02 22:13 EDT
+> **Version:** ver 0.2: neutralize project-planning language<br>
+> **Updated:** 2026-08-02 22:18 EDT
 
 ## Project Ideas
 

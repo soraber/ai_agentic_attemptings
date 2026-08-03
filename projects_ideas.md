@@ -1,17 +1,16 @@
 # Five Compact AI Agent Engineering Project Ideas
 
-> **Status:** Planning document; no performance result is claimed yet.  
-> **Updated:** 2026-08-02 EDT  
-> **Target:** M.S. Computer Engineering graduate applying for AI Agent Engineer roles  
+> **Status:** Planning document; no performance result is claimed yet.<br>
+> **Updated:** 2026-08-02 EDT<br>
 > **Execution limit:** Each completed project must run from a fresh Colab runtime in less than 6 hours.
 
 ## Selection Strategy
 
-The existing portfolio already demonstrates LLM fine-tuning, advanced RAG, typed
+The related project collection already demonstrates LLM fine-tuning, advanced RAG, typed
 tools, MCP-style contracts, safety gates, and multi-agent orchestration. These five
 ideas add different skills instead of producing larger versions of the same work.
 
-| Project | Primary knowledge area | Main engineering signal | Estimated Colab run |
+| Project | Primary knowledge area | Main engineering focus | Estimated Colab run |
 | --- | --- | --- | ---: |
 | 4. Durable Incident-Response Agent | Stateful workflow reliability | Checkpointing, HITL, idempotency, recovery, observability | 45-90 minutes |
 | 5. Governed Text-to-SQL Analyst | Data agents and access control | Schema grounding, AST validation, self-repair, PII protection | 60-120 minutes |
@@ -21,7 +20,7 @@ ideas add different skills instead of producing larger versions of the same work
 
 Together, they cover workflow orchestration, databases, software engineering,
 security, protocols, distributed tracing, evaluation, and memory. If only two are
-built initially, Projects 4 and 5 provide the strongest signal for the least
+implemented initially, Projects 4 and 5 provide the broadest coverage for the least
 execution time.
 
 ## Shared Project Contract
@@ -41,7 +40,7 @@ Each finished project should produce approximately the following:
 3. **One report-generation script:** rebuild charts and the PDF from saved result
    files rather than hard-coded values.
 4. **One final report PDF:** problem, workflow, experiment controls, results,
-   representative cases, limitations, and resume interpretation.
+   representative cases, limitations, and engineering interpretation.
 5. **One final-summary JSON:** configuration, compute, runtime, dataset size, and
    final metrics.
 6. **One representative-samples JSON:** successful, failed, unsafe, and recovered
@@ -89,7 +88,7 @@ root cause, fix, and verification result.
   LLM judge only for qualities that cannot be measured mechanically.
 - Never place API keys, personal data, local absolute paths, or raw environment
   variables in notebook outputs, traces, reports, or Git history.
-- Do not choose an improvement percentage in advance. Generate the resume bullet
+- Do not choose an improvement percentage in advance. Generate headline metrics
   only after the controlled evaluation is complete.
 
 ## Project 4: Durable Incident-Response Agent
@@ -111,8 +110,8 @@ survives an injected process crash, and resumes without repeating the action.
 - Logs, metrics, traces, correlation IDs, and failure injection.
 - Reliability evaluation beyond final-answer quality.
 
-This project makes strong use of a CE and systems background. It shows that an
-agent is a recoverable distributed workflow rather than only an LLM prompt loop.
+This project emphasizes systems concepts and shows that an agent is a recoverable
+distributed workflow rather than only an LLM prompt loop.
 
 ### Compact Dataset
 
@@ -159,13 +158,6 @@ notebook must abort cleanly if it reaches the configured call or time budget.
 - Recovery trace before and after the injected crash.
 - Baseline-versus-durable reliability chart.
 - Duplicate-side-effect and safety-block table.
-
-### Resume Bullet Template
-
-> Built a checkpointed incident-response agent with HITL approvals, idempotent
-> tools, crash recovery, compensation, and OpenTelemetry traces; improved
-> `[metric]` from `[baseline]` to `[advanced]` across `[N]` injected incidents
-> while recording `[zero/X]` duplicate actions.
 
 ## Project 5: Governed Text-to-SQL Analyst
 
@@ -232,13 +224,6 @@ Database setup and deterministic policy tests should run without an API key.
 - Safety confusion matrix.
 - Representative SQL repair and blocked-PII examples.
 
-### Resume Bullet Template
-
-> Engineered a governed text-to-SQL agent using schema retrieval, SQLGlot AST
-> validation, read-only DuckDB execution, and bounded self-repair; achieved
-> `[X]%` execution accuracy and blocked `[Y/Z]` unsafe requests on `[N]` held-out
-> analytics tasks.
-
 ## Project 6: Test-Driven Code-Repair Agent
 
 **Keywords:** coding agents, AST repository mapping, fault localization,
@@ -304,13 +289,6 @@ agent failures.
 - Bug-by-bug repair matrix.
 - Repair-rate and cost comparison.
 - Representative successful patch, overfitting patch, and rollback trace.
-
-### Resume Bullet Template
-
-> Developed a test-driven Python repair agent with AST repository retrieval,
-> constrained diffs, pytest feedback, rollback, and hidden regression tests;
-> increased verified repair rate from `[A/B]` to `[C/B]` within a three-attempt
-> budget.
 
 ## Project 7: Secure Interoperable Agent Gateway
 
@@ -380,13 +358,6 @@ without a model.
 - Attack-versus-benign outcome matrix.
 - Correlated trace showing delegation, rejection, retry, and approval.
 
-### Resume Bullet Template
-
-> Built a secure two-agent gateway using A2A delegation and MCP tools with scoped
-> authorization, provenance tracking, idempotent retries, and prompt-injection
-> defenses; reduced attack success from `[A]%` to `[B]%` while retaining `[C]%`
-> benign task completion.
-
 ## Project 8: Long-Term Memory Agent
 
 **Keywords:** long-term memory, episodic memory, semantic memory, temporal
@@ -451,25 +422,16 @@ repeat API calls.
 - Accuracy-versus-context-token chart.
 - Conflict-resolution and verified-deletion examples.
 
-### Resume Bullet Template
-
-> Built a hybrid long-term memory agent with episodic retrieval, normalized
-> semantic facts, temporal conflict resolution, and deletion controls; improved
-> `[metric]` by `[X]%` over a sliding-window baseline on `[N]` audited memory
-> questions.
-
 ## Recommended Build Order
 
 1. **Project 4:** Best compact demonstration of production workflow reliability.
 2. **Project 5:** Adds database execution and governance with deterministic metrics.
 3. **Project 7:** Adds current protocols and measurable agent security.
-4. **Project 6:** Build next when targeting coding-agent or developer-tool roles.
-5. **Project 8:** Build next when targeting assistants, enterprise agents, or
-   personalization platforms.
+4. **Project 6:** Adds coding-agent and developer-tool depth.
+5. **Project 8:** Adds assistant, enterprise-memory, and personalization depth.
 
-Two polished additions are enough to begin applying. Complete reports, failure
-analysis, and reproducible metrics are more valuable than five partially executed
-notebooks.
+Implement one project at a time. Complete reports, failure analysis, and
+reproducible metrics are more valuable than five partially executed notebooks.
 
 ## Primary Technical References
 
@@ -497,7 +459,7 @@ notebooks.
 - [QuixBugs repository](https://github.com/jkoppel/QuixBugs) for compact
   program-repair cases.
 
-## Portfolio-Ready Quality Gate
+## Project-Ready Quality Gate
 
 A selected project is complete only when:
 
@@ -509,5 +471,5 @@ A selected project is complete only when:
 - Metrics include quality, safety, trajectory, latency, token use, and cost.
 - Representative failures and limitations appear in the notebook and report.
 - Output artifacts contain no API keys, personal data, or local absolute paths.
-- Notebook results, summary JSON, charts, report PDF, and resume bullet use the
-  same final measured values.
+- Notebook results, summary JSON, charts, report PDF, and headline conclusions use
+  the same final measured values.
