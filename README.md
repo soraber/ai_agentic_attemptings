@@ -4,24 +4,22 @@ Compact, evaluation-driven AI agent engineering projects spanning workflow
 reliability, governed data access, coding agents, protocol
 security, and long-term memory.
 
-> **Version:** ver 0.3: add Project 4 pre-execution scaffold<br>
-> **Updated:** 2026-08-02 22:56 EDT
+> **Version:** ver 0.4: add detailed project information<br>
+> **Updated:** 2026-08-02 23:07 EDT
 
-## Implemented Scaffold
+## Portfolio Summary
 
-### Project 4: Durable Incident-Response Agent
+| Project | Status | Summary |
+| --- | --- | --- |
+| 4. Durable Incident-Response Agent | Pre-execution scaffold complete | Stateless loop vs. checkpointed LangGraph workflow with HITL approval, SQLite idempotency, crash recovery, compensation, safety policy, and measured-artifact generation |
 
-[`project4/`](project4/) contains the complete pre-execution package for a paired
-comparison between a stateless action loop and a checkpointed, approval-gated
-LangGraph workflow. It includes a committed 24-incident benchmark, stable-cell
-Colab notebook, reusable Python package, SQLite side-effect simulator, policy and
-failure-injection tests, background guide, runbook, debug log, validator, and a
-measured-result report generator.
+The deterministic Project 4 preflight passes all 11 tests. No final API evaluation
+or model-performance result is claimed yet.
 
-The deterministic preflight suite passes 11 tests, including approval resume,
-incident-bound policy checks, idempotent crash recovery, compensation replay, and
-trace redaction. No full evaluation or performance result is claimed yet; final
-JSON, charts, traces, and PDF are generated only after notebook execution.
+See [`projects_info.md`](projects_info.md) for project files, goals, methods,
+resources, settings, preflight results, judgments, future optimization, and debug
+summaries. Detailed project information must be updated there whenever this README
+summary changes.
 
 ## Project Ideas
 
