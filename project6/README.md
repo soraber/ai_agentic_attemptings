@@ -6,9 +6,9 @@ subset.
 
 ## Status
 
-Prepared for execution. Local fixture tests validate repository mapping, patch
-policy, subprocess limits, hidden-test gating, and exact rollback without model
-calls. Final QuixBugs results are absent.
+The OpenAI-backed QuixBugs comparison has been executed and saved in `output/`.
+An A100 comparison is prepared under `output/gpu/` with one shared local BF16 code
+model; patch policy, public/hidden tests, and rollback remain unchanged.
 
 ## Architecture
 
@@ -33,3 +33,6 @@ issue + failing trace -> AST repository map -> fault localization -> patch plan
 
 Every case starts from a fresh worktree copy. The agent may modify only the
 declared Python source file and never sees gold patches during planning.
+
+Set `EVAL_BACKEND="local_gpu"` in `P06-C02` to use
+`Qwen/Qwen2.5-Coder-7B-Instruct` on an A100 without API calls.

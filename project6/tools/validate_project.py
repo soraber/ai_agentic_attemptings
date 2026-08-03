@@ -13,7 +13,7 @@ EXPECTED = [f"P06-C{index:02d}" for index in range(11)]
 
 def main() -> None:
     parser = argparse.ArgumentParser(); parser.add_argument("--require-results", action="store_true"); args = parser.parse_args()
-    required = ["README.md", "RUNBOOK.md", "data/quixbugs_manifest.json", "project6_test_driven_code_repair.ipynb", "src/project6_agent/agent.py", "tools/fetch_quixbugs.py", "tools/generate_report.py", "background/project6_background.md"]
+    required = ["README.md", "RUNBOOK.md", "data/quixbugs_manifest.json", "project6_test_driven_code_repair.ipynb", "src/project6_agent/agent.py", "src/project6_agent/planners.py", "tools/fetch_quixbugs.py", "tools/generate_report.py", "background/project6_background.md"]
     errors = [f"missing {path}" for path in required if not (ROOT/path).exists()]
     manifest = json.loads((ROOT/"data/quixbugs_manifest.json").read_text())
     if len(manifest["cases"]) != 12 or len(manifest["commit"]) != 40: errors.append("invalid QuixBugs manifest")

@@ -6,9 +6,9 @@ consolidation, deletion tombstones, evidence citations, and abstention.
 
 ## Status
 
-Prepared for execution. A pinned LoCoMo subset is downloaded once in Colab;
-deterministic lifecycle fixtures run fully offline. Final model-backed QA results
-are absent.
+The OpenAI-backed LoCoMo run and lifecycle evidence are saved in `output/`. A
+separate A100 path combines dense event embeddings, lexical/recency fusion, and a
+local BF16 answer model under `output/gpu/` without replacing existing evidence.
 
 ## Architecture
 
@@ -20,3 +20,6 @@ session events -> working window
 ```
 
 See `RUNBOOK.md` for stable cells `P08-C00` through `P08-C10`.
+
+Set `EVAL_BACKEND="local_gpu"` in `P08-C02` to run the local comparison. Deletion,
+supersession, conflict, and tombstone checks remain deterministic.

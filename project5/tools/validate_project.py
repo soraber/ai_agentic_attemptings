@@ -14,7 +14,7 @@ EXPECTED_IDS = [f"P05-C{index:02d}" for index in range(11)]
 REQUIRED = [
     "README.md", "RUNBOOK.md", "config/default.json", "data/cache/project5_questions.json",
     "data/cache/project5_questions.sha256", "project5_governed_text_to_sql.ipynb",
-    "src/project5_agent/analyst.py", "src/project5_agent/governance.py",
+    "src/project5_agent/analyst.py", "src/project5_agent/governance.py", "src/project5_agent/local_models.py",
     "tools/build_notebook.py", "tools/generate_report.py", "background/project5_background.md",
 ]
 

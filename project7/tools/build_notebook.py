@@ -24,10 +24,14 @@ if PROJECT_ROOT is None:
     if not repo.exists(): subprocess.run(["git","clone","https://github.com/soraber/ai_agentic_attemptings.git",str(repo)],check=True)
     PROJECT_ROOT=repo/"project7"
 os.chdir(PROJECT_ROOT)
-subprocess.run([sys.executable,"-m","pip","install","--upgrade-strategy","only-if-needed","-r","requirements-colab.txt"],check=True)
-subprocess.run([sys.executable,"-m","pip","install","-e",".","--no-deps"],check=True)
-check=subprocess.run([sys.executable,"-m","pip","check"],text=True,capture_output=True)
-if check.returncode: print(check.stdout or check.stderr)
+if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
+    subprocess.run([sys.executable,"-m","pip","install","--upgrade-strategy","only-if-needed","-r","requirements-colab.txt"],check=True)
+    subprocess.run([sys.executable,"-m","pip","install","-e",".","--no-deps"],check=True)
+source_root=PROJECT_ROOT/"src"
+if str(source_root) not in sys.path: sys.path.insert(0,str(source_root))
+if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
+    check=subprocess.run([sys.executable,"-m","pip","check"],text=True,capture_output=True)
+    if check.returncode: print(check.stdout or check.stderr)
 from project7_agent.gateway import SecureGateway
 print("Project 7 imports passed")"""),
 cell("P07-C02","code","""import getpass,os,sys

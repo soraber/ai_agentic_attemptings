@@ -1,0 +1,3388 @@
+[
+  {
+    "answer": "The context does not specify when Caroline went to the LGBTQ support group.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "7 May 2023",
+    "qa_index": 0,
+    "question": "When did Caroline go to the LGBTQ support group?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline went to the LGBTQ support group on 7 May 2023, the day before she mentioned it on 8 May 2023.",
+    "context_tokens": 61,
+    "evidence_ids": [
+      "D1:3"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "7 May 2023",
+    "qa_index": 0,
+    "question": "When did Caroline go to the LGBTQ support group?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.25
+  },
+  {
+    "answer": "Caroline went to the LGBTQ support group on 7 May 2023, the day before she mentioned it on 8 May 2023.",
+    "context_tokens": 65,
+    "evidence_ids": [
+      "D1:3"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "7 May 2023",
+    "qa_index": 0,
+    "question": "When did Caroline go to the LGBTQ support group?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.25
+  },
+  {
+    "answer": "The context does not say when Melanie painted a sunrise.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "2022",
+    "qa_index": 1,
+    "question": "When did Melanie paint a sunrise?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Melanie painted a sunrise last year, according to her statement on 8 May 2023.",
+    "context_tokens": 51,
+    "evidence_ids": [
+      "D1:14"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "2022",
+    "qa_index": 1,
+    "question": "When did Melanie paint a sunrise?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Melanie painted a sunrise last year, as of 8 May 2023.",
+    "context_tokens": 51,
+    "evidence_ids": [
+      "D1:14"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "2022",
+    "qa_index": 1,
+    "question": "When did Melanie paint a sunrise?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify which fields Caroline would pursue in her education.",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D19:10",
+      "D19:11"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Psychology, counseling certification",
+    "qa_index": 2,
+    "question": "What fields would Caroline be likely to pursue in her educaton?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline would likely pursue **art** and a helping field focused on **children or family support**, such as social work or child welfare. This is suggested by her apparent interest in art and her desire to take in children in need (D14:24, D2:9).",
+    "context_tokens": 87,
+    "evidence_ids": [
+      "D14:24",
+      "D2:9"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Psychology, counseling certification",
+    "qa_index": 2,
+    "question": "What fields would Caroline be likely to pursue in her educaton?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not provide enough information to determine which fields Caroline would pursue in her education.",
+    "context_tokens": 94,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Psychology, counseling certification",
+    "qa_index": 2,
+    "question": "What fields would Caroline be likely to pursue in her educaton?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not state what Caroline researched.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Adoption agencies",
+    "qa_index": 3,
+    "question": "What did Caroline research?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine what Caroline researched from the provided context.",
+    "context_tokens": 49,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Adoption agencies",
+    "qa_index": 3,
+    "question": "What did Caroline research?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine what Caroline researched from the provided context.",
+    "context_tokens": 53,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Adoption agencies",
+    "qa_index": 3,
+    "question": "What did Caroline research?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline\u2019s specific identity is not stated in the provided context. The dialogue only indicates that she has found her \u201ctrue self\u201d and is living honestly.",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D19:10",
+      "D19:15"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Transgender woman",
+    "qa_index": 4,
+    "question": "What is Caroline's identity?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline\u2019s specific identity is not supported by the context. She is described only as Melanie\u2019s friend and supporter.",
+    "context_tokens": 52,
+    "evidence_ids": [
+      "D12:12",
+      "D8:38"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Transgender woman",
+    "qa_index": 4,
+    "question": "What is Caroline's identity?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline is Melanie\u2019s friend and supporter, but no further identity information is provided. (D12:12, D8:38)",
+    "context_tokens": 52,
+    "evidence_ids": [
+      "D12:12",
+      "D8:38"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Transgender woman",
+    "qa_index": 4,
+    "question": "What is Caroline's identity?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Melanie ran a charity race.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The sunday before 25 May 2023",
+    "qa_index": 5,
+    "question": "When did Melanie run a charity race?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.11764705882352942
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie ran a charity race from the provided context.",
+    "context_tokens": 38,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The sunday before 25 May 2023",
+    "qa_index": 5,
+    "question": "When did Melanie run a charity race?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.1
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie ran a charity race from the provided context.",
+    "context_tokens": 41,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The sunday before 25 May 2023",
+    "qa_index": 5,
+    "question": "When did Melanie run a charity race?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.1
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie is planning to go camping from the provided context.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "June 2023",
+    "qa_index": 6,
+    "question": "When is Melanie planning on going camping?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine when Melanie is planning to go camping from the provided context.",
+    "context_tokens": 63,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "June 2023",
+    "qa_index": 6,
+    "question": "When is Melanie planning on going camping?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine when Melanie is planning to go camping from the provided context.",
+    "context_tokens": 66,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "June 2023",
+    "qa_index": 6,
+    "question": "When is Melanie planning on going camping?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not provide Caroline\u2019s relationship status.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Single",
+    "qa_index": 7,
+    "question": "What is Caroline's relationship status?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline's relationship status is not specified in the provided context.",
+    "context_tokens": 52,
+    "evidence_ids": [
+      "D17:22",
+      "D12:18",
+      "D12:12",
+      "D8:38",
+      "D4:10"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Single",
+    "qa_index": 7,
+    "question": "What is Caroline's relationship status?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline's relationship status is not specified in the provided context.",
+    "context_tokens": 52,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Single",
+    "qa_index": 7,
+    "question": "What is Caroline's relationship status?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Caroline gave a speech at a school.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 9 June 2023",
+    "qa_index": 8,
+    "question": "When did Caroline give a speech at a school?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.10526315789473684
+  },
+  {
+    "answer": "I can\u2019t determine when Caroline gave a speech at a school from the provided context.",
+    "context_tokens": 50,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 9 June 2023",
+    "qa_index": 8,
+    "question": "When did Caroline give a speech at a school?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.09090909090909091
+  },
+  {
+    "answer": "I can't determine when Caroline gave a speech at a school from the provided context.",
+    "context_tokens": 51,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 9 June 2023",
+    "qa_index": 8,
+    "question": "When did Caroline give a speech at a school?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.09090909090909091
+  },
+  {
+    "answer": "The context does not specify when Caroline met up with her friends, family, and mentors.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 9 June 2023",
+    "qa_index": 9,
+    "question": "When did Caroline meet up with her friends, family, and mentors?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.09523809523809522
+  },
+  {
+    "answer": "Caroline met up with her friends, family, and mentors the week before June 9, 2023 (i.e., the week of June 2, 2023).",
+    "context_tokens": 94,
+    "evidence_ids": [
+      "D3:11"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "The week before 9 June 2023",
+    "qa_index": 9,
+    "question": "When did Caroline meet up with her friends, family, and mentors?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.41379310344827586
+  },
+  {
+    "answer": "Caroline met up with her friends, family, and mentors the week before 9 June 2023, based on her statement that she shared a picture from when they met up \u201clast week\u201d (D3:11).",
+    "context_tokens": 96,
+    "evidence_ids": [
+      "D3:11"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "The week before 9 June 2023",
+    "qa_index": 9,
+    "question": "When did Caroline meet up with her friends, family, and mentors?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.3076923076923077
+  },
+  {
+    "answer": "The context does not state how long Caroline has had her current group of friends.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "4 years",
+    "qa_index": 10,
+    "question": "How long has Caroline had her current group of friends for?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine how long Caroline has had her current group of friends from the provided context.",
+    "context_tokens": 84,
+    "evidence_ids": [
+      "D3:12",
+      "D12:15"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "4 years",
+    "qa_index": 10,
+    "question": "How long has Caroline had her current group of friends for?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not state how long Caroline has had her current group of friends. It only mentions that they attended Pride together last year (D12:15).",
+    "context_tokens": 99,
+    "evidence_ids": [
+      "D12:15",
+      "D3:12"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "4 years",
+    "qa_index": 10,
+    "question": "How long has Caroline had her current group of friends for?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not say where Caroline moved from four years ago.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Sweden",
+    "qa_index": 11,
+    "question": "Where did Caroline move from 4 years ago?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline moved from her home country 4 years ago. (D3:13)",
+    "context_tokens": 113,
+    "evidence_ids": [
+      "D3:13"
+    ],
+    "evidence_recall": 0.5,
+    "exact_match": false,
+    "gold": "Sweden",
+    "qa_index": 11,
+    "question": "Where did Caroline move from 4 years ago?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine where Caroline moved from; the provided context does not mention it.",
+    "context_tokens": 73,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Sweden",
+    "qa_index": 11,
+    "question": "Where did Caroline move from 4 years ago?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine how long ago Caroline\u2019s 18th birthday was from the provided context.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "10 years ago",
+    "qa_index": 12,
+    "question": "How long ago was Caroline's 18th birthday?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.10526315789473684
+  },
+  {
+    "answer": "I can\u2019t determine how long ago Caroline\u2019s 18th birthday was from the provided context.",
+    "context_tokens": 68,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "10 years ago",
+    "qa_index": 12,
+    "question": "How long ago was Caroline's 18th birthday?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.10526315789473684
+  },
+  {
+    "answer": "The context does not state when Caroline\u2019s 18th birthday was, so I can\u2019t determine how long ago it was.",
+    "context_tokens": 61,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "10 years ago",
+    "qa_index": 12,
+    "question": "How long ago was Caroline's 18th birthday?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.08333333333333333
+  },
+  {
+    "answer": "The context does not specify Caroline\u2019s exact career path; it only indicates that she is helping others through her personal journey.",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D19:10",
+      "D19:11"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "counseling or mental health for Transgender people",
+    "qa_index": 13,
+    "question": "What career path has Caroline decided to persue?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not state what career path Caroline has decided to pursue.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "counseling or mental health for Transgender people",
+    "qa_index": 13,
+    "question": "What career path has Caroline decided to persue?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not state what career path Caroline decided to pursue.",
+    "context_tokens": 72,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "counseling or mental health for Transgender people",
+    "qa_index": 13,
+    "question": "What career path has Caroline decided to persue?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "It cannot be determined from the context whether Caroline would still pursue counseling without having received support growing up. She says that encouragement from those close to her \u201cmade me who I am\u201d (D19:13), but she does not say what she would have chosen without it.",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D19:13"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Likely no",
+    "qa_index": 14,
+    "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "It is unclear. Caroline says she wants to pursue counseling to help people who experienced similar things, but the context does not establish whether she would still want this career without having received support growing up.",
+    "context_tokens": 94,
+    "evidence_ids": [
+      "D4:11",
+      "D4:14"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Likely no",
+    "qa_index": 14,
+    "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "It cannot be determined from the context whether Caroline would still pursue counseling without the support she received growing up. She said she wanted to help people who had gone through similar experiences (D4:11), and that encouragement from close others made her who she is (D19:13), but she did not state how she would feel without that support.",
+    "context_tokens": 79,
+    "evidence_ids": [
+      "D4:11",
+      "D19:13"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Likely no",
+    "qa_index": 14,
+    "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Melanie supports and encourages Caroline, celebrates her self-discovery, and expresses that they are there for each other (D19:10, D19:12, D19:14).",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D19:10",
+      "D19:12",
+      "D19:14"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "pottery, camping, painting, swimming",
+    "qa_index": 15,
+    "question": "What activities does Melanie partake in?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify any activities that Melanie partakes in.",
+    "context_tokens": 41,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "pottery, camping, painting, swimming",
+    "qa_index": 15,
+    "question": "What activities does Melanie partake in?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not establish what activities Melanie participates in.",
+    "context_tokens": 41,
+    "evidence_ids": [
+      "D8:18",
+      "D15:25"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "pottery, camping, painting, swimming",
+    "qa_index": 15,
+    "question": "What activities does Melanie partake in?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not say when Melanie signed up for a pottery class.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "2 July 2023",
+    "qa_index": 16,
+    "question": "When did Melanie sign up for a pottery class?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Melanie signed up for a pottery class on 2 July 2023, as she said she did so \u201cyesterday\u201d on 3 July 2023. (D5:4)",
+    "context_tokens": 88,
+    "evidence_ids": [
+      "D5:4"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "2 July 2023",
+    "qa_index": 16,
+    "question": "When did Melanie sign up for a pottery class?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.2222222222222222
+  },
+  {
+    "answer": "Melanie signed up for a pottery class on 2 July 2023, the day before she mentioned it on 3 July 2023 (D5:4).",
+    "context_tokens": 97,
+    "evidence_ids": [
+      "D5:4"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "2 July 2023",
+    "qa_index": 16,
+    "question": "When did Melanie sign up for a pottery class?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.23076923076923078
+  },
+  {
+    "answer": "The context does not say when Caroline is going to a transgender conference.",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D19:10",
+      "D19:11",
+      "D19:15"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "July 2023",
+    "qa_index": 17,
+    "question": "When is Caroline going to the transgender conference?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline is going to the transgender conference in July 2023, but the exact date is not specified. [D5:13]",
+    "context_tokens": 92,
+    "evidence_ids": [
+      "D5:13"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "July 2023",
+    "qa_index": 17,
+    "question": "When is Caroline going to the transgender conference?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.1904761904761905
+  },
+  {
+    "answer": "I can\u2019t determine when Caroline is going to the transgender conference from the provided context.",
+    "context_tokens": 63,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "July 2023",
+    "qa_index": 17,
+    "question": "When is Caroline going to the transgender conference?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not say where Melanie has camped.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "beach, mountains, forest",
+    "qa_index": 18,
+    "question": "Where has Melanie camped?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify where Melanie has camped.",
+    "context_tokens": 38,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "beach, mountains, forest",
+    "qa_index": 18,
+    "question": "Where has Melanie camped?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine where Melanie has camped from the provided context.",
+    "context_tokens": 41,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "beach, mountains, forest",
+    "qa_index": 18,
+    "question": "Where has Melanie camped?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not say what Melanie\u2019s kids like.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "dinosaurs, nature",
+    "qa_index": 19,
+    "question": "What do Melanie's kids like?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine what Melanie\u2019s kids like from the provided context.",
+    "context_tokens": 75,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "dinosaurs, nature",
+    "qa_index": 19,
+    "question": "What do Melanie's kids like?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I don\u2019t have enough information to determine what Melanie\u2019s kids like.",
+    "context_tokens": 90,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "dinosaurs, nature",
+    "qa_index": 19,
+    "question": "What do Melanie's kids like?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie went to the museum from the provided context.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "5 July 2023",
+    "qa_index": 20,
+    "question": "When did Melanie go to the museum?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie went to the museum from the provided context.",
+    "context_tokens": 38,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "5 July 2023",
+    "qa_index": 20,
+    "question": "When did Melanie go to the museum?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine when Melanie went to the museum from the provided context.",
+    "context_tokens": 41,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "5 July 2023",
+    "qa_index": 20,
+    "question": "When did Melanie go to the museum?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not say when Caroline had a picnic.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 6 July 2023",
+    "qa_index": 21,
+    "question": "When did Caroline have a picnic?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.125
+  },
+  {
+    "answer": "I can\u2019t determine when Caroline had a picnic from the provided context.",
+    "context_tokens": 66,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 6 July 2023",
+    "qa_index": 21,
+    "question": "When did Caroline have a picnic?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.10526315789473684
+  },
+  {
+    "answer": "I can\u2019t determine when Caroline had a picnic from the provided context.",
+    "context_tokens": 69,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 6 July 2023",
+    "qa_index": 21,
+    "question": "When did Caroline have a picnic?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.10526315789473684
+  },
+  {
+    "answer": "There is not enough information to determine whether Caroline would likely have Dr. Seuss books on her bookshelf.",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D19:10",
+      "D19:11",
+      "D19:15"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Yes, since she collects classic children's books",
+    "qa_index": 22,
+    "question": "Would Caroline likely have Dr. Seuss books on her bookshelf?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.07692307692307691
+  },
+  {
+    "answer": "The context does not provide enough information to determine whether Caroline likely has Dr. Seuss books on her bookshelf.",
+    "context_tokens": 59,
+    "evidence_ids": [
+      "D7:10"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Yes, since she collects classic children's books",
+    "qa_index": 22,
+    "question": "Would Caroline likely have Dr. Seuss books on her bookshelf?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.07407407407407407
+  },
+  {
+    "answer": "There is not enough information in the context to determine whether Caroline would likely have Dr. Seuss books on her bookshelf.",
+    "context_tokens": 63,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Yes, since she collects classic children's books",
+    "qa_index": 22,
+    "question": "Would Caroline likely have Dr. Seuss books on her bookshelf?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.06896551724137931
+  },
+  {
+    "answer": "The context does not mention any books that Melanie has read.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "\"Nothing is Impossible\", \"Charlotte's Web\"",
+    "qa_index": 23,
+    "question": "What books has Melanie read?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine which books Melanie has read from the provided context.",
+    "context_tokens": 45,
+    "evidence_ids": [
+      "D7:10"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "\"Nothing is Impossible\", \"Charlotte's Web\"",
+    "qa_index": 23,
+    "question": "What books has Melanie read?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine which books Melanie has read from the provided context.",
+    "context_tokens": 45,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "\"Nothing is Impossible\", \"Charlotte's Web\"",
+    "qa_index": 23,
+    "question": "What books has Melanie read?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not say what Melanie does to destress.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Running, pottery",
+    "qa_index": 24,
+    "question": "What does Melanie do to destress?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine what Melanie does to destress from the provided context.",
+    "context_tokens": 38,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Running, pottery",
+    "qa_index": 24,
+    "question": "What does Melanie do to destress?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine what Melanie does to destress from the provided context.",
+    "context_tokens": 41,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Running, pottery",
+    "qa_index": 24,
+    "question": "What does Melanie do to destress?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Caroline went to the LGBTQ conference.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "10 July 2023",
+    "qa_index": 25,
+    "question": "When did Caroline go to the LGBTQ conference?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Caroline went to the LGBTQ conference.",
+    "context_tokens": 81,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "10 July 2023",
+    "qa_index": 25,
+    "question": "When did Caroline go to the LGBTQ conference?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Caroline went to the LGBTQ conference.",
+    "context_tokens": 71,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "10 July 2023",
+    "qa_index": 25,
+    "question": "When did Caroline go to the LGBTQ conference?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Melanie read the book \"Nothing Is Impossible.\"",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "2022",
+    "qa_index": 26,
+    "question": "When did Melanie read the book \"nothing is impossible\"?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie read the book \"Nothing Is Impossible\" from the provided context.",
+    "context_tokens": 38,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "2022",
+    "qa_index": 26,
+    "question": "When did Melanie read the book \"nothing is impossible\"?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie read the book \u201cnothing is impossible\u201d from the provided context.",
+    "context_tokens": 41,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "2022",
+    "qa_index": 26,
+    "question": "When did Melanie read the book \"nothing is impossible\"?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not indicate whether Caroline would pursue writing as a career option.",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D19:10",
+      "D19:11",
+      "D19:15"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "LIkely no; though she likes reading, she wants to be a counselor",
+    "qa_index": 27,
+    "question": "Would Caroline pursue writing as a career option?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.07692307692307691
+  },
+  {
+    "answer": "There is insufficient information to determine whether Caroline would pursue writing as a career option.",
+    "context_tokens": 64,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "LIkely no; though she likes reading, she wants to be a counselor",
+    "qa_index": 27,
+    "question": "Would Caroline pursue writing as a career option?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.14814814814814814
+  },
+  {
+    "answer": "There is not enough information to determine whether Caroline would pursue writing as a career option. The context only shows Melanie reacting positively to Caroline\u2019s artwork and journey (D17:22, D14:18, D17:2).",
+    "context_tokens": 53,
+    "evidence_ids": [
+      "D17:22",
+      "D14:18",
+      "D17:2"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "LIkely no; though she likes reading, she wants to be a counselor",
+    "qa_index": 27,
+    "question": "Would Caroline pursue writing as a career option?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0851063829787234
+  },
+  {
+    "answer": "I can\u2019t determine when Caroline went to the adoption meeting from the provided context.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The friday before 15 July 2023",
+    "qa_index": 28,
+    "question": "When did Caroline go to the adoption meeting?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.09523809523809522
+  },
+  {
+    "answer": "I can\u2019t determine when Caroline went to the adoption meeting. The context only mentions her adoption process on 25 May 2023, not a meeting. (D2:13)",
+    "context_tokens": 78,
+    "evidence_ids": [
+      "D2:13"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The friday before 15 July 2023",
+    "qa_index": 28,
+    "question": "When did Caroline go to the adoption meeting?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.12121212121212122
+  },
+  {
+    "answer": "The context does not specify when Caroline went to the adoption meeting.",
+    "context_tokens": 62,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The friday before 15 July 2023",
+    "qa_index": 28,
+    "question": "When did Caroline go to the adoption meeting?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.1111111111111111
+  },
+  {
+    "answer": "The context does not say when Melanie went to the pottery workshop.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The Friday before 15 July 2023",
+    "qa_index": 29,
+    "question": "When did Melanie go to the pottery workshop?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.1111111111111111
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie went to the pottery workshop from the provided context.",
+    "context_tokens": 45,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The Friday before 15 July 2023",
+    "qa_index": 29,
+    "question": "When did Melanie go to the pottery workshop?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.09523809523809522
+  },
+  {
+    "answer": "The context does not specify when Melanie went to the pottery workshop.",
+    "context_tokens": 45,
+    "evidence_ids": [
+      "D5:5",
+      "D14:3"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The Friday before 15 July 2023",
+    "qa_index": 29,
+    "question": "When did Melanie go to the pottery workshop?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.1111111111111111
+  },
+  {
+    "answer": "Cannot determine whether Melanie is a member of the LGBTQ community from the context. She expresses support for Caroline, but does not disclose her own sexual orientation or gender identity.",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D19:10",
+      "D19:12",
+      "D19:14"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "Likely no, she does not refer to herself as part of it",
+    "qa_index": 30,
+    "question": "Would Melanie be considered a member of the LGBTQ community?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.19047619047619044
+  },
+  {
+    "answer": "Cannot determine from the context whether Melanie is a member of the LGBTQ community. Her statement about being \u201cpart of that community\u201d is ambiguous and does not explicitly identify her membership. [D11:5]",
+    "context_tokens": 122,
+    "evidence_ids": [
+      "D11:5"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "Likely no, she does not refer to herself as part of it",
+    "qa_index": 30,
+    "question": "Would Melanie be considered a member of the LGBTQ community?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.17777777777777776
+  },
+  {
+    "answer": "It cannot be determined from the context whether Melanie is a member of the LGBTQ community. Her comment about being \u201cpart of that community\u201d could refer to participation or support rather than personal identity (D11:5).",
+    "context_tokens": 106,
+    "evidence_ids": [
+      "D11:5",
+      "D9:2"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "Likely no, she does not refer to herself as part of it",
+    "qa_index": 30,
+    "question": "Would Melanie be considered a member of the LGBTQ community?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.20833333333333334
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie went camping in June from the provided context.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 27 June 2023",
+    "qa_index": 31,
+    "question": "When did Melanie go camping in June?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.2
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie went camping in June from the provided context.",
+    "context_tokens": 52,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 27 June 2023",
+    "qa_index": 31,
+    "question": "When did Melanie go camping in June?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.2
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie went camping in June from the provided context.",
+    "context_tokens": 44,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 27 June 2023",
+    "qa_index": 31,
+    "question": "When did Melanie go camping in June?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.2
+  },
+  {
+    "answer": "The context does not specify any LGBTQ+ events that Caroline participated in.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Pride parade, school speech, support group",
+    "qa_index": 32,
+    "question": "What LGBTQ+ events has Caroline participated in?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline participated in an LGBTQ+ parade. The context also refers to her LGBTQ advocacy, but does not specify additional events (D5:2; D9:11).",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D5:2",
+      "D9:11"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Pride parade, school speech, support group",
+    "qa_index": 32,
+    "question": "What LGBTQ+ events has Caroline participated in?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.06666666666666667
+  },
+  {
+    "answer": "The context only indicates that Caroline was involved in an LGBTQ-related art show or exhibition. Melanie referred to seeing Caroline\u2019s show and said the LGBTQ community needed more platforms like it (D14:34). No other specific LGBTQ+ events are identified.",
+    "context_tokens": 101,
+    "evidence_ids": [
+      "D14:34"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Pride parade, school speech, support group",
+    "qa_index": 32,
+    "question": "What LGBTQ+ events has Caroline participated in?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Caroline went to a pride parade during the summer.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 3 July 2023",
+    "qa_index": 33,
+    "question": "When did Caroline go to a pride parade during the summer?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.09523809523809522
+  },
+  {
+    "answer": "Caroline went to a pride parade a few weeks before July 15, 2023\u2014around late June or early July 2023.",
+    "context_tokens": 85,
+    "evidence_ids": [
+      "D8:17"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 3 July 2023",
+    "qa_index": 33,
+    "question": "When did Caroline go to a pride parade during the summer?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.23076923076923075
+  },
+  {
+    "answer": "I can\u2019t determine when Caroline went to a pride parade; the provided context does not mention one.",
+    "context_tokens": 65,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The week before 3 July 2023",
+    "qa_index": 33,
+    "question": "When did Caroline go to a pride parade during the summer?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.08333333333333333
+  },
+  {
+    "answer": "The context does not specify any events Caroline participated in to help children.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Mentoring program, school speech",
+    "qa_index": 34,
+    "question": "What events has Caroline participated in to help children?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify any events Caroline participated in to help children.",
+    "context_tokens": 102,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Mentoring program, school speech",
+    "qa_index": 34,
+    "question": "What events has Caroline participated in to help children?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify any events Caroline participated in to help children.",
+    "context_tokens": 119,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Mentoring program, school speech",
+    "qa_index": 34,
+    "question": "What events has Caroline participated in to help children?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie went camping in July from the provided context.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "two weekends before 17 July 2023",
+    "qa_index": 35,
+    "question": "When did Melanie go camping in July?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.1
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie went camping in July from the provided context.",
+    "context_tokens": 52,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "two weekends before 17 July 2023",
+    "qa_index": 35,
+    "question": "When did Melanie go camping in July?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.1
+  },
+  {
+    "answer": "I can\u2019t determine when Melanie went camping in July from the provided context.",
+    "context_tokens": 44,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "two weekends before 17 July 2023",
+    "qa_index": 35,
+    "question": "When did Melanie go camping in July?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.1
+  },
+  {
+    "answer": "It is not stated when Caroline joined a mentorship program.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "The weekend before 17 July 2023",
+    "qa_index": 36,
+    "question": "When did Caroline join a mentorship program?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline joined a mentorship program last weekend, before 17 July 2023.",
+    "context_tokens": 70,
+    "evidence_ids": [
+      "D9:2"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "The weekend before 17 July 2023",
+    "qa_index": 36,
+    "question": "When did Caroline join a mentorship program?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.5882352941176471
+  },
+  {
+    "answer": "Caroline joined a mentorship program the weekend before 17 July 2023\u2014likely around 15\u201316 July 2023.",
+    "context_tokens": 72,
+    "evidence_ids": [
+      "D9:2"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "The weekend before 17 July 2023",
+    "qa_index": 36,
+    "question": "When did Caroline join a mentorship program?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.5217391304347826
+  },
+  {
+    "answer": "I can\u2019t determine what Melanie painted recently from the provided context.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "sunset",
+    "qa_index": 37,
+    "question": "What did Melanie paint recently?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not say what Melanie painted. Event D9:16 says Caroline painted something after visiting an LGBTQ center.",
+    "context_tokens": 49,
+    "evidence_ids": [
+      "D9:16"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "sunset",
+    "qa_index": 37,
+    "question": "What did Melanie paint recently?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine what Melanie painted from the provided context.",
+    "context_tokens": 49,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "sunset",
+    "qa_index": 37,
+    "question": "What did Melanie paint recently?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not mention any activities Melanie has done with her family.",
+    "context_tokens": 111,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Pottery, painting, camping, museum, swimming, hiking",
+    "qa_index": 38,
+    "question": "What activities has Melanie done with her family?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify any activities Melanie has done with her family.",
+    "context_tokens": 65,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Pottery, painting, camping, museum, swimming, hiking",
+    "qa_index": 38,
+    "question": "What activities has Melanie done with her family?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Melanie has spent quality, tranquil time with her family, including waking up surrounded by nature. (D18:22)",
+    "context_tokens": 97,
+    "evidence_ids": [
+      "D18:22"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Pottery, painting, camping, museum, swimming, hiking",
+    "qa_index": 38,
+    "question": "What activities has Melanie done with her family?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Caroline is participating by openly embracing and sharing her identity, and by helping others through their own journeys. She describes living honestly and accepting oneself as freeing, while also saying she shares her experience to help others. (D19:10, D19:11, D19:15)",
+    "context_tokens": 111,
+    "evidence_ids": [
+      "D19:10",
+      "D19:11",
+      "D19:15"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Joining activist group, going to pride parades, participating in an art show, mentoring program",
+    "qa_index": 39,
+    "question": "In what ways is Caroline participating in the LGBTQ community?",
+    "sample_id": "conv-26",
+    "system": "window",
+    "token_f1": 0.07017543859649122
+  },
+  {
+    "answer": "Caroline is participating in the LGBTQ community by joining the transgender community, taking part in an LGBTQ+ parade, engaging in LGBTQ advocacy, and creating or presenting a show that provides a platform for the community. (Events D14:12, D5:2, D9:11, D14:34)",
+    "context_tokens": 117,
+    "evidence_ids": [
+      "D14:12",
+      "D5:2",
+      "D9:11",
+      "D14:34"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Joining activist group, going to pride parades, participating in an art show, mentoring program",
+    "qa_index": 39,
+    "question": "In what ways is Caroline participating in the LGBTQ community?",
+    "sample_id": "conv-26",
+    "system": "episodic",
+    "token_f1": 0.17241379310344826
+  },
+  {
+    "answer": "Caroline participates by creating art that represents inclusivity and diversity, using it to advocate for the LGBTQ+ community and promote acceptance (D11:8). She is also preparing a show intended to provide more platforms for the LGBTQ+ community (D14:34).",
+    "context_tokens": 120,
+    "evidence_ids": [
+      "D11:8",
+      "D14:34"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Joining activist group, going to pride parades, participating in an art show, mentoring program",
+    "qa_index": 39,
+    "question": "In what ways is Caroline participating in the LGBTQ community?",
+    "sample_id": "conv-26",
+    "system": "hybrid",
+    "token_f1": 0.1111111111111111
+  },
+  {
+    "answer": "The context does not specify when Jon lost his job as a banker.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "19 January, 2023",
+    "qa_index": 0,
+    "question": "When Jon has lost his job as a banker?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Jon lost his job as a banker on 19 January 2023, the day before he mentioned it.",
+    "context_tokens": 95,
+    "evidence_ids": [
+      "D1:2"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "19 January, 2023",
+    "qa_index": 0,
+    "question": "When Jon has lost his job as a banker?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.3
+  },
+  {
+    "answer": "Jon lost his job as a banker on 19 January 2023, the day before he mentioned it.",
+    "context_tokens": 77,
+    "evidence_ids": [
+      "D1:2"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "19 January, 2023",
+    "qa_index": 0,
+    "question": "When Jon has lost his job as a banker?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.3
+  },
+  {
+    "answer": "I can\u2019t determine when Gina lost her job at DoorDash from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "January, 2023",
+    "qa_index": 1,
+    "question": "When Gina has lost her job at Door Dash?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Gina lost her job at DoorDash in January 2023\u2014she said it happened \u201cthis month\u201d on 20 January 2023. (D1:3)",
+    "context_tokens": 130,
+    "evidence_ids": [
+      "D1:3"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "January, 2023",
+    "qa_index": 1,
+    "question": "When Gina has lost her job at Door Dash?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.17391304347826084
+  },
+  {
+    "answer": "Gina lost her job at DoorDash in January 2023\u2014she said it happened \u201cthis month\u201d on 20 January 2023. (D1:3)",
+    "context_tokens": 120,
+    "evidence_ids": [
+      "D1:3"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "January, 2023",
+    "qa_index": 1,
+    "question": "When Gina has lost her job at Door Dash?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.17391304347826084
+  },
+  {
+    "answer": "The context does not say how Jon and Gina like to destress.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "by dancing",
+    "qa_index": 2,
+    "question": "How do Jon and Gina both like to destress?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not provide information about how Jon and Gina like to destress.",
+    "context_tokens": 76,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "by dancing",
+    "qa_index": 2,
+    "question": "How do Jon and Gina both like to destress?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine how Jon and Gina both like to destress from the provided context.",
+    "context_tokens": 76,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "by dancing",
+    "qa_index": 2,
+    "question": "How do Jon and Gina both like to destress?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Jon and Gina both share determination and perseverance: they encourage continuing toward a dream and not giving up. They also both embrace the attitude of \u201cjust doing it.\u201d",
+    "context_tokens": 70,
+    "evidence_ids": [
+      "D19:9",
+      "D19:10",
+      "D19:11",
+      "D19:12",
+      "D19:13"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "They lost their jobs and decided to start their own businesses.",
+    "qa_index": 3,
+    "question": "What do Jon and Gina both have in common?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.10256410256410255
+  },
+  {
+    "answer": "Jon and Gina both have an interest in dancing: Jon says dancing helps him de-stress and is a must-have in his life (D11:7), while Gina is searching for the perfect dance studio (D4:10).",
+    "context_tokens": 74,
+    "evidence_ids": [
+      "D11:7",
+      "D4:10"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "They lost their jobs and decided to start their own businesses.",
+    "qa_index": 3,
+    "question": "What do Jon and Gina both have in common?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.04166666666666667
+  },
+  {
+    "answer": "Both Gina and Jon value encouragement and belief in oneself: Gina repeatedly encourages Jon to keep going, and Jon expresses gratitude for her believing in and supporting him.",
+    "context_tokens": 82,
+    "evidence_ids": [
+      "D8:26",
+      "D13:1",
+      "D16:15",
+      "D17:15"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "They lost their jobs and decided to start their own businesses.",
+    "qa_index": 3,
+    "question": "What do Jon and Gina both have in common?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.10256410256410255
+  },
+  {
+    "answer": "The context does not explain why Jon decided to start his dance studio. It only indicates that opening it is his dream and that Gina supports him (D19:9\u2013D19:11).",
+    "context_tokens": 70,
+    "evidence_ids": [
+      "D19:9",
+      "D19:10",
+      "D19:11"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "He lost his job and decided to start his own business to share his passion.",
+    "qa_index": 4,
+    "question": "Why did Jon decide to start his dance studio?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.26086956521739135
+  },
+  {
+    "answer": "Jon decided to start the studio to turn his passion for dance into a business, as Gina noted (D9:2).",
+    "context_tokens": 65,
+    "evidence_ids": [
+      "D9:2"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "He lost his job and decided to start his own business to share his passion.",
+    "qa_index": 4,
+    "question": "Why did Jon decide to start his dance studio?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.4
+  },
+  {
+    "answer": "Jon decided to start the dance studio to turn his passion for dance into a business, as Gina noted. (D9:2)",
+    "context_tokens": 53,
+    "evidence_ids": [
+      "D9:2"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "He lost his job and decided to start his own business to share his passion.",
+    "qa_index": 4,
+    "question": "Why did Jon decide to start his dance studio?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.3888888888888889
+  },
+  {
+    "answer": "The context does not state what Jon thinks the ideal dance studio should look like.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "By the water, with natural light and Marley flooring",
+    "qa_index": 5,
+    "question": "What Jon thinks the ideal dance studio should look like?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.08333333333333334
+  },
+  {
+    "answer": "Jon thinks the ideal dance studio should be located by the water.",
+    "context_tokens": 77,
+    "evidence_ids": [
+      "D1:20"
+    ],
+    "evidence_recall": 0.3333333333333333,
+    "exact_match": false,
+    "gold": "By the water, with natural light and Marley flooring",
+    "qa_index": 5,
+    "question": "What Jon thinks the ideal dance studio should look like?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.28571428571428575
+  },
+  {
+    "answer": "Jon thinks the ideal dance studio should be located by the water. He is also working toward opening one and promoting it online to attract investors.",
+    "context_tokens": 80,
+    "evidence_ids": [
+      "D1:20",
+      "D15:3",
+      "D18:11"
+    ],
+    "evidence_recall": 0.3333333333333333,
+    "exact_match": false,
+    "gold": "By the water, with natural light and Marley flooring",
+    "qa_index": 5,
+    "question": "What Jon thinks the ideal dance studio should look like?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.2285714285714286
+  },
+  {
+    "answer": "The context does not state when Jon's group is performing at a festival.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "February, 2023",
+    "qa_index": 6,
+    "question": "When is Jon's group performing at a festival?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Jon\u2019s group is performing at the festival. [D1:26]",
+    "context_tokens": 55,
+    "evidence_ids": [
+      "D1:26"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "February, 2023",
+    "qa_index": 6,
+    "question": "When is Jon's group performing at a festival?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Jon\u2019s group is performing at a festival from the provided context.",
+    "context_tokens": 50,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "February, 2023",
+    "qa_index": 6,
+    "question": "When is Jon's group performing at a festival?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Gina launched an ad campaign for her store from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "29 January, 2023",
+    "qa_index": 7,
+    "question": "When did Gina launch an ad campaign for her store?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Gina launched an ad campaign for her store from the provided context.",
+    "context_tokens": 60,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "29 January, 2023",
+    "qa_index": 7,
+    "question": "When did Gina launch an ad campaign for her store?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not state when Gina launched an ad campaign for her store.",
+    "context_tokens": 60,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "29 January, 2023",
+    "qa_index": 7,
+    "question": "When did Gina launch an ad campaign for her store?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not indicate when Jon was in Paris.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "28 January 2023",
+    "qa_index": 8,
+    "question": "When was Jon in Paris?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not indicate when Jon was in Paris.",
+    "context_tokens": 34,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "28 January 2023",
+    "qa_index": 8,
+    "question": "When was Jon in Paris?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Jon was in Paris.",
+    "context_tokens": 45,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "28 January 2023",
+    "qa_index": 8,
+    "question": "When was Jon in Paris?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine which city Jean and John have both visited from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Rome",
+    "qa_index": 9,
+    "question": "Which city have both Jean and John visited?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not mention any city visited by Jean and John.",
+    "context_tokens": 98,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Rome",
+    "qa_index": 9,
+    "question": "Which city have both Jean and John visited?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not provide enough information to determine which city both Jean and John visited.",
+    "context_tokens": 72,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Rome",
+    "qa_index": 9,
+    "question": "Which city have both Jean and John visited?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not mention Gina teaming up with a local artist for designs.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "February, 2023",
+    "qa_index": 10,
+    "question": "When did Gina team up with a local artist for some cool designs?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Gina teamed up with a local artist on 8 February 2023 at 9:32 am.",
+    "context_tokens": 131,
+    "evidence_ids": [
+      "D5:5"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "February, 2023",
+    "qa_index": 10,
+    "question": "When did Gina team up with a local artist for some cool designs?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.23529411764705882
+  },
+  {
+    "answer": "Gina teamed up with a local artist on 8 February 2023 at 9:32 am.",
+    "context_tokens": 126,
+    "evidence_ids": [
+      "D5:5"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "February, 2023",
+    "qa_index": 10,
+    "question": "When did Gina team up with a local artist for some cool designs?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.23529411764705882
+  },
+  {
+    "answer": "The context does not say when Gina got her tattoo.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "A few years ago",
+    "qa_index": 11,
+    "question": "When did Gina get her tattoo?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The exact date is not stated. On 8 February 2023, Jon asked Gina if she had \u201cjust\u201d gotten the tattoo, suggesting it was shortly before then (D5:14).",
+    "context_tokens": 41,
+    "evidence_ids": [
+      "D5:14"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "A few years ago",
+    "qa_index": 11,
+    "question": "When did Gina get her tattoo?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "It is not specified when Gina got her tattoo. On 8 February 2023, Jon asked whether she had just gotten it, but Gina\u2019s actual tattoo date is not given (D5:14).",
+    "context_tokens": 42,
+    "evidence_ids": [
+      "D5:14"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "A few years ago",
+    "qa_index": 11,
+    "question": "When did Gina get her tattoo?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not say when Jon started going to the gym.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "March, 2023",
+    "qa_index": 12,
+    "question": "When did Jon start to go to the gym?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Jon started going to the gym.",
+    "context_tokens": 40,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "March, 2023",
+    "qa_index": 12,
+    "question": "When did Jon start to go to the gym?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine when Jon started going to the gym from the provided context.",
+    "context_tokens": 40,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "March, 2023",
+    "qa_index": 12,
+    "question": "When did Jon start to go to the gym?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Gina opened her online clothing store from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "16 March, 2023",
+    "qa_index": 13,
+    "question": "When did Gina open her online clothing store?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Gina opened her online clothing store on 16 March 2023.",
+    "context_tokens": 86,
+    "evidence_ids": [
+      "D6:6"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "16 March, 2023",
+    "qa_index": 13,
+    "question": "When did Gina open her online clothing store?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.4615384615384615
+  },
+  {
+    "answer": "The exact date is not stated. Gina had opened the online clothing store by 16 March 2023, when Jon congratulated her and asked what inspired her to start it (D6:7).",
+    "context_tokens": 82,
+    "evidence_ids": [
+      "D6:7",
+      "D14:8"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "16 March, 2023",
+    "qa_index": 13,
+    "question": "When did Gina open her online clothing store?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.17647058823529413
+  },
+  {
+    "answer": "The context does not indicate when Jon started expanding his studio's social media presence.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "April, 2023",
+    "qa_index": 14,
+    "question": "When did Jon start expanding his studio's social media presence?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Jon started expanding his studio\u2019s social media presence by 16 June 2023, when he said he had already begun posting dance videos. (D14:5)",
+    "context_tokens": 87,
+    "evidence_ids": [
+      "D14:5"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "April, 2023",
+    "qa_index": 14,
+    "question": "When did Jon start expanding his studio's social media presence?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.07407407407407407
+  },
+  {
+    "answer": "Jon started expanding his studio\u2019s social media presence by 16 June 2023, when he said he had begun posting dance videos and was creating a stir.",
+    "context_tokens": 96,
+    "evidence_ids": [
+      "D14:5"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "April, 2023",
+    "qa_index": 14,
+    "question": "When did Jon start expanding his studio's social media presence?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.06896551724137931
+  },
+  {
+    "answer": "The context does not specify when Jon hosted a dance competition.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "May, 2023",
+    "qa_index": 15,
+    "question": "When did Jon host a dance competition?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Jon hosted a dance competition.",
+    "context_tokens": 52,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "May, 2023",
+    "qa_index": 15,
+    "question": "When did Jon host a dance competition?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Cannot determine from the provided context when Jon hosted a dance competition.",
+    "context_tokens": 61,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "May, 2023",
+    "qa_index": 15,
+    "question": "When did Jon host a dance competition?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine when Jon went to a fair to get more exposure for his dance studio from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "24 April, 2023",
+    "qa_index": 16,
+    "question": "When did Jon go to a fair to get more exposure for his dance studio?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not state when Jon went to a fair to get more exposure for his dance studio.",
+    "context_tokens": 48,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "24 April, 2023",
+    "qa_index": 16,
+    "question": "When did Jon go to a fair to get more exposure for his dance studio?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Jon went to a fair to get more exposure for his dance studio from the provided context.",
+    "context_tokens": 44,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "24 April, 2023",
+    "qa_index": 16,
+    "question": "When did Jon go to a fair to get more exposure for his dance studio?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not explain why Gina decided to start her own clothing store.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "She always loved fashion trends and finding unique pieces and she lost her job so decided it was time to start her own business.",
+    "qa_index": 17,
+    "question": "Why did Gina decide to start her own clothing store?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.2631578947368421
+  },
+  {
+    "answer": "Gina decided to start her own clothing store after losing her job, so she could be her own boss and do something she loves. (D14:8)",
+    "context_tokens": 82,
+    "evidence_ids": [
+      "D14:8"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "She always loved fashion trends and finding unique pieces and she lost her job so decided it was time to start her own business.",
+    "qa_index": 17,
+    "question": "Why did Gina decide to start her own clothing store?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.43999999999999995
+  },
+  {
+    "answer": "Gina started her own clothing store after losing her job, wanting to be her own boss and do something she loves. (D14:8)",
+    "context_tokens": 82,
+    "evidence_ids": [
+      "D14:8"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "She always loved fashion trends and finding unique pieces and she lost her job so decided it was time to start her own business.",
+    "qa_index": 17,
+    "question": "Why did Gina decide to start her own clothing store?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.2978723404255319
+  },
+  {
+    "answer": "The context does not establish whether Jon and Gina start businesses based on what they love.",
+    "context_tokens": 70,
+    "evidence_ids": [
+      "D19:9",
+      "D19:10"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Yes",
+    "qa_index": 18,
+    "question": "Do Jon and Gina start businesses out of what they love?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Yes. Gina\u2019s store is driven by her love of fashion and dance, while Jon is pursuing dance by posting videos and is encouraged to focus on it because he loves it. (D8:6, D10:8, D14:5)",
+    "context_tokens": 148,
+    "evidence_ids": [
+      "D8:6",
+      "D10:8",
+      "D14:5"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Yes",
+    "qa_index": 18,
+    "question": "Do Jon and Gina start businesses out of what they love?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.05128205128205127
+  },
+  {
+    "answer": "The context supports this for Gina: she says fashion fuels her creativity and that she is finding trends for her store (D8:6). For Jon, it only shows him posting dance videos (D14:5), not starting a business. So it is not supported that both started businesses out of what they love.",
+    "context_tokens": 122,
+    "evidence_ids": [
+      "D8:6",
+      "D14:5"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Yes",
+    "qa_index": 18,
+    "question": "Do Jon and Gina start businesses out of what they love?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine when Gina interviewed for a design internship from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "10 May, 2023",
+    "qa_index": 19,
+    "question": "When did Gina interview for a design internship?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Gina interviewed for a design internship on 10 May 2023, the day before her message on 11 May.",
+    "context_tokens": 99,
+    "evidence_ids": [
+      "D11:14"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "10 May, 2023",
+    "qa_index": 19,
+    "question": "When did Gina interview for a design internship?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.2857142857142857
+  },
+  {
+    "answer": "The context does not specify when Gina interviewed for a design internship.",
+    "context_tokens": 68,
+    "evidence_ids": [
+      "D12:2"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "10 May, 2023",
+    "qa_index": 19,
+    "question": "When did Gina interview for a design internship?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not say when Gina was accepted for the design internship.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "27 May, 2023",
+    "qa_index": 20,
+    "question": "When did Gina get accepted for the design internship?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Gina got accepted for the design (fashion) internship on 27 May 2023.",
+    "context_tokens": 77,
+    "evidence_ids": [
+      "D12:1"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "27 May, 2023",
+    "qa_index": 20,
+    "question": "When did Gina get accepted for the design internship?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.4
+  },
+  {
+    "answer": "Gina got accepted on 27 May 2023.",
+    "context_tokens": 66,
+    "evidence_ids": [
+      "D12:1"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "27 May, 2023",
+    "qa_index": 20,
+    "question": "When did Gina get accepted for the design internship?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.6
+  },
+  {
+    "answer": "I can\u2019t determine when Jon started reading \"The Lean Startup\" from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "May, 2023",
+    "qa_index": 21,
+    "question": "When did Jon start reading \"The Lean Startup\"?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Jon mentioned he was reading \"The Lean Startup\" on 27 May 2023 at 7:18 pm.",
+    "context_tokens": 36,
+    "evidence_ids": [
+      "D12:6"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "May, 2023",
+    "qa_index": 21,
+    "question": "When did Jon start reading \"The Lean Startup\"?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.2222222222222222
+  },
+  {
+    "answer": "Jon started reading \"The Lean Startup\" by 7:18 pm on 27 May, 2023.",
+    "context_tokens": 39,
+    "evidence_ids": [
+      "D12:6"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "May, 2023",
+    "qa_index": 21,
+    "question": "When did Jon start reading \"The Lean Startup\"?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.25
+  },
+  {
+    "answer": "I can\u2019t determine when Gina developed a video presentation to teach how to style her fashion pieces from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "June, 2023",
+    "qa_index": 22,
+    "question": "When did Gina develop a video presentation to teach how to style her fashion pieces? ",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Gina developed the video presentation by 8:29 pm on 13 June 2023.",
+    "context_tokens": 100,
+    "evidence_ids": [
+      "D13:4"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "June, 2023",
+    "qa_index": 22,
+    "question": "When did Gina develop a video presentation to teach how to style her fashion pieces? ",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.2666666666666667
+  },
+  {
+    "answer": "Gina developed the video presentation by 8:29 pm on 13 June 2023.",
+    "context_tokens": 104,
+    "evidence_ids": [
+      "D13:4"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "June, 2023",
+    "qa_index": 22,
+    "question": "When did Gina develop a video presentation to teach how to style her fashion pieces? ",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.2666666666666667
+  },
+  {
+    "answer": "I can\u2019t determine how Gina promoted her clothes store from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "worked with an artist to make unique fashion pieces, made limited-edition sweatshirts, got some new offers and promotions for online store, developed a video presentation showing how to style her pieces",
+    "qa_index": 23,
+    "question": "How did Gina promote her clothes store?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.13043478260869562
+  },
+  {
+    "answer": "The context does not say how Gina promoted her clothes store.",
+    "context_tokens": 55,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "worked with an artist to make unique fashion pieces, made limited-edition sweatshirts, got some new offers and promotions for online store, developed a video presentation showing how to style her pieces",
+    "qa_index": 23,
+    "question": "How did Gina promote her clothes store?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.13953488372093023
+  },
+  {
+    "answer": "The context does not say how Gina promoted her clothes store.",
+    "context_tokens": 55,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "worked with an artist to make unique fashion pieces, made limited-edition sweatshirts, got some new offers and promotions for online store, developed a video presentation showing how to style her pieces",
+    "qa_index": 23,
+    "question": "How did Gina promote her clothes store?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.13953488372093023
+  },
+  {
+    "answer": "The context does not mention any events Jon participated in to promote his business venture.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "fair, networking events, dance competition",
+    "qa_index": 24,
+    "question": "Which events has Jon participated in to promote his business venture?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.1
+  },
+  {
+    "answer": "Jon has participated in networking events to promote his business venture. No specific event names are provided.",
+    "context_tokens": 94,
+    "evidence_ids": [
+      "D16:7"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "fair, networking events, dance competition",
+    "qa_index": 24,
+    "question": "Which events has Jon participated in to promote his business venture?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.1818181818181818
+  },
+  {
+    "answer": "Jon has participated in networking events to promote his business venture (D16:7).",
+    "context_tokens": 83,
+    "evidence_ids": [
+      "D16:7"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "fair, networking events, dance competition",
+    "qa_index": 24,
+    "question": "Which events has Jon participated in to promote his business venture?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.2222222222222222
+  },
+  {
+    "answer": "The context does not say what Jon\u2019s dance studio offers.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "one-on-one metoring and training to dancers,  workshops and classes to local schools and centers",
+    "qa_index": 25,
+    "question": "What does Jon's dance studio offer?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not say what Jon\u2019s dance studio offers; it only indicates that he is working on opening one. [D15:3]",
+    "context_tokens": 67,
+    "evidence_ids": [
+      "D15:3"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "one-on-one metoring and training to dancers,  workshops and classes to local schools and centers",
+    "qa_index": 25,
+    "question": "What does Jon's dance studio offer?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.10256410256410256
+  },
+  {
+    "answer": "The context does not specify what Jon\u2019s dance studio offers.",
+    "context_tokens": 64,
+    "evidence_ids": [
+      "D18:17",
+      "D15:3",
+      "D15:4"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "one-on-one metoring and training to dancers,  workshops and classes to local schools and centers",
+    "qa_index": 25,
+    "question": "What does Jon's dance studio offer?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Jon received encouragement and mentorship from Gina at 6:46 pm on 23 July 2023, when she urged him to keep pursuing his dream and said, \u201cJust do it!\u201d (D19:10, D19:12).",
+    "context_tokens": 70,
+    "evidence_ids": [
+      "D19:10",
+      "D19:12"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "15 June, 2023",
+    "qa_index": 26,
+    "question": "When did Jon receive mentorship to promote his venture?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.05555555555555555
+  },
+  {
+    "answer": "The context does not explicitly establish when Jon received mentorship to promote his venture.",
+    "context_tokens": 28,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "15 June, 2023",
+    "qa_index": 26,
+    "question": "When did Jon receive mentorship to promote his venture?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Jon received mentorship to promote his venture.",
+    "context_tokens": 35,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "15 June, 2023",
+    "qa_index": 26,
+    "question": "When did Jon receive mentorship to promote his venture?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Cannot determine from the provided context whether Jon and Gina participated in dance competitions.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Yes",
+    "qa_index": 27,
+    "question": "Did Jon and Gina both participate in dance competitions?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine whether Jon and Gina both participated in dance competitions from the context provided. The dialogue only indicates that Jon dances and is looking for a dance studio (D4:10, D9:6).",
+    "context_tokens": 75,
+    "evidence_ids": [
+      "D4:10",
+      "D9:6"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Yes",
+    "qa_index": 27,
+    "question": "Did Jon and Gina both participate in dance competitions?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Cannot determine from the context whether Jon and Gina both participated in dance competitions. Gina only comments that Jon dances (D9:6).",
+    "context_tokens": 75,
+    "evidence_ids": [
+      "D9:6"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Yes",
+    "qa_index": 27,
+    "question": "Did Jon and Gina both participate in dance competitions?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine when Jon was in Rome from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "June 2023",
+    "qa_index": 28,
+    "question": "When was Jon in Rome?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not indicate when Jon was in Rome.",
+    "context_tokens": 34,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "June 2023",
+    "qa_index": 28,
+    "question": "When was Jon in Rome?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Jon was in Rome.",
+    "context_tokens": 45,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "June 2023",
+    "qa_index": 28,
+    "question": "When was Jon in Rome?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not mention any cities Jon has visited.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Paris, Rome",
+    "qa_index": 29,
+    "question": "Which cities has Jon visited?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify any cities that Jon has visited.",
+    "context_tokens": 28,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Paris, Rome",
+    "qa_index": 29,
+    "question": "Which cities has Jon visited?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify any cities Jon has visited.",
+    "context_tokens": 35,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Paris, Rome",
+    "qa_index": 29,
+    "question": "Which cities has Jon visited?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Jon plans to open his dance studio.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "20 June, 2023",
+    "qa_index": 30,
+    "question": "When Jon is planning to open his dance studio?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Jon plans to open his dance studio. It only says he is still working on it as of June 19, 2023 (D15:3).",
+    "context_tokens": 65,
+    "evidence_ids": [
+      "D15:3",
+      "D13:3"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "20 June, 2023",
+    "qa_index": 30,
+    "question": "When Jon is planning to open his dance studio?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.125
+  },
+  {
+    "answer": "The context does not specify when Jon plans to open the dance studio. He is still working and preparing for it (D15:3; D13:3).",
+    "context_tokens": 53,
+    "evidence_ids": [
+      "D15:3",
+      "D13:3"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "20 June, 2023",
+    "qa_index": 30,
+    "question": "When Jon is planning to open his dance studio?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can\u2019t determine how long it took Jon to open his studio from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [
+      "D19:9",
+      "D19:10",
+      "D19:11"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "six months",
+    "qa_index": 31,
+    "question": "How long did it take for Jon to open his studio?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "It took about two months\u2014from searching for a studio on February 4 to having the dance studio open by April 9 (roughly 64 days).",
+    "context_tokens": 85,
+    "evidence_ids": [
+      "D4:10",
+      "D9:2"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "six months",
+    "qa_index": 31,
+    "question": "How long did it take for Jon to open his studio?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.07407407407407407
+  },
+  {
+    "answer": "The context does not state how long it took Jon to open his studio.",
+    "context_tokens": 79,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "six months",
+    "qa_index": 31,
+    "question": "How long did it take for Jon to open his studio?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Gina designed a limited collection of hoodies.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "June 2023",
+    "qa_index": 32,
+    "question": "When did Gina design a limited collection of hoodies?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Gina designed a limited collection of hoodies.",
+    "context_tokens": 87,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "June 2023",
+    "qa_index": 32,
+    "question": "When did Gina design a limited collection of hoodies?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify when Gina designed a limited collection of hoodies.",
+    "context_tokens": 91,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "June 2023",
+    "qa_index": 32,
+    "question": "When did Gina design a limited collection of hoodies?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "I can't determine when Jon visited networking events for his store from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "20 June, 2023",
+    "qa_index": 33,
+    "question": "When did Jon visit networking events for his store?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Jon attended networking events on 21 June 2023, as noted at 2:15 pm. (D16:7)",
+    "context_tokens": 73,
+    "evidence_ids": [
+      "D16:7"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "20 June, 2023",
+    "qa_index": 33,
+    "question": "When did Jon visit networking events for his store?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.21052631578947367
+  },
+  {
+    "answer": "Jon attended networking events on 21 June 2023 at 2:15 pm (D16:7).",
+    "context_tokens": 65,
+    "evidence_ids": [
+      "D16:7"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "20 June, 2023",
+    "qa_index": 33,
+    "question": "When did Jon visit networking events for his store?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.23529411764705882
+  },
+  {
+    "answer": "I can\u2019t determine when Gina started being recognized by fashion editors from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "July 2023",
+    "qa_index": 34,
+    "question": "When did Gina start being recognized by fashion editors?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Gina started being recognized by fashion editors by 9 July 2023, when Jon congratulated her on their reaching out.",
+    "context_tokens": 84,
+    "evidence_ids": [
+      "D17:2"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "July 2023",
+    "qa_index": 34,
+    "question": "When did Gina start being recognized by fashion editors?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.1904761904761905
+  },
+  {
+    "answer": "Gina started being recognized by fashion editors in early July 2023\u2014she said it happened \u201clast week\u201d in her message on July 9, 2023.",
+    "context_tokens": 124,
+    "evidence_ids": [
+      "D17:1"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "July 2023",
+    "qa_index": 34,
+    "question": "When did Gina start being recognized by fashion editors?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.15384615384615385
+  },
+  {
+    "answer": "The context does not state when Jon started learning marketing and analytics tools.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "July, 2023",
+    "qa_index": 35,
+    "question": "When did Jon start learning marketing and analytics tools?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Jon started learning marketing and analytics tools after losing his job, by July 9, 2023.",
+    "context_tokens": 118,
+    "evidence_ids": [
+      "D17:4"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "July, 2023",
+    "qa_index": 35,
+    "question": "When did Jon start learning marketing and analytics tools?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.23529411764705882
+  },
+  {
+    "answer": "Jon started learning marketing and analytics tools by July 9, 2023, after losing his job and deciding to pursue his business dreams.",
+    "context_tokens": 110,
+    "evidence_ids": [
+      "D17:4"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "July, 2023",
+    "qa_index": 35,
+    "question": "When did Jon start learning marketing and analytics tools?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.16666666666666669
+  },
+  {
+    "answer": "The context does not indicate when Jon and Gina decided to collaborate to create dance content.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "21 July 2023",
+    "qa_index": 36,
+    "question": "When did Jon and Gina decide to collaborate to create dance content?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "They decided to collaborate on 21 July 2023 at 5:44 pm, when Gina proposed creating content and managing Jon\u2019s social media accounts (D18:15).",
+    "context_tokens": 78,
+    "evidence_ids": [
+      "D18:15"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "21 July 2023",
+    "qa_index": 36,
+    "question": "When did Jon and Gina decide to collaborate to create dance content?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.20689655172413793
+  },
+  {
+    "answer": "Jon and Gina decided to collaborate on creating dance content on 21 July 2023, at 5:44 pm, when Gina proposed creating content and managing Jon\u2019s social media accounts (D18:15).",
+    "context_tokens": 78,
+    "evidence_ids": [
+      "D18:15"
+    ],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "21 July 2023",
+    "qa_index": 36,
+    "question": "When did Jon and Gina decide to collaborate to create dance content?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.17142857142857143
+  },
+  {
+    "answer": "Gina did not mention Shia LaBeouf in the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": " 23 July, 2023",
+    "qa_index": 37,
+    "question": "When did Gina mention Shia Labeouf?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Gina mentioned Shia LaBeouf at 6:46 pm on 23 July, 2023.",
+    "context_tokens": 30,
+    "evidence_ids": [
+      "D19:4"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": " 23 July, 2023",
+    "qa_index": 37,
+    "question": "When did Gina mention Shia Labeouf?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.4
+  },
+  {
+    "answer": "Gina mentioned Shia LaBeouf at 6:46 pm on 23 July 2023 (event D19:4).",
+    "context_tokens": 35,
+    "evidence_ids": [
+      "D19:4"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": " 23 July, 2023",
+    "qa_index": 37,
+    "question": "When did Gina mention Shia Labeouf?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.33333333333333337
+  },
+  {
+    "answer": "The context does not provide information about when Gina went to a dance class with a group of friends.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "21 July 2023",
+    "qa_index": 38,
+    "question": "When did Gina go to a dance class with a group of friends?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "Gina went to a dance class with a group of friends on the Friday before July 23, 2023\u2014likely July 21, 2023.",
+    "context_tokens": 100,
+    "evidence_ids": [
+      "D19:6"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "21 July 2023",
+    "qa_index": 38,
+    "question": "When did Gina go to a dance class with a group of friends?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.24000000000000002
+  },
+  {
+    "answer": "Gina went to a dance class with a group of friends last Friday, before July 23, 2023\u2014likely July 21, 2023.",
+    "context_tokens": 98,
+    "evidence_ids": [
+      "D19:6"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": false,
+    "gold": "21 July 2023",
+    "qa_index": 38,
+    "question": "When did Gina go to a dance class with a group of friends?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.25
+  },
+  {
+    "answer": "I can\u2019t determine Gina\u2019s favorite style of dance from the provided context.",
+    "context_tokens": 70,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Contemporary",
+    "qa_index": 39,
+    "question": "What is Gina's favorite style of dance?",
+    "sample_id": "conv-30",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "",
+    "context_tokens": 74,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Contemporary",
+    "qa_index": 39,
+    "question": "What is Gina's favorite style of dance?",
+    "sample_id": "conv-30",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "answer": "The context does not specify Gina\u2019s favorite style of dance.",
+    "context_tokens": 74,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": false,
+    "gold": "Contemporary",
+    "qa_index": 39,
+    "question": "What is Gina's favorite style of dance?",
+    "sample_id": "conv-30",
+    "system": "hybrid",
+    "token_f1": 0.0
+  }
+]

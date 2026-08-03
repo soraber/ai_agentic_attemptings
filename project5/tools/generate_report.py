@@ -57,7 +57,7 @@ def main() -> None:
         canvas.saveState(); canvas.setFillColor(colors.white); canvas.rect(0, 0, letter[0], letter[1], fill=1, stroke=0); canvas.setFillColor(colors.HexColor("#526971")); canvas.setFont("Helvetica", 8); canvas.drawString(45, 18, "Project 5 - measured artifact report"); canvas.drawRightString(letter[0]-45, 18, f"Page {doc.page}"); canvas.restoreState()
 
     SimpleDocTemplate(str(args.output), pagesize=letter, leftMargin=45, rightMargin=45, topMargin=42, bottomMargin=38).build(story, onFirstPage=page, onLaterPages=page)
-    print(f"Wrote {args.output}")
+    print(f"Wrote {args.output.name}")
 
 
 if __name__ == "__main__":

@@ -8,7 +8,13 @@ from typing import Iterable
 from .schemas import RepairResult
 
 
-def summarize_results(results: Iterable[RepairResult], output_dir: str | Path) -> dict:
+def summarize_results(
+    results: Iterable[RepairResult],
+    output_dir: str | Path,
+    planner_usage: dict | None = None,
+    model: str | None = None,
+    evaluation_backend: str | None = None,
+) -> dict:
     rows = [result.model_dump(mode="json") for result in results]
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -25,7 +31,16 @@ def summarize_results(results: Iterable[RepairResult], output_dir: str | Path) -
             "median_latency_seconds": statistics.median(row["latency_seconds"] for row in selected) if selected else 0,
         }
 
-    summary = {"project": "Test-Driven Code-Repair Agent", "result_status": "measured", "one_shot": system_summary("one_shot"), "repair_loop": system_summary("repair_loop")}
+    summary = {
+        "project": "Test-Driven Code-Repair Agent",
+        "result_status": "measured",
+        "model": model,
+        "evaluation_backend": evaluation_backend,
+        "planner_usage": planner_usage
+        or {"model_calls": 0, "input_tokens": 0, "output_tokens": 0, "estimated_cost_usd": 0.0},
+        "one_shot": system_summary("one_shot"),
+        "repair_loop": system_summary("repair_loop"),
+    }
     samples = {"verified": [row for row in rows if row["verified"]][:4], "overfit": [row for row in rows if row["overfit_detected"]][:4], "failed": [row for row in rows if not row["verified"]][:4]}
     (output_dir / "project6_case_results.json").write_text(json.dumps(rows, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     with (output_dir / "project6_trajectories.jsonl").open("w", encoding="utf-8") as handle:

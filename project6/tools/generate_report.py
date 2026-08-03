@@ -28,7 +28,7 @@ def main() -> None:
     styles=getSampleStyleSheet(); story=[Paragraph("Test-Driven Code-Repair Agent",styles["Title"]),Paragraph("Measured one-shot versus bounded repair-loop comparison",styles["Heading2"]),Spacer(1,10),Image(str(chart),width=7*inch,height=3.64*inch)]
     data=[["Metric","One-shot","Repair loop"]]+[[label,f"{summary['one_shot'][key]:.1f}%",f"{summary['repair_loop'][key]:.1f}%"] for label,key in zip(labels,keys)]; table=Table(data,colWidths=[3*inch,1.5*inch,1.5*inch]); table.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.HexColor("#1f4e5f")),("TEXTCOLOR",(0,0),(-1,0),colors.white),("GRID",(0,0),(-1,-1),.5,colors.grey),("PADDING",(0,0),(-1,-1),7)])); story.extend([Spacer(1,12),table,Spacer(1,14),Paragraph("Limits",styles["Heading2"]),Paragraph("QuixBugs is compact. Passing public and generated hidden tests does not prove correctness in large dependency-heavy repositories, and subprocess limits are not a hardened sandbox.",styles["BodyText"])])
     def page(canvas,doc): canvas.saveState(); canvas.setFillColor(colors.white); canvas.rect(0,0,letter[0],letter[1],fill=1,stroke=0); canvas.setFillColor(colors.HexColor("#526971")); canvas.setFont("Helvetica",8); canvas.drawString(45,18,"Project 6 - measured artifact report"); canvas.drawRightString(letter[0]-45,18,f"Page {doc.page}"); canvas.restoreState()
-    SimpleDocTemplate(str(args.output),pagesize=letter,leftMargin=45,rightMargin=45,topMargin=42,bottomMargin=38).build(story,onFirstPage=page,onLaterPages=page); print(f"Wrote {args.output}")
+    SimpleDocTemplate(str(args.output),pagesize=letter,leftMargin=45,rightMargin=45,topMargin=42,bottomMargin=38).build(story,onFirstPage=page,onLaterPages=page); print(f"Wrote {args.output.name}")
 
 
 if __name__ == "__main__": main()

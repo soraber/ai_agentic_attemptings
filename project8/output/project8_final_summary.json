@@ -1,0 +1,62 @@
+{
+  "cache_hits": 0,
+  "deletion_compliance_pct": 100.0,
+  "episodic": {
+    "exact_match_pct": 0.0,
+    "mean_context_tokens": 71.2875,
+    "mean_evidence_recall": 0.22291666666666665,
+    "mean_token_f1": 0.11495915520963307
+  },
+  "estimated_cost_usd": 0.213829,
+  "evaluation_mode": "locomo_api",
+  "hybrid": {
+    "exact_match_pct": 0.0,
+    "mean_context_tokens": 69.6375,
+    "mean_evidence_recall": 0.19166666666666668,
+    "mean_token_f1": 0.09412888492296416
+  },
+  "input_tokens": 109387,
+  "lifecycle_validation": {
+    "deletion_compliance_pct": 100.0,
+    "episodic": {
+      "exact_match_pct": 75.0,
+      "mean_context_tokens": 2.5,
+      "mean_evidence_recall": 0.875,
+      "mean_token_f1": 0.75,
+      "median_latency_ms": 0.07745847688056529
+    },
+    "hybrid": {
+      "exact_match_pct": 100.0,
+      "mean_context_tokens": 2.5,
+      "mean_evidence_recall": 0.75,
+      "mean_token_f1": 1.0,
+      "median_latency_ms": 0.1314370019827038
+    },
+    "project": "Long-Term Memory Agent",
+    "result_status": "measured",
+    "store_stats": {
+      "events": 6,
+      "facts": 6,
+      "tombstones": 1
+    },
+    "window": {
+      "exact_match_pct": 75.0,
+      "mean_context_tokens": 12.0,
+      "mean_evidence_recall": 0.875,
+      "mean_token_f1": 0.75,
+      "median_latency_ms": 0.09972898988053203
+    }
+  },
+  "model": "gpt-5.6-luna",
+  "model_calls": 240,
+  "output_tokens": 17407,
+  "project": "Long-Term Memory Agent",
+  "qa_items": 80,
+  "result_status": "measured",
+  "window": {
+    "exact_match_pct": 0.0,
+    "mean_context_tokens": 90.5,
+    "mean_evidence_recall": 0.0125,
+    "mean_token_f1": 0.03200514735466445
+  }
+}

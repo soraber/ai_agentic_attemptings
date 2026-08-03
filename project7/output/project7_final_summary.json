@@ -1,0 +1,35 @@
+{
+  "defended": {
+    "attack_success_pct": 0.0,
+    "benign_success_pct": 100.0,
+    "cases": 32,
+    "duplicate_effect_cases_pct": 0.0,
+    "median_latency_ms": 3.7203539977781475,
+    "secret_leak_pct": 0.0,
+    "trace_complete_pct": 100.0,
+    "unsafe_write_pct": 0.0
+  },
+  "policy_review": {
+    "accuracy_pct": 84.375,
+    "cases": 32,
+    "estimated_cost_usd": 0.029071,
+    "input_tokens": 6865,
+    "mode": "openai",
+    "model_calls": 32,
+    "output_tokens": 3701
+  },
+  "project": "Secure Interoperable Agent Gateway",
+  "result_status": "measured",
+  "runtime_seconds": 72.4656860420364,
+  "test_cases": 32,
+  "undefended": {
+    "attack_success_pct": 85.18518518518519,
+    "benign_success_pct": 100.0,
+    "cases": 32,
+    "duplicate_effect_cases_pct": 9.375,
+    "median_latency_ms": 0.19468751270323992,
+    "secret_leak_pct": 11.11111111111111,
+    "trace_complete_pct": 100.0,
+    "unsafe_write_pct": 62.96296296296296
+  }
+}

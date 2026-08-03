@@ -15,9 +15,19 @@ retrieve schema -> plan -> parse AST -> authorize -> explain -> execute -> verif
 ## Schema Linking
 
 Schema linking maps words in a question to tables, columns, relationships, and
-business definitions. This project retrieves descriptions lexically in
-deterministic mode and leaves an embedding-backed path for API evaluation. Schema
-retrieval reduces prompt size and discourages invented columns.
+business definitions. Deterministic and OpenAI runs retain the lexical baseline.
+The A100 path encodes the question and seven schema descriptions with normalized
+MiniLM vectors, then ranks tables by cosine similarity. Schema retrieval reduces
+prompt size and discourages invented columns.
+
+## Why Use A Local GPU Model
+
+The A100 path runs Qwen2.5-Coder 7B in BF16. A 7B model is large enough to test
+local code-oriented planning while fitting comfortably on a 40 GB A100 alongside
+the embedding model and KV cache. Deterministic decoding makes repeated prompts
+comparable. The model still has no execution authority: JSON parsing, Pydantic,
+SQLGlot, region/column policy, `EXPLAIN`, and read-only DuckDB form independent
+layers after generation.
 
 ## SQL AST Validation
 
@@ -60,7 +70,7 @@ must remain data and must never change tool selection or authorization.
 ## Limitations
 
 - Synthetic schemas are cleaner than production warehouses.
-- Lexical linking does not capture every business synonym.
+- Dense linking can still miss organization-specific business synonyms.
 - Read-only DuckDB does not reproduce distributed warehouse latency or IAM.
 - Result hashes prove equality only for the fixed data snapshot.
 
@@ -69,3 +79,5 @@ must remain data and must never change tool selection or authorization.
 - [DuckDB Python API](https://duckdb.org/docs/stable/clients/python/overview)
 - [SQLGlot documentation](https://sqlglot.com/)
 - [OpenAI structured outputs](https://developers.openai.com/api/docs/guides/structured-outputs)
+- [Qwen2.5-Coder 7B Instruct](https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct)
+- [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)

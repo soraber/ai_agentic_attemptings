@@ -6,18 +6,18 @@ documentation pattern used in `ai_project_artifacts`: portfolio summary,
 repository map, methods, compute settings, results and judgment, future work, and
 debugging notes.
 
-> **Version:** ver 0.3: add measured Project 4 evaluation<br>
-> **Updated:** 2026-08-03 00:50 EDT
+> **Version:** ver 0.4: add measured Projects 5-8 evaluations<br>
+> **Updated:** 2026-08-03 01:49 EDT
 
 ## Portfolio Summary
 
 | Project | Primary goal | Main comparison | Current result | Judgment |
 | --- | --- | --- | --- | --- |
 | 4. Durable Incident-Response Agent | Build a recoverable, approval-gated agent for simulated service incidents | Stateless linear loop vs. checkpointed LangGraph workflow | Measured API run: 32 paired observations per system, 64 model calls, and 13 final local tests passed | The durable path preserved task quality, eliminated duplicate effects and unsafe allows, and recovered every executed crash, at roughly 10x workflow latency |
-| 5. Governed Text-to-SQL Analyst | Answer analytics questions while enforcing database policy | One-shot SQL vs. schema-grounded governed repair | Preflight complete: 7 tests passed and the deterministic held-out dry run completed; final API evaluation has not run | SQL execution, policy, repair, PII, and report mechanics are ready; dry-run scores isolate controls rather than model quality |
-| 6. Test-Driven Code-Repair Agent | Repair compact Python defects without accepting unsafe or overfit patches | One-shot patch vs. bounded test-driven repair loop | Preflight complete: 6 tests passed; pinned QuixBugs evaluation has not run | Repository mapping, patch constraints, hidden-test gating, rollback, and report mechanics are ready |
-| 7. Secure Interoperable Agent Gateway | Preserve utility while blocking protocol-layer attacks | Undefended vs. defended A2A/MCP-style workflow | Preflight complete: 7 tests passed and the deterministic held-out dry run completed; optional structured policy review has not run | The local protocol controls block the included attacks without reducing benign success; this is not production security certification |
-| 8. Long-Term Memory Agent | Retrieve useful cross-session facts while honoring corrections, conflicts, and deletion | Recent window vs. episodic vs. hybrid memory | Preflight complete: 7 tests passed and lifecycle fixtures completed; LoCoMo API QA has not run | Memory lifecycle mechanics are verified locally; final QA quality and context-cost claims require the notebook run |
+| 5. Governed Text-to-SQL Analyst | Answer analytics questions while enforcing database policy | One-shot SQL vs. schema-grounded governed repair | Measured API run: 40 held-out questions, 50 calls, and 10 final tests passed | Governance doubled result-hash accuracy, improved repair, and blocked unsafe cases, but absolute SQL accuracy remains a clear optimization target |
+| 6. Test-Driven Code-Repair Agent | Repair compact Python defects without accepting unsafe or overfit patches | One-shot patch vs. bounded test-driven repair loop | Measured API run: 8 pinned defects per system, 18 calls, and 9 final tests passed | Iterative public-test feedback recovered one additional defect while hidden tests and exact rollback constrained acceptance |
+| 7. Secure Interoperable Agent Gateway | Preserve utility while blocking protocol-layer attacks | Undefended vs. defended A2A/MCP-style workflow | Measured API run: 32 held-out cases, 32 review calls, and 8 final tests passed | The local controls eliminated included attacks without reducing benign utility; structured review was useful but correctly remained non-authoritative |
+| 8. Long-Term Memory Agent | Retrieve useful cross-session facts while honoring corrections, conflicts, and deletion | Recent window vs. episodic vs. hybrid memory | Measured API run: 80 QA items across 3 systems, 240 cached calls, and 11 final tests passed | Episodic retrieval beat the current hybrid weighting; strict exact match exposed substantial retrieval/answer-quality headroom while lifecycle deletion stayed complete |
 
 ## Repository Map
 
@@ -202,7 +202,7 @@ The full cell-specific history remains in
 | [`project5/tools/`](project5/tools/) | Dataset, notebook, report, and structure/privacy generators and validators |
 | [`project5/background/project5_background.md`](project5/background/project5_background.md) | Schema grounding, executable SQL evaluation, AST policy, repair, and governance concepts |
 | [`project5/debug_log/project5_debug_log.md`](project5/debug_log/project5_debug_log.md) | Cell-specific preparation history |
-| [`project5/output/`](project5/output/) | Reserved for measured summaries, samples, traces, report assets, and PDF |
+| [`project5/output/`](project5/output/) | Measured per-case results, summary, representative samples, traces, report assets, and final PDF |
 
 ### Project 6 Files
 
@@ -219,7 +219,7 @@ The full cell-specific history remains in
 | [`project6/tools/validate_project.py`](project6/tools/validate_project.py) | Checks structure, notebook order, manifest pin, local paths, and key-shaped strings |
 | [`project6/background/project6_background.md`](project6/background/project6_background.md) | Fault localization, constrained patches, feedback loops, hidden tests, and rollback concepts |
 | [`project6/debug_log/project6_debug_log.md`](project6/debug_log/project6_debug_log.md) | Cell-specific preparation history |
-| [`project6/output/`](project6/output/) | Reserved for measured repair summaries, patches, traces, matrix, report assets, and PDF |
+| [`project6/output/`](project6/output/) | Measured repair results, trajectories, representative samples, report assets, and final PDF |
 
 ### Project 7 Files
 
@@ -233,7 +233,7 @@ The full cell-specific history remains in
 | [`project7/tools/`](project7/tools/) | Dataset, notebook, report, and structure/privacy generators and validators |
 | [`project7/background/project7_background.md`](project7/background/project7_background.md) | Protocol roles, trust boundaries, least privilege, taint, pinning, and idempotency concepts |
 | [`project7/debug_log/project7_debug_log.md`](project7/debug_log/project7_debug_log.md) | Cell-specific data and report-layout issue history |
-| [`project7/output/`](project7/output/) | Reserved for measured summaries, correlated traces, attack matrix, diagrams, and PDF |
+| [`project7/output/`](project7/output/) | Measured paired results, correlated traces, representative attacks, report assets, and final PDF |
 
 ### Project 8 Files
 
@@ -251,7 +251,7 @@ The full cell-specific history remains in
 | [`project8/tools/validate_project.py`](project8/tools/validate_project.py) | Checks structure, notebook order, source pin, local paths, and key-shaped strings |
 | [`project8/background/project8_background.md`](project8/background/project8_background.md) | Memory tiers, temporal retrieval, consolidation, conflicts, deletion, and evaluation concepts |
 | [`project8/debug_log/project8_debug_log.md`](project8/debug_log/project8_debug_log.md) | Cell-specific retrieval-debug history |
-| [`project8/output/`](project8/output/) | Reserved for measured summaries, evidence, traces, report assets, and PDF |
+| [`project8/output/`](project8/output/) | Measured QA/lifecycle results, evidence traces, representative samples, report assets, cache, and final PDF |
 
 ## Project 5: Governed Text-to-SQL Analyst
 
@@ -284,32 +284,38 @@ row limits, PII masking, bounded repair, and approval before export.
 
 | Item | Configuration |
 | --- | --- |
-| Verified preflight | Local macOS CPU; 7 tests passed in 0.82 seconds and a deterministic 40-case dry run completed in 0.44 seconds |
-| Intended complete runtime | Google Colab CPU, approximately 60-120 minutes |
+| Evaluation compute | Local macOS CPU with isolated Python dependencies; no GPU required |
+| Measured evaluation time | 201.55 seconds for the 40-case API comparison; report generation and validation completed afterward |
+| Final verification | 10 deterministic tests passed in 0.91 seconds, including local-model fallback contracts |
 | Dataset | 50 synthetic questions: 10 development and 40 held-out; checksum `8d861b67fb259c81ab830446d9f75ccd325942088c8b49413dc3c64e7144e11a` |
 | Query limits | Two repair attempts, 100 result rows, read-only local DuckDB, authorized region `NA` |
-| Default API planner | `gpt-5.6-luna`, low reasoning effort, API mode opt-in |
+| API planner | `gpt-5.6-luna`, low reasoning effort, strict Pydantic query plans |
 | API limits | 180 calls, 500 output tokens per call, two retries, USD 6.00 estimated cost |
+| Measured API use | 50 calls, 13,634 input tokens, 13,665 output tokens, USD 0.095624 estimated cost |
 
-### Preflight Results and Judgment
+### Results and Judgment
 
-| Metric | One-shot deterministic dry run | Governed deterministic dry run |
-| --- | ---: | ---: |
-| Result-hash accuracy | 81.48% | 100.00% |
-| Unsafe-query block rate | 23.08% | 100.00% |
-| PII leak rate | 12.50% | 0.00% |
-| Repair success | 0.00% | 100.00% |
+| Metric | One-shot | Governed | Judgment |
+| --- | ---: | ---: | --- |
+| Execution accuracy | 70.37% | 100.00% | Policy plus repair recovered executable plans for every safe case |
+| Result-hash accuracy | 18.52% | 37.04% | Governance doubled semantic execution accuracy, but absolute model quality remains limited |
+| Unsafe-query block rate | 0.00% | 38.46% | The policy stopped a meaningful subset that one-shot execution would allow |
+| PII leak rate | 0.00% | 0.00% | Neither measured path emitted a PII column in this model run |
+| Repair success | 80.00% | 100.00% | Bounded feedback recovered every included repair case |
+| Median execution latency | 15.85 ms | 12.22 ms | This timer covers local execution after the shared frozen plan, not API generation |
 
-These temporary dry-run values verify the benchmark and control logic using the
-rule-based planner. They are not committed result artifacts and do not establish
-model-backed text-to-SQL quality. Final judgment requires `P05-C08` in API mode.
+The measured result supports the safety and repair design, but not a claim of high
+general text-to-SQL accuracy. Result hashes remain strict and expose many
+semantically wrong executable queries. Repeated model runs, stronger schema
+retrieval, and calibrated abstention should be prioritized before expanding the
+database or claim surface.
 
-### Training and Evaluation Figures
+### Evaluation Figures
 
-No final figures are committed before execution. The dry-tested report pipeline
-creates `quality_repair_safety.png`, `procedure_diagram.svg`, and
-`project5_report.pdf` from a measured summary. Its rendered page was visually
-checked for readable charts, tables, margins, and footer placement.
+The measured run generated `project5/output/project5_report_assets/quality_repair_safety.png`,
+`project5/output/project5_report_assets/procedure_diagram.svg`, and
+`project5/output/project5_report.pdf`. The one-page PDF was rendered and checked
+for readable bars, table values, interpretation text, margins, and footer.
 
 ### Future Optimization
 
@@ -323,9 +329,11 @@ checked for readable charts, tables, margins, and footer placement.
 
 ### Debug Log Summary
 
-Project 5 was created as a new workspace and required no material debugging beyond
-the shared test, notebook, privacy, and report verification pass. The full history
-is in [`project5/debug_log/project5_debug_log.md`](project5/debug_log/project5_debug_log.md).
+The first smoke command omitted the local source path and made no API call. The
+corrected smoke test passed, after which retries, token/cost accounting, and a
+local skip-install path supported the full run. Saved notebook paths were made
+repository-relative. The full history is in
+[`project5/debug_log/project5_debug_log.md`](project5/debug_log/project5_debug_log.md).
 
 ## Project 6: Test-Driven Code-Repair Agent
 
@@ -355,29 +363,38 @@ restores the exact starting state after every rejected attempt.
 
 | Item | Configuration |
 | --- | --- |
-| Verified preflight | Local macOS CPU; 6 tests passed in 6.17 seconds |
-| Intended complete runtime | Google Colab CPU, approximately 90-180 minutes |
+| Evaluation compute | Local macOS CPU with subprocess-isolated tests; no GPU required |
+| Measured evaluation time | 114.63 seconds for both repair modes over 8 held-out defects; report generation and validation completed afterward |
+| Final verification | 9 deterministic tests passed in 4.22 seconds, including local patch-planner contracts |
 | Dataset | Twelve QuixBugs Python cases: four development and eight held-out, pinned to one commit |
 | Repair limits | Three attempts, 30 changed lines, one declared source file, 20-second tests, 12,000 output characters |
-| Default API planner | `gpt-5.6-sol`, medium reasoning effort, API mode opt-in |
-| API limits | 220 calls, 900 output tokens per call, USD 8.00 estimated cost |
+| API planner | `gpt-5.6-sol`, medium reasoning effort, strict Pydantic patch proposals |
+| API limits | 220 calls, 900 output tokens per call, two retries, USD 8.00 estimated cost |
+| Measured API use | 18 calls, 22,988 input tokens, 4,436 output tokens, USD 0.248020 estimated cost |
 
-### Preflight Results and Judgment
+### Results and Judgment
 
-All six deterministic tests pass. They verify AST mapping, traversal and line-budget
-rejection, patch apply/rollback, test timeout, rejection of a public-test-only
-overfit patch, and acceptance of a patch that passes hidden assertions. The report
-generator also produced a readable temporary measured-format PDF.
+| Metric | One-shot | Repair loop | Judgment |
+| --- | ---: | ---: | --- |
+| Verified repair rate | 75.00% | 87.50% | Iterative public-test feedback recovered one additional defect |
+| Hidden-test pass rate | 75.00% | 87.50% | The accepted repair improvement survived generated regression checks |
+| Overfit detected | 0.00% | 0.00% | No public-only candidate reached the hidden-test rejection state in this run |
+| Rollback success | 100.00% | 100.00% | Every rejected attempt restored the exact source snapshot |
+| Mean changed lines | 2.0 | 2.0 | The loop improved success without increasing average patch size |
+| Median latency | 5.07 s | 5.98 s | Additional feedback added modest end-to-end latency on this compact suite |
 
-No QuixBugs repair rate is claimed yet. Final one-shot and repair-loop comparison
-requires fetching the pinned repository and running notebook cell `P06-C08` with
-an API key.
+The measured comparison favors the bounded loop on this small pinned suite, while
+the result remains too small for a universal coding-agent claim. The hidden tests
+are generated and compact, and subprocess controls are not a hardened sandbox.
+Future runs should add mutation strength, more repositories, and uncertainty over
+multiple model samples.
 
-### Training and Evaluation Figures
+### Evaluation Figures
 
-The measured run will create a repair-quality chart, procedure diagram, bug matrix,
-representative patches, trajectories, and `project6_report.pdf`. No placeholder
-performance figure is committed.
+The measured run generated `project6/output/project6_report_assets/repair_quality.png`,
+`project6/output/project6_report_assets/procedure_diagram.svg`, case results,
+trajectories, representative samples, and `project6/output/project6_report.pdf`.
+The one-page PDF was rendered and checked for chart/table readability and margins.
 
 ### Future Optimization
 
@@ -391,9 +408,10 @@ performance figure is committed.
 
 ### Debug Log Summary
 
-Project 6 was created as a new pinned workspace. The preflight specifically tested
-the most failure-prone boundaries: hidden-test information isolation, subprocess
-timeout, failed-patch rollback, and exact source restoration. See
+Preflight found that the prompt supplied an absolute patch path while policy
+accepted only the relative manifest path; those concerns are now separate. The
+first notebook run also exposed a missing quote in `P06-C03`, before benchmark API
+calls. Both fixes, plus usage accounting and report validation, are recorded in
 [`project6/debug_log/project6_debug_log.md`](project6/debug_log/project6_debug_log.md).
 
 ## Project 7: Secure Interoperable Agent Gateway
@@ -425,33 +443,38 @@ exfiltration.
 
 | Item | Configuration |
 | --- | --- |
-| Verified preflight | Local macOS CPU; 7 tests passed in 0.09 seconds and a deterministic 32-case dry run completed in 0.04 seconds |
-| Intended complete runtime | Google Colab CPU, approximately 60-120 minutes |
+| Evaluation compute | Local macOS CPU; no GPU required |
+| Measured evaluation time | 72.78 seconds for 32 structured reviews plus both deterministic gateway modes |
+| Final verification | 8 deterministic tests passed in 0.08 seconds |
 | Dataset | 40 cases: eight development and 32 held-out; checksum `b86768acd310ca836fe6b370f5babc6989200b2879bbea6eb622409c2e5e5927` |
 | Protocol controls | Agent-specific scopes, schema and metadata pinning, taint, redaction, approval, idempotency, and trace correlation |
-| Optional API review | `gpt-5.6-luna`, low reasoning effort; one recommendation per held-out case, scored but non-authoritative |
-| API limits | 160 calls, 500 output tokens per call, two retries, USD 6.00 estimated cost; expected evaluation use is 32 calls |
+| API review | `gpt-5.6-luna`, low reasoning effort; one recommendation per held-out case, scored but non-authoritative |
+| API limits | 160 calls, 500 output tokens per call, two retries, USD 6.00 estimated cost |
+| Measured API use | 32 calls, 6,865 input tokens, 3,701 output tokens, USD 0.029071 estimated cost |
 
-### Preflight Results and Judgment
+### Results and Judgment
 
-| Metric | Undefended dry run | Defended dry run |
-| --- | ---: | ---: |
-| Benign success | 100.00% | 100.00% |
-| Attack success | 85.19% | 0.00% |
-| Secret leakage | 11.11% | 0.00% |
-| Unsafe writes | 62.96% | 0.00% |
-| Duplicate-effect cases | 9.38% | 0.00% |
-| Complete traces | 100.00% | 100.00% |
+| Metric | Undefended | Defended | Judgment |
+| --- | ---: | ---: | --- |
+| Benign success | 100.00% | 100.00% | Included defenses preserved measured utility |
+| Attack success | 85.19% | 0.00% | Policy enforcement blocked every included attack path |
+| Secret leakage | 11.11% | 0.00% | Provenance and redaction prevented canary disclosure |
+| Unsafe writes | 62.96% | 0.00% | Scope, schema, approval, and policy gates prevented unauthorized effects |
+| Duplicate-effect cases | 9.38% | 0.00% | Idempotency removed repeated effects from duplicate delivery |
+| Complete traces | 100.00% | 100.00% | Correlation and trace coverage were preserved in both modes |
+| Policy-review accuracy | - | 84.38% | The model recommendation is informative but not reliable enough to authorize tools |
 
-The deterministic result verifies the implemented controls against this synthetic
-threat suite. It does not evaluate internet transport, production authorization,
-cryptographic identity, or every adaptive prompt-injection strategy.
+The measured result supports the control design against this synthetic threat
+suite and also supports keeping model review non-authoritative. It does not test
+internet transport, cryptographic identity, production authorization, or every
+adaptive prompt-injection strategy.
 
-### Training and Evaluation Figures
+### Evaluation Figures
 
-The dry-tested pipeline creates `attack_benign_matrix.png`,
-`procedure_diagram.svg`, and `project7_report.pdf`. Visual inspection caught and
-fixed a title/subtitle collision before this scaffold was committed.
+The measured run generated `project7/output/project7_report_assets/attack_benign_matrix.png`,
+`project7/output/project7_report_assets/procedure_diagram.svg`, correlated traces,
+representative attacks, and `project7/output/project7_report.pdf`. The one-page PDF
+was rendered and checked for readable charts, policy-review text, limits, and footer.
 
 ### Future Optimization
 
@@ -464,9 +487,9 @@ fixed a title/subtitle collision before this scaffold was committed.
 
 ### Debug Log Summary
 
-The synthetic task-ID prefix accidentally formed a key-shaped substring and was
-changed before committing the benchmark. A report dry run also exposed overlapping
-heading styles; explicit leading and spacing fixed the rendered PDF. Details are in
+Earlier preflight corrected a synthetic key-shaped task ID and report heading
+spacing. The measured run added retry and usage telemetry; one exact contract test
+needed the new fields added to its expected summary. Details are in
 [`project7/debug_log/project7_debug_log.md`](project7/debug_log/project7_debug_log.md).
 
 ## Project 8: Long-Term Memory Agent
@@ -496,32 +519,39 @@ consolidation, evidence retrieval, abstention, and verifiable deletion.
 
 | Item | Configuration |
 | --- | --- |
-| Verified preflight | Local macOS CPU; 7 tests passed in 0.04 seconds; deterministic lifecycle evaluation also completed in under one second |
-| Intended complete runtime | Google Colab CPU or L4, approximately 90-180 minutes |
+| Evaluation compute | Local macOS CPU; no GPU required because API latency dominated |
+| Measured evaluation time | 424.10 seconds for 80 QA items across 3 retrieval systems; report generation and validation completed afterward |
+| Final verification | 11 deterministic tests passed in 0.07 seconds, including local embedding/answerer contracts; lifecycle evaluation completed in under one second |
 | Dataset | LoCoMo samples 0 and 1, 40 QA per sample, plus deterministic lifecycle fixtures |
 | Memory settings | Working window 6 events, episodic top-k 5, SQLite facts/events/tombstones, evidence-cited retrieval |
-| Default API answerer | `gpt-5.6-luna`, low reasoning effort, API mode opt-in |
-| API limits | 300 calls, 500 output tokens per call, two retries, USD 8.00 estimated cost; expected QA use is 240 calls |
+| API answerer | `gpt-5.6-luna`, low reasoning effort, strict grounded-answer schema and per-context cache |
+| API limits | 300 calls, 500 output tokens per call, two retries, USD 8.00 estimated cost |
+| Measured API use | 240 calls, 109,387 input tokens, 17,407 output tokens, USD 0.213829 estimated cost |
 
-### Preflight Results and Judgment
+### Results and Judgment
 
 | Metric | Recent window | Episodic | Hybrid |
 | --- | ---: | ---: | ---: |
+| LoCoMo exact match | 0.00% | 0.00% | 0.00% |
+| LoCoMo mean token F1 | 3.20% | 11.50% | 9.41% |
+| LoCoMo evidence recall | 1.25% | 22.29% | 19.17% |
+| LoCoMo mean context tokens | 90.5 | 71.3 | 69.6 |
 | Lifecycle exact match | 75.00% | 75.00% | 100.00% |
-| Mean context tokens | 12.0 | 2.5 | 2.5 |
-| Deletion compliance | 100.00% | 100.00% | 100.00% |
 
-The lifecycle dry run confirms that the hybrid store resolves the included
-correction/conflict cases and that deletion removes retrievable events and facts
-while preserving an audit tombstone. These small fixtures are engineering checks,
-not the final LoCoMo QA result. Final quality, evidence recall, and context-cost
-claims require API-backed cell `P08-C08`.
+Episodic retrieval is the strongest current LoCoMo baseline, while the hybrid
+recency bonus slightly lowers token F1 and evidence recall despite using the least
+context. Strict exact match exposes substantial answer-quality headroom. Separately,
+the lifecycle fixtures retain 100% hybrid exact match and 100% deletion compliance
+across events, derived facts, retrieval, and tombstones. The fixed two-conversation
+subset is compact and does not establish general memory-agent quality.
 
-### Training and Evaluation Figures
+### Evaluation Figures
 
-The dry-tested report creates `quality_context_tradeoff.png`,
-`procedure_diagram.svg`, and `project8_report.pdf`. The rendered page was inspected
-for legible axes, table layout, deletion statement, limitations, and footer.
+The measured run generated `project8/output/project8_report_assets/quality_context_tradeoff.png`,
+`project8/output/project8_report_assets/procedure_diagram.svg`, 240-answer traces,
+representative samples, and `project8/output/project8_report.pdf`. The final report
+uses token F1 and evidence recall rather than an all-zero exact-match chart; its
+rendered page was checked for legibility, spacing, deletion text, limits, and footer.
 
 ### Future Optimization
 
@@ -535,10 +565,11 @@ for legible axes, table layout, deletion statement, limitations, and footer.
 
 ### Debug Log Summary
 
-Initial lexical overlap over-weighted a pronoun and did not normalize a simple
-past-tense verb, causing the wrong event to rank first. A fixed stopword list and
-minimal suffix normalization corrected the retrieval test without changing notebook
-cells. See [`project8/debug_log/project8_debug_log.md`](project8/debug_log/project8_debug_log.md).
+The measured run completed all calls before `P08-C10` found a token-shaped string
+inside the raw upstream clone. Validation now excludes only that third-party clone
+while continuing to scan the selected subset and generated artifacts. Absolute
+notebook paths were sanitized, and `P08-C10` was rerun without model calls. See
+[`project8/debug_log/project8_debug_log.md`](project8/debug_log/project8_debug_log.md).
 
 ## Documentation Maintenance
 

@@ -31,6 +31,19 @@ plan -> inspect -> patch -> public tests -> hidden tests -> accept
 Hidden tests matter because a patch may overfit the visible assertion. Each case
 starts from a clean copy to prevent contamination.
 
+## Local GPU Planning
+
+The A100 comparison loads one Qwen2.5-Coder 7B model in BF16 and reuses it for all
+bugs and attempts. Reuse separates model-load time from repair latency and avoids
+wasting GPU memory on duplicate model instances. The local model receives the same
+source, sanitized public-test failure, relative allowlist path, and changed-line
+budget as the API planner. Its JSON response is converted into a typed patch
+proposal before the existing deterministic controls run.
+
+Local inference changes where generation happens, not the trust boundary. A model
+cannot accept its own patch, see hidden-test details, expand its path allowlist, or
+disable rollback.
+
 ## Metrics
 
 - Pass@1 and verified repair within three attempts.
@@ -51,3 +64,4 @@ containment, not a hardened untrusted-code sandbox.
 - [Python AST](https://docs.python.org/3/library/ast.html)
 - [git apply](https://git-scm.com/docs/git-apply)
 - [pytest](https://docs.pytest.org/)
+- [Qwen2.5-Coder 7B Instruct](https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct)

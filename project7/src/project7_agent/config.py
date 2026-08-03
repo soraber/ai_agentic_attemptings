@@ -17,6 +17,8 @@ class Project7Config(BaseModel):
     max_output_tokens: int = Field(default=500, ge=64)
     max_retries: int = Field(default=2, ge=0, le=5)
     max_estimated_cost_usd: float = Field(default=6, ge=0)
+    input_price_per_million_usd: float = Field(default=1.0, ge=0)
+    output_price_per_million_usd: float = Field(default=6.0, ge=0)
 
 
 def load_config(path: str | Path) -> Project7Config:

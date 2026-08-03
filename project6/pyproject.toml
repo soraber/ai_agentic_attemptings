@@ -11,6 +11,9 @@ dependencies = ["pydantic>=2.7,<3", "openai>=2,<3"]
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[project.optional-dependencies]
+gpu = ["transformers>=4.48,<6", "accelerate>=1.2,<2"]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

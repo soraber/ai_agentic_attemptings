@@ -36,3 +36,13 @@ verification, and preservation notes.
 - **Root cause:** Protocol controls were implemented first and the optional language-review layer had not been connected
 - **Fix:** Added a structured policy reviewer, scored one frozen recommendation per held-out case, and kept deterministic gateway policy authoritative
 - **Verification:** Rebuilt the notebook; a deterministic reviewer test verifies 32 recommendations are scored without enabling unsafe writes
+
+## 2026-08-03 - Measured API Evaluation
+
+- **Environment:** Local macOS kernel with temporary isolated dependencies; OpenAI Responses API
+- **Notebook cells:** `P07-C01` and `P07-C02`; executed `P07-C03` through `P07-C10`
+- **Symptom:** The first deterministic test run failed because an exact expected summary did not include the new token/cost telemetry fields
+- **Root cause:** Reviewer accounting intentionally expanded the evaluation result contract
+- **Fix:** Added bounded retries and measured usage, updated the contract assertion, added the local skip-install path, and enabled the measured flags
+- **Verification:** Eight tests passed; live attack-case review rejected the malicious document; all 32 held-out cases completed with 32 model calls; report/privacy validation passed; rendered PDF had no clipping or overlap
+- **Preservation:** Dataset generation and deterministic gateway authorization logic were unchanged

@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from .analyst import DeterministicSQLPlanner, FrozenInitialPlanner, OpenAISQLPlanner, run_baseline, run_baseline_plan, run_governed
+from .analyst import DeterministicSQLPlanner, FrozenInitialPlanner, LocalSQLPlanner, OpenAISQLPlanner, run_baseline, run_baseline_plan, run_governed
 from .config import Project5Config
 from .schemas import QuestionCase
 
@@ -35,7 +35,7 @@ def evaluate_project5(
     database_path: str | Path,
     config: Project5Config,
     output_dir: str | Path,
-    planner: DeterministicSQLPlanner | OpenAISQLPlanner | None = None,
+    planner: DeterministicSQLPlanner | OpenAISQLPlanner | LocalSQLPlanner | None = None,
 ) -> dict[str, Any]:
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -46,7 +46,7 @@ def evaluate_project5(
     trace_path.unlink(missing_ok=True)
     started = time.perf_counter()
     for case in test_cases:
-        if isinstance(planner, OpenAISQLPlanner):
+        if isinstance(planner, (OpenAISQLPlanner, LocalSQLPlanner)):
             initial = planner.plan(case, 0, None)
             compared = [
                 run_baseline_plan(case, database_path, initial),
@@ -62,11 +62,17 @@ def evaluate_project5(
     by_id = {case.question_id: case for case in test_cases}
     baseline = [row for row in results if row["system"] == "baseline"]
     governed = [row for row in results if row["system"] == "governed"]
+    planner_usage = (
+        planner.usage_summary()
+        if isinstance(planner, (OpenAISQLPlanner, LocalSQLPlanner))
+        else {"model_calls": 0, "input_tokens": 0, "output_tokens": 0, "estimated_cost_usd": 0.0}
+    )
     summary = {
         "project": "Governed Text-to-SQL Analyst",
         "result_status": "measured",
         "planner_mode": config.planner_mode,
-        "model_calls": getattr(planner, "calls", 0),
+        "model_calls": planner_usage["model_calls"],
+        "planner_usage": planner_usage,
         "test_questions": len(test_cases),
         "baseline": _summary(baseline, by_id),
         "governed": _summary(governed, by_id),

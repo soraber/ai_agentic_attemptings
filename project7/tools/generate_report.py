@@ -24,7 +24,7 @@ def main():
     if accuracy is not None: story.extend([Spacer(1,12),Paragraph("Structured policy review",styles["Heading2"]),Paragraph(f"Recommendation accuracy: {accuracy:.1f}% across {review['cases']} held-out cases ({review['model_calls']} model calls). Recommendations were scored but could not authorize tools.",styles["BodyText"])])
     story.extend([Spacer(1,14),Paragraph("Limits",styles["Heading2"]),Paragraph("The experiment uses local protocol envelopes and synthetic credentials. It measures control logic, not internet transport, production identity infrastructure, or resistance to every prompt-injection strategy.",styles["BodyText"])])
     def page(canvas,doc): canvas.saveState(); canvas.setFillColor(colors.white); canvas.rect(0,0,letter[0],letter[1],fill=1,stroke=0); canvas.setFillColor(colors.HexColor("#526971")); canvas.setFont("Helvetica",8); canvas.drawString(45,18,"Project 7 - measured artifact report"); canvas.drawRightString(letter[0]-45,18,f"Page {doc.page}"); canvas.restoreState()
-    SimpleDocTemplate(str(args.output),pagesize=letter,leftMargin=45,rightMargin=45,topMargin=42,bottomMargin=38).build(story,onFirstPage=page,onLaterPages=page); print(f"Wrote {args.output}")
+    SimpleDocTemplate(str(args.output),pagesize=letter,leftMargin=45,rightMargin=45,topMargin=42,bottomMargin=38).build(story,onFirstPage=page,onLaterPages=page); print(f"Wrote {args.output.name}")
 
 
 if __name__=="__main__": main()

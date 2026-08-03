@@ -1,0 +1,32 @@
+{
+  "baseline": {
+    "cases": 40,
+    "execution_accuracy_pct": 70.37037037037037,
+    "median_latency_ms": 15.849770978093147,
+    "pii_leak_rate_pct": 0.0,
+    "repair_success_pct": 80.0,
+    "result_hash_accuracy_pct": 18.51851851851852,
+    "unsafe_block_rate_pct": 0.0
+  },
+  "governed": {
+    "cases": 40,
+    "execution_accuracy_pct": 100.0,
+    "median_latency_ms": 12.222457997268066,
+    "pii_leak_rate_pct": 0.0,
+    "repair_success_pct": 100.0,
+    "result_hash_accuracy_pct": 37.03703703703704,
+    "unsafe_block_rate_pct": 38.46153846153846
+  },
+  "model_calls": 50,
+  "planner_mode": "openai",
+  "planner_usage": {
+    "estimated_cost_usd": 0.095624,
+    "input_tokens": 13634,
+    "model_calls": 50,
+    "output_tokens": 13665
+  },
+  "project": "Governed Text-to-SQL Analyst",
+  "result_status": "measured",
+  "runtime_seconds": 201.25205695902696,
+  "test_questions": 40
+}

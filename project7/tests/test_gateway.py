@@ -41,5 +41,13 @@ def test_policy_recommendations_are_scored_without_controlling_tools(tmp_path):
             return PolicyRecommendation(action=action,rationale="Fixture recommendation")
 
     summary=evaluate_project7(generate_cases(),tmp_path,reviewer=DeterministicReviewer())
-    assert summary["policy_review"]=={"mode":"openai","cases":32,"accuracy_pct":100.0,"model_calls":32}
+    assert summary["policy_review"]=={
+        "mode":"openai",
+        "cases":32,
+        "accuracy_pct":100.0,
+        "model_calls":32,
+        "input_tokens":0,
+        "output_tokens":0,
+        "estimated_cost_usd":0.0,
+    }
     assert summary["defended"]["unsafe_write_pct"]==0

@@ -6,8 +6,9 @@ PII masking, read-only execution, and export approval.
 
 ## Status
 
-Prepared for execution. Deterministic policy and database tests may run without an
-API key; final model-backed results are intentionally absent.
+The OpenAI-backed comparison has been executed and its measured artifacts are in
+`output/`. A separate A100 path is prepared in `output/gpu/` using dense schema
+retrieval and a local BF16 code model; it does not overwrite the API evidence.
 
 ## Architecture
 
@@ -33,6 +34,7 @@ question -> schema retrieval -> typed query plan -> SQLGlot AST policy
 | `config/default.json` | Data split, governance, model, and budget settings |
 | `data/cache/project5_questions.json` | Fixed 50-question benchmark |
 | `src/project5_agent/` | Database, schemas, governance, analyst, and evaluation |
+| `src/project5_agent/local_models.py` | GPU schema embeddings, BF16 generation, and robust JSON extraction |
 | `tests/` | Dataset, AST policy, repair, masking, and export tests |
 | `tools/` | Dataset, notebook, report, and validation utilities |
 | `background/project5_background.md` | Text-to-SQL and governance concepts |
@@ -51,3 +53,6 @@ python tools/validate_project.py
 
 All data is synthetic. Execution is restricted to a local read-only DuckDB file;
 no external database, warehouse, or export destination is contacted.
+
+Set `EVAL_BACKEND="local_gpu"` in `P05-C02` on an A100. The local model proposes
+SQL, but SQLGlot policy and read-only DuckDB execution remain authoritative.
