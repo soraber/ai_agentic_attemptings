@@ -93,6 +93,9 @@ root cause, fix, and verification result.
 
 ## Project 4: Durable Incident-Response Agent
 
+**Implementation:** [`project4/`](project4/) contains the prepared pre-execution
+scaffold; measured results are intentionally absent until the notebook is run.
+
 **Keywords:** LangGraph, durable execution, HITL, idempotency, fault injection,
 OpenTelemetry, saga compensation
 

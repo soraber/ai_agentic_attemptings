@@ -1,0 +1,16 @@
+# Core workflow
+langgraph>=1.0,<2
+langgraph-checkpoint-sqlite>=2,<4
+pydantic>=2.7,<3
+
+# Optional API planner
+openai>=2,<3
+
+# Observability
+opentelemetry-api>=1.30,<2
+opentelemetry-sdk>=1.30,<2
+
+# Evaluation and reporting
+matplotlib>=3.8,<4
+reportlab>=4.2,<5
+pytest>=8,<9

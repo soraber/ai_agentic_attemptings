@@ -1,0 +1,19 @@
+{
+  "project_id": "project4",
+  "seed": 20260802,
+  "planner_mode": "deterministic",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "low",
+  "max_model_calls": 120,
+  "max_output_tokens": 450,
+  "max_retries": 2,
+  "max_estimated_cost_usd": 5.0,
+  "input_usd_per_million": 1.0,
+  "output_usd_per_million": 6.0,
+  "development_case_count": 8,
+  "test_case_count": 16,
+  "evaluation_repetitions": 2,
+  "crash_case_fraction": 0.5,
+  "tool_timeout_seconds": 5.0,
+  "report_title": "Durable Incident-Response Agent"
+}

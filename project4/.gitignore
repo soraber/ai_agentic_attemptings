@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+output/runtime/
+output/*.sqlite
+output/*.sqlite-shm
+output/*.sqlite-wal
+output/*.tmp
