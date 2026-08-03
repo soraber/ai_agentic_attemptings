@@ -84,7 +84,7 @@ def build_charts(summary: dict, assets: Path) -> list[Path]:
         image.convert("RGB").save(quality_path)
     outputs.append(quality_path)
 
-    labels = ["Crash recovery", "No duplicate effects", "Unsafe plans blocked"]
+    labels = ["Executed-crash recovery", "No duplicate effects", "Unsafe plans blocked"]
     baseline = [
         summary["baseline"]["crash_recovery_pct"],
         100 - summary["baseline"]["cases_with_duplicate_effects_pct"],
@@ -176,9 +176,15 @@ def build_pdf(summary: dict, output_path: Path, chart_paths: list[Path]) -> None
         Image(str(chart_paths[1]), width=6.5 * inch, height=3.2 * inch),
         Spacer(1, 8),
     ]
-    table_data = [["Metric", "Baseline", "Durable"]]
+    table_data = [
+        ["Metric", "Baseline", "Durable"],
+        [
+            "Executed-crash recovery",
+            f"{summary['baseline']['crash_recovery_pct']:.1f}% (n={summary['baseline']['executed_crash_trials']})",
+            f"{summary['durable']['crash_recovery_pct']:.1f}% (n={summary['durable']['executed_crash_trials']})",
+        ],
+    ]
     for label, key in [
-        ("Crash recovery", "crash_recovery_pct"),
         ("Cases with duplicate effects", "cases_with_duplicate_effects_pct"),
         ("Failed actions compensated", "failed_actions_compensated_pct"),
     ]:

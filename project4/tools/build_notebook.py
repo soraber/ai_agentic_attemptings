@@ -51,16 +51,16 @@ candidates = [
     Path("/content/ai_agentic_attemptings/project4"),
 ]
 PROJECT_ROOT = next((path.resolve() for path in candidates if (path / "config/default.json").exists()), None)
+repo_root = Path("/content/ai_agentic_attemptings")
 if PROJECT_ROOT is None:
-    repo_root = Path("/content/ai_agentic_attemptings")
     if not repo_root.exists():
         subprocess.run(
             ["git", "clone", "https://github.com/soraber/ai_agentic_attemptings.git", str(repo_root)],
             check=True,
         )
-    elif (repo_root / ".git").exists():
-        subprocess.run(["git", "-C", str(repo_root), "pull", "--ff-only"], check=True)
     PROJECT_ROOT = repo_root / "project4"
+if (repo_root / ".git").exists() and repo_root in PROJECT_ROOT.parents:
+    subprocess.run(["git", "-C", str(repo_root), "pull", "--ff-only"], check=True)
 
 os.chdir(PROJECT_ROOT)
 subprocess.run(
@@ -71,6 +71,10 @@ subprocess.run([sys.executable, "-m", "pip", "install", "-e", ".", "--no-deps"],
 source_root = PROJECT_ROOT / "src"
 if str(source_root) not in sys.path:
     sys.path.insert(0, str(source_root))
+import importlib
+for module_name in [name for name in sys.modules if name == "project4_agent" or name.startswith("project4_agent.")]:
+    del sys.modules[module_name]
+importlib.invalidate_caches()
 dependency_check = subprocess.run(
     [sys.executable, "-m", "pip", "check"], text=True, capture_output=True
 )

@@ -88,7 +88,12 @@ def _case_result(
 
 
 def _summarize_system(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    crash_rows = [row for row in rows if row["crash_injected"]]
+    nonexecuting_statuses = {"rejected_by_operator", "blocked_policy"}
+    crash_rows = [
+        row
+        for row in rows
+        if row["crash_injected"] and row["terminal_status"] not in nonexecuting_statuses
+    ]
     failed_action_rows = [row for row in rows if row["terminal_status"] in {"action_failed", "compensated"}]
     latencies = [float(row["workflow_latency_ms"]) for row in rows]
     return {
@@ -110,6 +115,7 @@ def _summarize_system(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "crash_recovery_pct": _percent(
             sum(bool(row["crash_recovered"]) for row in crash_rows), len(crash_rows)
         ),
+        "executed_crash_trials": len(crash_rows),
         "cases_with_duplicate_effects_pct": _percent(
             sum(row["duplicate_effects"] > 0 for row in rows), len(rows)
         ),

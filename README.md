@@ -4,14 +4,14 @@ Compact, evaluation-driven AI agent engineering projects spanning workflow
 reliability, governed data access, coding agents, protocol
 security, and long-term memory.
 
-> **Version:** ver 0.6: remove preflight disclaimer<br>
-> **Updated:** 2026-08-03 00:08 EDT
+> **Version:** ver 0.7: complete Project 4 API evaluation<br>
+> **Updated:** 2026-08-03 00:50 EDT
 
 ## Portfolio Summary
 
 | Project | Status | Summary |
 | --- | --- | --- |
-| 4. Durable Incident-Response Agent | Pre-execution scaffold complete | Stateless loop vs. checkpointed LangGraph workflow with HITL approval, SQLite idempotency, crash recovery, compensation, safety policy, and measured-artifact generation |
+| 4. Durable Incident-Response Agent | Measured API evaluation complete | Across 32 paired observations, the durable workflow preserved task quality while eliminating duplicate effects (50% to 0%) and unsafe allows (80% to 0%); all executed crash trials recovered, with higher mean latency (11.4 ms to 112.0 ms) |
 | 5. Governed Text-to-SQL Analyst | Pre-execution scaffold complete | One-shot SQL vs. schema-grounded planning with SQLGlot policy, read-only DuckDB execution, bounded repair, row/column controls, PII masking, and export approval |
 | 6. Test-Driven Code-Repair Agent | Pre-execution scaffold complete | One-shot patching vs. a bounded inspect-patch-test loop with AST mapping, constrained diffs, public and hidden tests, exact rollback, and pinned QuixBugs cases |
 | 7. Secure Interoperable Agent Gateway | Pre-execution scaffold complete | Undefended vs. policy-enforced local A2A/MCP-style workflows with scopes, taint, metadata pinning, redaction, approval, idempotency, correlated traces, and non-authoritative structured review |

@@ -1,0 +1,270 @@
+{"event": "baseline.complete", "incident_id": "INC-017", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732179.687016}
+{"event": "workflow.node", "incident_id": "INC-017", "node": "diagnose", "prediction": "configuration_error", "system": "durable", "timestamp": 1785732179.7331986}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-017", "node": "verify", "system": "durable", "timestamp": 1785732179.7346697}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-017", "node": "plan", "system": "durable", "timestamp": 1785732179.7361212}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-017", "node": "policy", "system": "durable", "timestamp": 1785732179.7370453}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-017", "node": "approval", "system": "durable", "timestamp": 1785732179.785172}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-017", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732179.8071265}
+{"event": "workflow.node", "incident_id": "INC-017", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732179.8087654}
+{"event": "workflow.node", "incident_id": "INC-017", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732179.8107715}
+{"event": "baseline.complete", "incident_id": "INC-013", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732183.9757843}
+{"event": "workflow.node", "incident_id": "INC-013", "node": "diagnose", "prediction": "deployment_regression", "system": "durable", "timestamp": 1785732184.0250802}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-013", "node": "verify", "system": "durable", "timestamp": 1785732184.0266895}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-013", "node": "plan", "system": "durable", "timestamp": 1785732184.0281222}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-013", "node": "policy", "system": "durable", "timestamp": 1785732184.0290186}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-013", "node": "approval", "system": "durable", "timestamp": 1785732184.0736954}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-013", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732184.1007192}
+{"event": "workflow.node", "incident_id": "INC-013", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732184.1038594}
+{"event": "workflow.node", "incident_id": "INC-013", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732184.105929}
+{"event": "baseline.complete", "incident_id": "INC-015", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732192.122685}
+{"event": "workflow.node", "incident_id": "INC-015", "node": "diagnose", "prediction": "capacity_saturation", "system": "durable", "timestamp": 1785732192.1711495}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-015", "node": "verify", "system": "durable", "timestamp": 1785732192.172741}
+{"action": "scale_service", "event": "workflow.node", "incident_id": "INC-015", "node": "plan", "system": "durable", "timestamp": 1785732192.1740868}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-015", "node": "policy", "system": "durable", "timestamp": 1785732192.174847}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-015", "node": "approval", "system": "durable", "timestamp": 1785732192.2202058}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-015", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732192.241937}
+{"event": "workflow.node", "incident_id": "INC-015", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732192.2442298}
+{"event": "workflow.node", "incident_id": "INC-015", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732192.2455974}
+{"event": "baseline.complete", "incident_id": "INC-006", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732198.3477905}
+{"event": "workflow.node", "incident_id": "INC-006", "node": "diagnose", "prediction": "database_lock_contention", "system": "durable", "timestamp": 1785732198.3962877}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-006", "node": "verify", "system": "durable", "timestamp": 1785732198.398697}
+{"action": "restart_service", "event": "workflow.node", "incident_id": "INC-006", "node": "plan", "system": "durable", "timestamp": 1785732198.400166}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-006", "node": "policy", "system": "durable", "timestamp": 1785732198.4011292}
+{"approved": false, "event": "workflow.node", "incident_id": "INC-006", "node": "approval", "system": "durable", "timestamp": 1785732198.4487176}
+{"event": "workflow.node", "incident_id": "INC-006", "node": "close", "system": "durable", "terminal_status": "rejected_by_operator", "timestamp": 1785732198.4505293}
+{"event": "baseline.complete", "incident_id": "INC-004", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732205.4233892}
+{"event": "workflow.node", "incident_id": "INC-004", "node": "diagnose", "prediction": "dependency_outage", "system": "durable", "timestamp": 1785732205.4821396}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-004", "node": "verify", "system": "durable", "timestamp": 1785732205.4857655}
+{"action": "restart_service", "event": "workflow.node", "incident_id": "INC-004", "node": "plan", "system": "durable", "timestamp": 1785732205.4881113}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-004", "node": "policy", "system": "durable", "timestamp": 1785732205.4891503}
+{"approved": false, "event": "workflow.node", "incident_id": "INC-004", "node": "approval", "system": "durable", "timestamp": 1785732205.5257077}
+{"event": "workflow.node", "incident_id": "INC-004", "node": "close", "system": "durable", "terminal_status": "rejected_by_operator", "timestamp": 1785732205.527668}
+{"event": "baseline.complete", "incident_id": "INC-005", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732209.762561}
+{"event": "workflow.node", "incident_id": "INC-005", "node": "diagnose", "prediction": "configuration_error", "system": "durable", "timestamp": 1785732209.8153446}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-005", "node": "verify", "system": "durable", "timestamp": 1785732209.816884}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-005", "node": "plan", "system": "durable", "timestamp": 1785732209.8183157}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-005", "node": "policy", "system": "durable", "timestamp": 1785732209.8192651}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-005", "node": "approval", "system": "durable", "timestamp": 1785732209.8634515}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-005", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732209.883287}
+{"event": "workflow.node", "incident_id": "INC-005", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732209.8854637}
+{"event": "workflow.node", "incident_id": "INC-005", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732209.8869479}
+{"event": "baseline.complete", "incident_id": "INC-002", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732216.154517}
+{"event": "workflow.node", "incident_id": "INC-002", "node": "diagnose", "prediction": "memory_leak", "system": "durable", "timestamp": 1785732216.2007692}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-002", "node": "verify", "system": "durable", "timestamp": 1785732216.2024434}
+{"action": "restart_service", "event": "workflow.node", "incident_id": "INC-002", "node": "plan", "system": "durable", "timestamp": 1785732216.2038956}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-002", "node": "policy", "system": "durable", "timestamp": 1785732216.204808}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-002", "node": "approval", "system": "durable", "timestamp": 1785732216.249177}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-002", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732216.271733}
+{"event": "workflow.node", "incident_id": "INC-002", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732216.274014}
+{"event": "workflow.node", "incident_id": "INC-002", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732216.2754788}
+{"event": "baseline.complete", "incident_id": "INC-019", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732223.1480465}
+{"event": "workflow.node", "incident_id": "INC-019", "node": "diagnose", "prediction": "deployment_regression", "system": "durable", "timestamp": 1785732223.1930892}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-019", "node": "verify", "system": "durable", "timestamp": 1785732223.19459}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-019", "node": "plan", "system": "durable", "timestamp": 1785732223.1962595}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-019", "node": "policy", "system": "durable", "timestamp": 1785732223.1973236}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-019", "node": "approval", "system": "durable", "timestamp": 1785732223.2403955}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-019", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732223.263339}
+{"event": "workflow.node", "incident_id": "INC-019", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732223.2656271}
+{"event": "workflow.node", "incident_id": "INC-019", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732223.2670693}
+{"event": "baseline.complete", "incident_id": "INC-009", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732227.9074335}
+{"event": "workflow.node", "incident_id": "INC-009", "node": "diagnose", "prediction": "capacity_saturation", "system": "durable", "timestamp": 1785732227.957803}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-009", "node": "verify", "system": "durable", "timestamp": 1785732227.9594347}
+{"action": "scale_service", "event": "workflow.node", "incident_id": "INC-009", "node": "plan", "system": "durable", "timestamp": 1785732227.960767}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-009", "node": "policy", "system": "durable", "timestamp": 1785732227.9616122}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-009", "node": "approval", "system": "durable", "timestamp": 1785732228.0020206}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-009", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732228.0165417}
+{"event": "workflow.node", "incident_id": "INC-009", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732228.017788}
+{"event": "workflow.node", "incident_id": "INC-009", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732228.0195088}
+{"event": "baseline.complete", "incident_id": "INC-016", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732233.6136012}
+{"event": "workflow.node", "incident_id": "INC-016", "node": "diagnose", "prediction": "dependency_outage", "system": "durable", "timestamp": 1785732233.6612086}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-016", "node": "verify", "system": "durable", "timestamp": 1785732233.6624737}
+{"action": "open_ticket", "event": "workflow.node", "incident_id": "INC-016", "node": "plan", "system": "durable", "timestamp": 1785732233.6640916}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-016", "node": "policy", "system": "durable", "timestamp": 1785732233.6650069}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-016", "node": "approval", "system": "durable", "timestamp": 1785732233.7104816}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-016", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732233.726226}
+{"event": "workflow.node", "incident_id": "INC-016", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732233.7282758}
+{"event": "workflow.node", "incident_id": "INC-016", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732233.7299604}
+{"event": "baseline.complete", "incident_id": "INC-010", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732241.418861}
+{"event": "workflow.node", "incident_id": "INC-010", "node": "diagnose", "prediction": "dependency_outage", "system": "durable", "timestamp": 1785732241.4746945}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-010", "node": "verify", "system": "durable", "timestamp": 1785732241.4764113}
+{"action": "restart_service", "event": "workflow.node", "incident_id": "INC-010", "node": "plan", "system": "durable", "timestamp": 1785732241.4780345}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-010", "node": "policy", "system": "durable", "timestamp": 1785732241.4790993}
+{"approved": false, "event": "workflow.node", "incident_id": "INC-010", "node": "approval", "system": "durable", "timestamp": 1785732241.5245469}
+{"event": "workflow.node", "incident_id": "INC-010", "node": "close", "system": "durable", "terminal_status": "rejected_by_operator", "timestamp": 1785732241.5265026}
+{"event": "baseline.complete", "incident_id": "INC-021", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732246.0783567}
+{"event": "workflow.node", "incident_id": "INC-021", "node": "diagnose", "prediction": "capacity_saturation", "system": "durable", "timestamp": 1785732246.125373}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-021", "node": "verify", "system": "durable", "timestamp": 1785732246.1270504}
+{"action": "scale_service", "event": "workflow.node", "incident_id": "INC-021", "node": "plan", "system": "durable", "timestamp": 1785732246.1284232}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-021", "node": "policy", "system": "durable", "timestamp": 1785732246.1292794}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-021", "node": "approval", "system": "durable", "timestamp": 1785732246.1716268}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-021", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732246.185993}
+{"event": "workflow.node", "incident_id": "INC-021", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732246.1873598}
+{"event": "workflow.node", "incident_id": "INC-021", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732246.188985}
+{"event": "baseline.complete", "incident_id": "INC-007", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732251.1990707}
+{"event": "workflow.node", "incident_id": "INC-007", "node": "diagnose", "prediction": "deployment_regression", "system": "durable", "timestamp": 1785732251.2462838}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-007", "node": "verify", "system": "durable", "timestamp": 1785732251.247669}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-007", "node": "plan", "system": "durable", "timestamp": 1785732251.2492623}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-007", "node": "policy", "system": "durable", "timestamp": 1785732251.2502363}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-007", "node": "approval", "system": "durable", "timestamp": 1785732251.2923694}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-007", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732251.3091712}
+{"event": "workflow.node", "incident_id": "INC-007", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732251.3111064}
+{"event": "workflow.node", "incident_id": "INC-007", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732251.3125114}
+{"event": "baseline.complete", "incident_id": "INC-001", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732255.3471198}
+{"event": "workflow.node", "incident_id": "INC-001", "node": "diagnose", "prediction": "deployment_regression", "system": "durable", "timestamp": 1785732255.394238}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-001", "node": "verify", "system": "durable", "timestamp": 1785732255.3958077}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-001", "node": "plan", "system": "durable", "timestamp": 1785732255.3972116}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-001", "node": "policy", "system": "durable", "timestamp": 1785732255.3981292}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-001", "node": "approval", "system": "durable", "timestamp": 1785732255.442187}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-001", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732255.4575882}
+{"event": "workflow.node", "incident_id": "INC-001", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732255.4589803}
+{"event": "workflow.node", "incident_id": "INC-001", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732255.4608455}
+{"event": "baseline.complete", "incident_id": "INC-018", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732260.4956522}
+{"event": "workflow.node", "incident_id": "INC-018", "node": "diagnose", "prediction": "database_lock_contention", "system": "durable", "timestamp": 1785732260.54389}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-018", "node": "verify", "system": "durable", "timestamp": 1785732260.5454662}
+{"action": "restart_service", "event": "workflow.node", "incident_id": "INC-018", "node": "plan", "system": "durable", "timestamp": 1785732260.5468342}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-018", "node": "policy", "system": "durable", "timestamp": 1785732260.5477412}
+{"approved": false, "event": "workflow.node", "incident_id": "INC-018", "node": "approval", "system": "durable", "timestamp": 1785732260.5887096}
+{"event": "workflow.node", "incident_id": "INC-018", "node": "close", "system": "durable", "terminal_status": "rejected_by_operator", "timestamp": 1785732260.590417}
+{"event": "baseline.complete", "incident_id": "INC-008", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732265.6175861}
+{"event": "workflow.node", "incident_id": "INC-008", "node": "diagnose", "prediction": "memory_leak", "system": "durable", "timestamp": 1785732265.6717813}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-008", "node": "verify", "system": "durable", "timestamp": 1785732265.6738112}
+{"action": "restart_service", "event": "workflow.node", "incident_id": "INC-008", "node": "plan", "system": "durable", "timestamp": 1785732265.6770406}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-008", "node": "policy", "system": "durable", "timestamp": 1785732265.6782417}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-008", "node": "approval", "system": "durable", "timestamp": 1785732265.7131138}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-008", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732265.7305672}
+{"event": "workflow.node", "incident_id": "INC-008", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732265.7333915}
+{"event": "workflow.node", "incident_id": "INC-008", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732265.735128}
+{"event": "baseline.complete", "incident_id": "INC-017", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732270.5757885}
+{"event": "workflow.node", "incident_id": "INC-017", "node": "diagnose", "prediction": "configuration_error", "system": "durable", "timestamp": 1785732270.6242783}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-017", "node": "verify", "system": "durable", "timestamp": 1785732270.62599}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-017", "node": "plan", "system": "durable", "timestamp": 1785732270.6273952}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-017", "node": "policy", "system": "durable", "timestamp": 1785732270.628274}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-017", "node": "approval", "system": "durable", "timestamp": 1785732270.6699953}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-017", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732270.6913571}
+{"event": "workflow.node", "incident_id": "INC-017", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732270.6934378}
+{"event": "workflow.node", "incident_id": "INC-017", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732270.6948931}
+{"event": "baseline.complete", "incident_id": "INC-013", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732275.8254383}
+{"event": "workflow.node", "incident_id": "INC-013", "node": "diagnose", "prediction": "deployment_regression", "system": "durable", "timestamp": 1785732275.8719692}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-013", "node": "verify", "system": "durable", "timestamp": 1785732275.8735871}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-013", "node": "plan", "system": "durable", "timestamp": 1785732275.8750048}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-013", "node": "policy", "system": "durable", "timestamp": 1785732275.87592}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-013", "node": "approval", "system": "durable", "timestamp": 1785732275.9203217}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-013", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732275.9422405}
+{"event": "workflow.node", "incident_id": "INC-013", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732275.9444919}
+{"event": "workflow.node", "incident_id": "INC-013", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732275.945815}
+{"event": "baseline.complete", "incident_id": "INC-015", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732285.1063998}
+{"event": "workflow.node", "incident_id": "INC-015", "node": "diagnose", "prediction": "capacity_saturation", "system": "durable", "timestamp": 1785732285.1537209}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-015", "node": "verify", "system": "durable", "timestamp": 1785732285.1566691}
+{"action": "scale_service", "event": "workflow.node", "incident_id": "INC-015", "node": "plan", "system": "durable", "timestamp": 1785732285.1581655}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-015", "node": "policy", "system": "durable", "timestamp": 1785732285.1590064}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-015", "node": "approval", "system": "durable", "timestamp": 1785732285.2011807}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-015", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732285.2242968}
+{"event": "workflow.node", "incident_id": "INC-015", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732285.2258868}
+{"event": "workflow.node", "incident_id": "INC-015", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732285.2281067}
+{"event": "baseline.complete", "incident_id": "INC-006", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732289.951838}
+{"event": "workflow.node", "incident_id": "INC-006", "node": "diagnose", "prediction": "database_lock_contention", "system": "durable", "timestamp": 1785732290.0034037}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-006", "node": "verify", "system": "durable", "timestamp": 1785732290.006005}
+{"action": "restart_service", "event": "workflow.node", "incident_id": "INC-006", "node": "plan", "system": "durable", "timestamp": 1785732290.008377}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-006", "node": "policy", "system": "durable", "timestamp": 1785732290.0094645}
+{"approved": false, "event": "workflow.node", "incident_id": "INC-006", "node": "approval", "system": "durable", "timestamp": 1785732290.0498664}
+{"event": "workflow.node", "incident_id": "INC-006", "node": "close", "system": "durable", "terminal_status": "rejected_by_operator", "timestamp": 1785732290.0518723}
+{"event": "baseline.complete", "incident_id": "INC-004", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732294.6621287}
+{"event": "workflow.node", "incident_id": "INC-004", "node": "diagnose", "prediction": "deployment_regression", "system": "durable", "timestamp": 1785732294.708758}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-004", "node": "verify", "system": "durable", "timestamp": 1785732294.710363}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-004", "node": "plan", "system": "durable", "timestamp": 1785732294.7116978}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-004", "node": "policy", "system": "durable", "timestamp": 1785732294.7126093}
+{"approved": false, "event": "workflow.node", "incident_id": "INC-004", "node": "approval", "system": "durable", "timestamp": 1785732294.7543416}
+{"event": "workflow.node", "incident_id": "INC-004", "node": "close", "system": "durable", "terminal_status": "rejected_by_operator", "timestamp": 1785732294.75621}
+{"event": "baseline.complete", "incident_id": "INC-005", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732299.1737728}
+{"event": "workflow.node", "incident_id": "INC-005", "node": "diagnose", "prediction": "configuration_error", "system": "durable", "timestamp": 1785732299.2198262}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-005", "node": "verify", "system": "durable", "timestamp": 1785732299.2213223}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-005", "node": "plan", "system": "durable", "timestamp": 1785732299.2227314}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-005", "node": "policy", "system": "durable", "timestamp": 1785732299.2236514}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-005", "node": "approval", "system": "durable", "timestamp": 1785732299.2640054}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-005", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732299.2860267}
+{"event": "workflow.node", "incident_id": "INC-005", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732299.2876508}
+{"event": "workflow.node", "incident_id": "INC-005", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732299.2890315}
+{"event": "baseline.complete", "incident_id": "INC-002", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732303.9030592}
+{"event": "workflow.node", "incident_id": "INC-002", "node": "diagnose", "prediction": "memory_leak", "system": "durable", "timestamp": 1785732303.9485989}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-002", "node": "verify", "system": "durable", "timestamp": 1785732303.950114}
+{"action": "restart_service", "event": "workflow.node", "incident_id": "INC-002", "node": "plan", "system": "durable", "timestamp": 1785732303.9517536}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-002", "node": "policy", "system": "durable", "timestamp": 1785732303.9526305}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-002", "node": "approval", "system": "durable", "timestamp": 1785732303.994251}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-002", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732304.0161314}
+{"event": "workflow.node", "incident_id": "INC-002", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732304.0183253}
+{"event": "workflow.node", "incident_id": "INC-002", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732304.019673}
+{"event": "baseline.complete", "incident_id": "INC-019", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732310.8911903}
+{"event": "workflow.node", "incident_id": "INC-019", "node": "diagnose", "prediction": "deployment_regression", "system": "durable", "timestamp": 1785732310.9380145}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-019", "node": "verify", "system": "durable", "timestamp": 1785732310.939407}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-019", "node": "plan", "system": "durable", "timestamp": 1785732310.9409938}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-019", "node": "policy", "system": "durable", "timestamp": 1785732310.9417784}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-019", "node": "approval", "system": "durable", "timestamp": 1785732310.9880607}
+{"deduplicated": true, "event": "workflow.node", "incident_id": "INC-019", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732311.0124342}
+{"event": "workflow.node", "incident_id": "INC-019", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732311.0141296}
+{"event": "workflow.node", "incident_id": "INC-019", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732311.0162885}
+{"event": "baseline.complete", "incident_id": "INC-009", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732316.624767}
+{"event": "workflow.node", "incident_id": "INC-009", "node": "diagnose", "prediction": "capacity_saturation", "system": "durable", "timestamp": 1785732316.6702216}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-009", "node": "verify", "system": "durable", "timestamp": 1785732316.6715338}
+{"action": "scale_service", "event": "workflow.node", "incident_id": "INC-009", "node": "plan", "system": "durable", "timestamp": 1785732316.673135}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-009", "node": "policy", "system": "durable", "timestamp": 1785732316.6739812}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-009", "node": "approval", "system": "durable", "timestamp": 1785732316.7135835}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-009", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732316.7279537}
+{"event": "workflow.node", "incident_id": "INC-009", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732316.7292194}
+{"event": "workflow.node", "incident_id": "INC-009", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732316.730454}
+{"event": "baseline.complete", "incident_id": "INC-016", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732321.064973}
+{"event": "workflow.node", "incident_id": "INC-016", "node": "diagnose", "prediction": "dependency_outage", "system": "durable", "timestamp": 1785732321.110385}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-016", "node": "verify", "system": "durable", "timestamp": 1785732321.1120265}
+{"action": "restart_service", "event": "workflow.node", "incident_id": "INC-016", "node": "plan", "system": "durable", "timestamp": 1785732321.1133928}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-016", "node": "policy", "system": "durable", "timestamp": 1785732321.1144474}
+{"approved": false, "event": "workflow.node", "incident_id": "INC-016", "node": "approval", "system": "durable", "timestamp": 1785732321.1588368}
+{"event": "workflow.node", "incident_id": "INC-016", "node": "close", "system": "durable", "terminal_status": "rejected_by_operator", "timestamp": 1785732321.1606371}
+{"event": "baseline.complete", "incident_id": "INC-010", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732327.8193877}
+{"event": "workflow.node", "incident_id": "INC-010", "node": "diagnose", "prediction": "dependency_outage", "system": "durable", "timestamp": 1785732327.866231}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-010", "node": "verify", "system": "durable", "timestamp": 1785732327.8678255}
+{"action": "open_ticket", "event": "workflow.node", "incident_id": "INC-010", "node": "plan", "system": "durable", "timestamp": 1785732327.8692758}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-010", "node": "policy", "system": "durable", "timestamp": 1785732327.870396}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-010", "node": "approval", "system": "durable", "timestamp": 1785732327.9105337}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-010", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732327.9264238}
+{"event": "workflow.node", "incident_id": "INC-010", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732327.9277492}
+{"event": "workflow.node", "incident_id": "INC-010", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732327.9293187}
+{"event": "baseline.complete", "incident_id": "INC-021", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732332.7984912}
+{"event": "workflow.node", "incident_id": "INC-021", "node": "diagnose", "prediction": "capacity_saturation", "system": "durable", "timestamp": 1785732332.8447335}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-021", "node": "verify", "system": "durable", "timestamp": 1785732332.8460603}
+{"action": "scale_service", "event": "workflow.node", "incident_id": "INC-021", "node": "plan", "system": "durable", "timestamp": 1785732332.8474205}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-021", "node": "policy", "system": "durable", "timestamp": 1785732332.8482406}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-021", "node": "approval", "system": "durable", "timestamp": 1785732332.896226}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-021", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732332.9099498}
+{"event": "workflow.node", "incident_id": "INC-021", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732332.9111931}
+{"event": "workflow.node", "incident_id": "INC-021", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732332.9132338}
+{"event": "baseline.complete", "incident_id": "INC-007", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732338.4243588}
+{"event": "workflow.node", "incident_id": "INC-007", "node": "diagnose", "prediction": "deployment_regression", "system": "durable", "timestamp": 1785732338.4899964}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-007", "node": "verify", "system": "durable", "timestamp": 1785732338.492}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-007", "node": "plan", "system": "durable", "timestamp": 1785732338.4954484}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-007", "node": "policy", "system": "durable", "timestamp": 1785732338.4965403}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-007", "node": "approval", "system": "durable", "timestamp": 1785732338.5309386}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-007", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732338.5452888}
+{"event": "workflow.node", "incident_id": "INC-007", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732338.5468698}
+{"event": "workflow.node", "incident_id": "INC-007", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732338.5490444}
+{"event": "baseline.complete", "incident_id": "INC-001", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732343.531492}
+{"event": "workflow.node", "incident_id": "INC-001", "node": "diagnose", "prediction": "deployment_regression", "system": "durable", "timestamp": 1785732343.5788562}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-001", "node": "verify", "system": "durable", "timestamp": 1785732343.5804994}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-001", "node": "plan", "system": "durable", "timestamp": 1785732343.5818985}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-001", "node": "policy", "system": "durable", "timestamp": 1785732343.5827644}
+{"approved": true, "event": "workflow.node", "incident_id": "INC-001", "node": "approval", "system": "durable", "timestamp": 1785732343.6264358}
+{"deduplicated": false, "event": "workflow.node", "incident_id": "INC-001", "node": "execute", "status": "completed", "system": "durable", "timestamp": 1785732343.6418247}
+{"event": "workflow.node", "incident_id": "INC-001", "node": "validate", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732343.6432579}
+{"event": "workflow.node", "incident_id": "INC-001", "node": "close", "system": "durable", "terminal_status": "resolved", "timestamp": 1785732343.6450098}
+{"event": "baseline.complete", "incident_id": "INC-018", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732348.3751907}
+{"event": "workflow.node", "incident_id": "INC-018", "node": "diagnose", "prediction": "database_lock_contention", "system": "durable", "timestamp": 1785732348.4186857}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-018", "node": "verify", "system": "durable", "timestamp": 1785732348.4200196}
+{"action": "restart_service", "event": "workflow.node", "incident_id": "INC-018", "node": "plan", "system": "durable", "timestamp": 1785732348.4213684}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-018", "node": "policy", "system": "durable", "timestamp": 1785732348.422491}
+{"approved": false, "event": "workflow.node", "incident_id": "INC-018", "node": "approval", "system": "durable", "timestamp": 1785732348.4642425}
+{"event": "workflow.node", "incident_id": "INC-018", "node": "close", "system": "durable", "terminal_status": "rejected_by_operator", "timestamp": 1785732348.4658196}
+{"event": "baseline.complete", "incident_id": "INC-008", "system": "baseline", "terminal_status": "resolved", "timestamp": 1785732352.8179922}
+{"event": "workflow.node", "incident_id": "INC-008", "node": "diagnose", "prediction": "memory_leak", "system": "durable", "timestamp": 1785732352.865857}
+{"event": "workflow.node", "grounded": true, "incident_id": "INC-008", "node": "verify", "system": "durable", "timestamp": 1785732352.8672256}
+{"action": "rollback_deployment", "event": "workflow.node", "incident_id": "INC-008", "node": "plan", "system": "durable", "timestamp": 1785732352.8685596}
+{"allowed": true, "event": "workflow.node", "incident_id": "INC-008", "node": "policy", "system": "durable", "timestamp": 1785732352.869464}
+{"approved": false, "event": "workflow.node", "incident_id": "INC-008", "node": "approval", "system": "durable", "timestamp": 1785732352.9120986}
+{"event": "workflow.node", "incident_id": "INC-008", "node": "close", "system": "durable", "terminal_status": "rejected_by_operator", "timestamp": 1785732352.913838}

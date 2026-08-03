@@ -6,14 +6,14 @@ documentation pattern used in `ai_project_artifacts`: portfolio summary,
 repository map, methods, compute settings, results and judgment, future work, and
 debugging notes.
 
-> **Version:** ver 0.2: document Projects 5-8 execution scaffolds<br>
-> **Updated:** 2026-08-03 00:01 EDT
+> **Version:** ver 0.3: add measured Project 4 evaluation<br>
+> **Updated:** 2026-08-03 00:50 EDT
 
 ## Portfolio Summary
 
 | Project | Primary goal | Main comparison | Current result | Judgment |
 | --- | --- | --- | --- | --- |
-| 4. Durable Incident-Response Agent | Build a recoverable, approval-gated agent for simulated service incidents | Stateless linear loop vs. checkpointed LangGraph workflow | Preflight complete: 11 deterministic tests passed; final API evaluation has not run | The workflow mechanics, safety policy, idempotency, recovery, redaction, and report pipeline are ready; no model-quality claim should be made yet |
+| 4. Durable Incident-Response Agent | Build a recoverable, approval-gated agent for simulated service incidents | Stateless linear loop vs. checkpointed LangGraph workflow | Measured API run: 32 paired observations per system, 64 model calls, and 13 final local tests passed | The durable path preserved task quality, eliminated duplicate effects and unsafe allows, and recovered every executed crash, at roughly 10x workflow latency |
 | 5. Governed Text-to-SQL Analyst | Answer analytics questions while enforcing database policy | One-shot SQL vs. schema-grounded governed repair | Preflight complete: 7 tests passed and the deterministic held-out dry run completed; final API evaluation has not run | SQL execution, policy, repair, PII, and report mechanics are ready; dry-run scores isolate controls rather than model quality |
 | 6. Test-Driven Code-Repair Agent | Repair compact Python defects without accepting unsafe or overfit patches | One-shot patch vs. bounded test-driven repair loop | Preflight complete: 6 tests passed; pinned QuixBugs evaluation has not run | Repository mapping, patch constraints, hidden-test gating, rollback, and report mechanics are ready |
 | 7. Secure Interoperable Agent Gateway | Preserve utility while blocking protocol-layer attacks | Undefended vs. defended A2A/MCP-style workflow | Preflight complete: 7 tests passed and the deterministic held-out dry run completed; optional structured policy review has not run | The local protocol controls block the included attacks without reducing benign success; this is not production security certification |
@@ -33,13 +33,13 @@ debugging notes.
 | [`project4/data/cache/project4_incidents.json`](project4/data/cache/project4_incidents.json) | Fixed benchmark containing 24 deterministic incidents across four simulated services |
 | [`project4/data/cache/project4_incidents.sha256`](project4/data/cache/project4_incidents.sha256) | SHA-256 checksum protecting the committed benchmark from accidental changes |
 | [`project4/src/project4_agent/`](project4/src/project4_agent/) | Typed schemas, dataset generation, planners, policy engine, SQLite simulator, durable graph, telemetry, and evaluation code |
-| [`project4/tests/`](project4/tests/) | Deterministic tests for data isolation, planning, policy, idempotency, compensation, telemetry, and graph recovery |
+| [`project4/tests/`](project4/tests/) | Thirteen deterministic tests for data isolation, planning, strict schemas, policy, idempotency, compensation, telemetry, recovery, and metric aggregation |
 | [`project4/tools/build_notebook.py`](project4/tools/build_notebook.py) | Rebuilds the notebook deterministically with stable cell IDs `P04-C00` through `P04-C10` |
 | [`project4/tools/generate_incident_dataset.py`](project4/tools/generate_incident_dataset.py) | Reproduces the fixed incident benchmark and checksum |
 | [`project4/tools/generate_report.py`](project4/tools/generate_report.py) | Generates measured charts, procedure diagram, and final PDF from saved result JSON |
 | [`project4/tools/validate_project.py`](project4/tools/validate_project.py) | Checks structure, notebook cell order, dataset integrity, output contract, local paths, and key-shaped strings |
 | [`project4/debug_log/project4_debug_log.md`](project4/debug_log/project4_debug_log.md) | Records material setup, validation, security, and PDF-generation issues and fixes |
-| [`project4/output/`](project4/output/) | Reserved for measured summaries, traces, report assets, and final PDF; no placeholder results are committed |
+| [`project4/output/`](project4/output/) | Measured per-case results, summary, representative samples, redacted traces, report assets, and final PDF from the completed API evaluation |
 
 ## Project 4: Durable Incident-Response Agent
 
@@ -107,42 +107,40 @@ duplicate effects, compensation, trajectory length, latency, tokens, and cost.
 
 | Item | Configuration |
 | --- | --- |
-| Preflight compute | Local macOS CPU using an isolated Python 3.13 dependency directory; no GPU and no API key |
-| Verified preflight time | Eleven tests completed in 0.17 seconds; one-repetition deterministic evaluator dry run completed in about 0.7 seconds |
-| Intended complete runtime | Google Colab CPU; approximately 45-90 minutes for the API-backed experiment and artifact review |
+| Evaluation compute | Google Colab CPU, Python 3.12.13; no GPU required |
+| Measured evaluation time | 178.67 seconds for the API-backed paired evaluation; report generation and validation completed afterward |
+| Final verification | Thirteen local deterministic tests passed in 0.20 seconds; the notebook's pre-evaluation suite passed its then-current 12 tests in 0.86 seconds |
 | Dataset | 24 incidents, four services, six root causes per service, eight development cases, and sixteen held-out test cases |
 | Dataset checksum | `46e6e39a2d328a4c8f120f311db9f0bc5b80e5c87360f8640124c8196e4337e6` |
 | Evaluation design | Two repetitions and paired decisions; half of held-out cases receive a post-commit crash |
-| Default API planner | `gpt-5.6-luna` with low reasoning effort; API mode is opt-in |
+| API planner | `gpt-5.6-luna` with low reasoning effort and strict Pydantic structured outputs |
 | API limits | Maximum 120 calls, 450 output tokens per structured call, two retries, and USD 5.00 estimated cost |
-| Expected default API use | 64 structured calls: 16 cases x diagnosis and planning x two repetitions |
+| Measured API use | 64 structured calls, 48,171 input tokens, 13,298 output tokens, USD 0.127959 estimated cost |
 | Action boundary | Restart, rollback, scale, and open-ticket simulations writing only to local SQLite |
 
-### Preflight Results and Judgment
+### Results and Judgment
 
-| Check or metric | Stateless baseline | Durable workflow | Judgment |
+| Metric | Stateless baseline | Durable workflow | Judgment |
 | --- | ---: | ---: | --- |
-| Deterministic test suite | Included | Included | **11 of 11 tests passed** across shared components and both workflows |
-| Post-commit crash recovery | 100% in the dry run | 100% in the dry run | Both restarted, but only the durable path preserved exactly one primary effect |
-| Cases with duplicate primary effects | 50% in the one-repetition dry run | 0% in the one-repetition dry run | The injected crash affected half of cases; the baseline repeated effects while the ledger deduplicated replay |
-| Adversarial plans blocked | 20% with the coarse action-name check | 100% with the strict policy | The strict policy rejected unknown actions, excessive scale, wrong versions, wrong targets, and external callbacks |
-| Dataset integrity | Shared checksum verified | Shared checksum verified | Both systems receive the same committed benchmark |
-| Privacy and structure validation | Shared validator passed | Shared validator passed | No plaintext key or absolute local user path was found in project content |
+| Root-cause accuracy | 96.875% | 96.875% | Frozen paired decisions correctly isolate orchestration effects from planner variation |
+| Remediation accuracy | 71.875% | 71.875% | The reliability layer does not improve model task quality by design |
+| Controlled completion | 100% | 100% | Resolution, policy blocks, operator rejection, and compensation are treated explicitly |
+| Executed-crash recovery | 100% (`n=16`) | 100% (`n=12`) | Four durable cases were rejected before execution; every workflow that reached the injected crash recovered |
+| Cases with duplicate primary effects | 50% | 0% | The stateless restart repeated post-commit effects; the durable ledger deduplicated replay |
+| Adversarial plans blocked | 20% | 100% | Strict typed policy reduced unsafe allows from 80% to 0% over 80 challenges |
+| Mean workflow latency | 11.42 ms | 112.02 ms | Checkpointing, approval, validation, and recovery controls add roughly 10x orchestration latency |
 
-These are deterministic preflight observations, not the final Project 4 result.
-The planner in the dry run was rule based, the result JSON was written only to a
-temporary directory, and no OpenAI call was made. The preflight supports the
-engineering claim that the implemented ledger and graph recover as designed. It
-does not establish LLM diagnosis quality, production safety, or real-system
-exactly-once execution.
+The measured result supports the engineering claim: durable orchestration adds
+stronger execution safety and replay correctness without changing the frozen
+planner's diagnosis or remediation quality. The tradeoff is substantial local
+workflow latency and more trajectory steps. No evaluated action failed, so the
+compensation path remains verified by deterministic tests rather than the measured
+held-out run. The tools and incidents are simulations; this is not a claim of
+production exactly-once execution or universal model safety.
 
-Final judgment must wait for notebook cell `P04-C08` to run the held-out API-backed
-comparison and cell `P04-C10` to persist and validate the report artifacts.
+### Evaluation Figures
 
-### Training and Evaluation Figures
-
-No final figures are committed before execution. After a measured run, the report
-pipeline will create:
+The completed measured run generated:
 
 - `project4/output/project4_report_assets/procedure_diagram.svg`
 - `project4/output/project4_report_assets/quality_metrics.png`
@@ -150,9 +148,9 @@ pipeline will create:
 - `project4/output/project4_report_assets/latency_cost_tradeoff.png`
 - `project4/output/project4_report.pdf`
 
-The generator was dry-tested with temporary measured-format data. The resulting
-two-page PDF was rendered page by page to verify its white background, RGB charts,
-table readability, margins, and non-overlapping layout.
+The two-page PDF was regenerated after correcting the executed-crash denominator,
+then rendered page by page. Its white background, RGB charts, trial-count table,
+margins, and non-overlapping layout were visually verified.
 
 ### Future Optimization
 
@@ -181,6 +179,10 @@ table readability, margins, and non-overlapping layout.
 | Privacy-validator false positives | Static fixtures looked like the secrets and paths they were designed to detect | Built test tokens and path roots from noncontiguous fragments while retaining runtime detection |
 | Transparent PDF rendered black | ReportLab page transparency was interpreted inconsistently by the macOS renderer | Painted an explicit white background and added a restrained footer |
 | Chart fills disappeared and limits overflowed | Embedded RGBA PNG behavior and an over-tall second-page layout | Flattened charts to RGB and resized the second-page figures into a verified two-page report |
+| Colab Secret timed out in VS Code | The extension lacks the Colab web UI secret-fetch channel | Added hidden `getpass` fallback; the key remained only in kernel memory |
+| OpenAI rejected the action schema | An open parameter dictionary violated strict structured-output requirements | Replaced it with a closed typed model and added a schema regression test |
+| Reused Colab clone stayed stale | Candidate selection bypassed the pull branch and Python cached old modules | Fast-forward every reused clone and evict only Project 4 modules before import |
+| Crash recovery appeared as 75% | Operator-rejected cases were counted although execution and fault injection never occurred | Restricted the denominator to executed crash trials and exposed `n=16` versus `n=12` |
 
 The full cell-specific history remains in
 [`project4/debug_log/project4_debug_log.md`](project4/debug_log/project4_debug_log.md).

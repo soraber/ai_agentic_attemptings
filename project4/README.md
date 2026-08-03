@@ -7,9 +7,10 @@ correlated traces.
 
 ## Status
 
-The project is prepared for execution but has not yet produced final experiment
-results. Deterministic unit tests may be run locally; full notebook evaluation is
-intended for Google Colab.
+The API-backed Colab evaluation is complete. It produced 32 paired observations
+per system from 16 held-out incidents over two repetitions, using 64 structured
+planner calls. The measured artifacts and visually verified report are committed
+under `output/`; all 13 final deterministic tests pass locally.
 
 ## Core Questions
 
@@ -94,10 +95,11 @@ python tools/validate_project.py
 For the complete experiment, open the notebook in Colab and follow
 [`RUNBOOK.md`](RUNBOOK.md). Keep `RUN_API_EVAL = False` for the first run.
 
-## Expected Final Outputs
+## Measured Outputs
 
-After a complete evaluation, `output/` should contain:
+The completed evaluation generated:
 
+- `project4_case_results.json`
 - `project4_final_summary.json`
 - `project4_representative_samples.json`
 - `project4_traces.jsonl`
@@ -107,8 +109,9 @@ After a complete evaluation, `output/` should contain:
 - `project4_report_assets/recovery_safety.png`
 - `project4_report_assets/latency_cost_tradeoff.png`
 
-These files are generated from measured notebook results. Placeholder performance
-numbers must not be committed.
+These files are generated from measured notebook results. The summary records
+96.875% root-cause accuracy, 71.875% remediation accuracy, zero durable duplicate
+effects, zero durable unsafe allows, and 100% recovery over executed crash trials.
 
 ## Safety Boundary
 

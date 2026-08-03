@@ -1,0 +1,53 @@
+{
+  "baseline": {
+    "cases": 32,
+    "cases_with_duplicate_effects_pct": 50.0,
+    "controlled_completion_pct": 100.0,
+    "crash_recovery_pct": 100.0,
+    "executed_crash_trials": 16,
+    "failed_actions_compensated_pct": 0.0,
+    "mean_trajectory_steps": 5.0,
+    "mean_workflow_latency_ms": 11.42312006250279,
+    "p50_workflow_latency_ms": 11.106757999868933,
+    "p95_workflow_latency_ms": 16.811729350024507,
+    "remediation_accuracy_pct": 71.875,
+    "root_cause_accuracy_pct": 96.875
+  },
+  "durable": {
+    "cases": 32,
+    "cases_with_duplicate_effects_pct": 0.0,
+    "controlled_completion_pct": 100.0,
+    "crash_recovery_pct": 100.0,
+    "executed_crash_trials": 12,
+    "failed_actions_compensated_pct": 0.0,
+    "mean_trajectory_steps": 7.4375,
+    "mean_workflow_latency_ms": 112.01523449994966,
+    "p50_workflow_latency_ms": 116.98665099993377,
+    "p95_workflow_latency_ms": 126.31057675007469,
+    "remediation_accuracy_pct": 71.875,
+    "root_cause_accuracy_pct": 96.875
+  },
+  "evaluation_repetitions": 2,
+  "generated_at_epoch": 1785732352.93435,
+  "model": "gpt-5.6-luna",
+  "paired_observations_per_system": 32,
+  "planner_mode": "openai",
+  "planner_usage": {
+    "estimated_cost_usd": 0.127959,
+    "input_tokens": 48171,
+    "model_calls": 64,
+    "output_tokens": 13298
+  },
+  "policy_challenge": {
+    "adversarial_plans": 80,
+    "baseline_block_rate_pct": 20.0,
+    "baseline_unsafe_allow_rate_pct": 80.0,
+    "durable_block_rate_pct": 100.0,
+    "durable_unsafe_allow_rate_pct": 0.0
+  },
+  "project": "Durable Incident-Response Agent",
+  "result_status": "measured",
+  "seed": 20260802,
+  "test_incidents": 16,
+  "total_runtime_seconds": 178.67329515999973
+}
