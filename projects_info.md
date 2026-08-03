@@ -6,18 +6,18 @@ documentation pattern used in `ai_project_artifacts`: portfolio summary,
 repository map, methods, compute settings, results and judgment, future work, and
 debugging notes.
 
-> **Version:** ver 0.4: add measured Projects 5-8 evaluations<br>
-> **Updated:** 2026-08-03 01:49 EDT
+> **Version:** ver 0.5: add A100 local-model comparison paths<br>
+> **Updated:** 2026-08-03 02:03 EDT
 
 ## Portfolio Summary
 
 | Project | Primary goal | Main comparison | Current result | Judgment |
 | --- | --- | --- | --- | --- |
 | 4. Durable Incident-Response Agent | Build a recoverable, approval-gated agent for simulated service incidents | Stateless linear loop vs. checkpointed LangGraph workflow | Measured API run: 32 paired observations per system, 64 model calls, and 13 final local tests passed | The durable path preserved task quality, eliminated duplicate effects and unsafe allows, and recovered every executed crash, at roughly 10x workflow latency |
-| 5. Governed Text-to-SQL Analyst | Answer analytics questions while enforcing database policy | One-shot SQL vs. schema-grounded governed repair | Measured API run: 40 held-out questions, 50 calls, and 10 final tests passed | Governance doubled result-hash accuracy, improved repair, and blocked unsafe cases, but absolute SQL accuracy remains a clear optimization target |
-| 6. Test-Driven Code-Repair Agent | Repair compact Python defects without accepting unsafe or overfit patches | One-shot patch vs. bounded test-driven repair loop | Measured API run: 8 pinned defects per system, 18 calls, and 9 final tests passed | Iterative public-test feedback recovered one additional defect while hidden tests and exact rollback constrained acceptance |
+| 5. Governed Text-to-SQL Analyst | Answer analytics questions while enforcing database policy | One-shot SQL vs. schema-grounded governed repair | Measured API run complete; A100 comparison adds dense schema retrieval and local code-model planning | Governance doubled result-hash accuracy, improved repair, and blocked unsafe cases; the prepared GPU run will test whether local inference improves the still-limited absolute SQL accuracy |
+| 6. Test-Driven Code-Repair Agent | Repair compact Python defects without accepting unsafe or overfit patches | One-shot patch vs. bounded test-driven repair loop | Measured API run complete; A100 comparison adds a shared local code-model patch backend | Iterative public-test feedback recovered one additional defect while hidden tests and exact rollback constrained acceptance; the same harness can now compare local and API planners |
 | 7. Secure Interoperable Agent Gateway | Preserve utility while blocking protocol-layer attacks | Undefended vs. defended A2A/MCP-style workflow | Measured API run: 32 held-out cases, 32 review calls, and 8 final tests passed | The local controls eliminated included attacks without reducing benign utility; structured review was useful but correctly remained non-authoritative |
-| 8. Long-Term Memory Agent | Retrieve useful cross-session facts while honoring corrections, conflicts, and deletion | Recent window vs. episodic vs. hybrid memory | Measured API run: 80 QA items across 3 systems, 240 cached calls, and 11 final tests passed | Episodic retrieval beat the current hybrid weighting; strict exact match exposed substantial retrieval/answer-quality headroom while lifecycle deletion stayed complete |
+| 8. Long-Term Memory Agent | Retrieve useful cross-session facts while honoring corrections, conflicts, and deletion | Recent window vs. episodic vs. hybrid memory | Measured API run complete; A100 comparison adds dense event retrieval and a cached local answerer | Episodic retrieval beat the original lexical hybrid weighting; the prepared GPU run tests dense retrieval and local grounded answering while preserving lifecycle controls |
 
 ## Repository Map
 
@@ -197,12 +197,12 @@ The full cell-specific history remains in
 | [`project5/RUNBOOK.md`](project5/RUNBOOK.md) | Cell-by-cell commands, secrets, execution modes, budgets, and troubleshooting |
 | [`project5/config/default.json`](project5/config/default.json) | Split, planner, governance, repair, row, call, token, retry, and cost limits |
 | [`project5/data/cache/project5_questions.json`](project5/data/cache/project5_questions.json) | Fixed 50-question synthetic e-commerce benchmark |
-| [`project5/src/project5_agent/`](project5/src/project5_agent/) | DuckDB data, typed plans, SQLGlot policy, planners, governed execution, and paired evaluation |
+| [`project5/src/project5_agent/`](project5/src/project5_agent/) | DuckDB data, typed plans, SQLGlot policy, governed execution, paired evaluation, MiniLM schema retrieval, and a BF16 local planner |
 | [`project5/tests/`](project5/tests/) | Dataset integrity, SQL policy, PII masking, repair, export approval, and paired-agent tests |
 | [`project5/tools/`](project5/tools/) | Dataset, notebook, report, and structure/privacy generators and validators |
 | [`project5/background/project5_background.md`](project5/background/project5_background.md) | Schema grounding, executable SQL evaluation, AST policy, repair, and governance concepts |
 | [`project5/debug_log/project5_debug_log.md`](project5/debug_log/project5_debug_log.md) | Cell-specific preparation history |
-| [`project5/output/`](project5/output/) | Measured per-case results, summary, representative samples, traces, report assets, and final PDF |
+| [`project5/output/`](project5/output/) | Measured API results and report; the A100 notebook writes its independent comparison to `output/gpu/` |
 
 ### Project 6 Files
 
@@ -211,7 +211,7 @@ The full cell-specific history remains in
 | [`project6/project6_test_driven_code_repair.ipynb`](project6/project6_test_driven_code_repair.ipynb) | Stable cells `P06-C00` through `P06-C10` for pinned data, mapping, patching, tests, evaluation, and export |
 | [`project6/RUNBOOK.md`](project6/RUNBOOK.md) | QuixBugs preparation, execution modes, budgets, evidence checks, and troubleshooting |
 | [`project6/data/quixbugs_manifest.json`](project6/data/quixbugs_manifest.json) | Twelve-case manifest pinned to one exact upstream commit |
-| [`project6/src/project6_agent/`](project6/src/project6_agent/) | AST repository map, OpenAI patch planner, diff policy, subprocess runner, repair loop, rollback, and evaluation |
+| [`project6/src/project6_agent/`](project6/src/project6_agent/) | AST repository map, API and BF16 local patch planners, diff policy, subprocess runner, repair loop, rollback, and evaluation |
 | [`project6/tests/`](project6/tests/) | Deterministic tests for mapping, path/line policy, timeout, hidden regression rejection, acceptance, and rollback |
 | [`project6/tools/fetch_quixbugs.py`](project6/tools/fetch_quixbugs.py) | Download-once clone and pinned-revision verification |
 | [`project6/tools/generate_report.py`](project6/tools/generate_report.py) | Generates measured repair charts, procedure diagram, and PDF |
@@ -219,7 +219,7 @@ The full cell-specific history remains in
 | [`project6/tools/validate_project.py`](project6/tools/validate_project.py) | Checks structure, notebook order, manifest pin, local paths, and key-shaped strings |
 | [`project6/background/project6_background.md`](project6/background/project6_background.md) | Fault localization, constrained patches, feedback loops, hidden tests, and rollback concepts |
 | [`project6/debug_log/project6_debug_log.md`](project6/debug_log/project6_debug_log.md) | Cell-specific preparation history |
-| [`project6/output/`](project6/output/) | Measured repair results, trajectories, representative samples, report assets, and final PDF |
+| [`project6/output/`](project6/output/) | Measured API repair results and report; the A100 notebook writes its independent comparison to `output/gpu/` |
 
 ### Project 7 Files
 
@@ -243,7 +243,7 @@ The full cell-specific history remains in
 | [`project8/RUNBOOK.md`](project8/RUNBOOK.md) | LoCoMo preparation, secrets, execution modes, budgets, evidence checks, and troubleshooting |
 | [`project8/data/locomo_selection.json`](project8/data/locomo_selection.json) | Auditable LoCoMo source revision and two-conversation, 80-QA selection |
 | [`project8/data/lifecycle_cases.json`](project8/data/lifecycle_cases.json) | Deterministic correction, conflict, supersession, and deletion fixtures |
-| [`project8/src/project8_agent/`](project8/src/project8_agent/) | SQLite memory lifecycle, recent/episodic/hybrid retrieval, LoCoMo conversion, cached answerer, and evaluation |
+| [`project8/src/project8_agent/`](project8/src/project8_agent/) | SQLite memory lifecycle, lexical and dense retrieval, LoCoMo conversion, cached API/local answerers, and evaluation |
 | [`project8/tests/`](project8/tests/) | Memory ingestion, supersession, conflict, deletion, retrieval, lifecycle, and LoCoMo conversion tests |
 | [`project8/tools/fetch_locomo.py`](project8/tools/fetch_locomo.py) | Download-once pinned LoCoMo subset preparation |
 | [`project8/tools/generate_report.py`](project8/tools/generate_report.py) | Generates memory-quality/context charts, lifecycle diagram, and PDF |
@@ -251,7 +251,7 @@ The full cell-specific history remains in
 | [`project8/tools/validate_project.py`](project8/tools/validate_project.py) | Checks structure, notebook order, source pin, local paths, and key-shaped strings |
 | [`project8/background/project8_background.md`](project8/background/project8_background.md) | Memory tiers, temporal retrieval, consolidation, conflicts, deletion, and evaluation concepts |
 | [`project8/debug_log/project8_debug_log.md`](project8/debug_log/project8_debug_log.md) | Cell-specific retrieval-debug history |
-| [`project8/output/`](project8/output/) | Measured QA/lifecycle results, evidence traces, representative samples, report assets, cache, and final PDF |
+| [`project8/output/`](project8/output/) | Measured API QA/lifecycle results and report; the A100 notebook writes its independent comparison to `output/gpu/` |
 
 ## Project 5: Governed Text-to-SQL Analyst
 
@@ -270,6 +270,11 @@ row limits, PII masking, bounded repair, and approval before export.
   hashes are computed against the fixed snapshot.
 - Retrieved relevant schema descriptions and required a Pydantic query plan before
   execution.
+- Added normalized `all-MiniLM-L6-v2` embeddings for top-five schema selection in
+  the A100 path, reducing irrelevant schema context before generation.
+- Added deterministic BF16 `Qwen2.5-Coder-7B-Instruct` generation with one shared
+  model instance. The model proposes only a typed query plan; SQLGlot policy and
+  read-only execution remain authoritative.
 - Parsed SQL with SQLGlot and traversed the AST to allow only bounded `SELECT`
   queries over approved tables and columns.
 - Used a read-only DuckDB connection, `EXPLAIN`, deterministic result hashing, PII
@@ -284,7 +289,9 @@ row limits, PII masking, bounded repair, and approval before export.
 
 | Item | Configuration |
 | --- | --- |
-| Evaluation compute | Local macOS CPU with isolated Python dependencies; no GPU required |
+| Measured API evaluation | Local macOS CPU with isolated Python dependencies; API generation dominated the model work |
+| Prepared A100 comparison | One NVIDIA A100; `Qwen/Qwen2.5-Coder-7B-Instruct` in BF16 plus `sentence-transformers/all-MiniLM-L6-v2`, deterministic decoding, 500 new-token limit, schema top-k 5 |
+| GPU execution status | Source, notebook, dependency, and CPU interface validation complete; end-to-end A100 metrics are not yet claimed because no controllable Colab browser/Jupyter session was available |
 | Measured evaluation time | 201.55 seconds for the 40-case API comparison; report generation and validation completed afterward |
 | Final verification | 10 deterministic tests passed in 0.91 seconds, including local-model fallback contracts |
 | Dataset | 50 synthetic questions: 10 development and 40 held-out; checksum `8d861b67fb259c81ab830446d9f75ccd325942088c8b49413dc3c64e7144e11a` |
@@ -310,16 +317,24 @@ semantically wrong executable queries. Repeated model runs, stronger schema
 retrieval, and calibrated abstention should be prioritized before expanding the
 database or claim surface.
 
+The A100 path is an additional controlled comparison, not a replacement for these
+measured API results. It reuses the frozen-plan evaluation and governance stack so
+planner backend and schema retrieval can be varied without weakening execution
+policy. GPU score, runtime, and memory figures remain pending notebook execution.
+
 ### Evaluation Figures
 
 The measured run generated `project5/output/project5_report_assets/quality_repair_safety.png`,
 `project5/output/project5_report_assets/procedure_diagram.svg`, and
 `project5/output/project5_report.pdf`. The one-page PDF was rendered and checked
 for readable bars, table values, interpretation text, margins, and footer.
+The A100 cells write new summaries, traces, charts, and a report under
+`project5/output/gpu/`, keeping the measured API artifacts unchanged.
 
 ### Future Optimization
 
-- Replace lexical schema retrieval with evaluated embedding or hybrid retrieval.
+- Compare lexical, dense, and hybrid schema retrieval on held-out table/column
+  recall, then tune top-k only on the development split.
 - Add dialect variation, multi-hop joins, nested queries, null semantics, and
   larger database snapshots.
 - Evaluate constrained decoding or grammar-guided SQL generation against repair.
@@ -332,7 +347,9 @@ for readable bars, table values, interpretation text, margins, and footer.
 The first smoke command omitted the local source path and made no API call. The
 corrected smoke test passed, after which retries, token/cost accounting, and a
 local skip-install path supported the full run. Saved notebook paths were made
-repository-relative. The full history is in
+repository-relative. The A100 extension changed only `P05-C01`, `P05-C02`,
+`P05-C06`, `P05-C08`, `P05-C09`, and `P05-C10`; the user-modified data cell
+`P05-C03` and its output were preserved. The full history is in
 [`project5/debug_log/project5_debug_log.md`](project5/debug_log/project5_debug_log.md).
 
 ## Project 6: Test-Driven Code-Repair Agent
@@ -358,12 +375,17 @@ restores the exact starting state after every rejected attempt.
   failed attempts restore an exact source snapshot.
 - Added a Responses API patch planner and deterministic fixtures for mapping,
   overfitting rejection, correct-patch acceptance, timeout, and rollback.
+- Added a shared BF16 `Qwen2.5-Coder-7B-Instruct` backend that proposes the same
+  typed unified-diff contract for both one-shot and iterative modes. Patch policy,
+  hidden tests, acceptance, and rollback stay model-independent.
 
 ### Compute Resources, Time, and Key Settings
 
 | Item | Configuration |
 | --- | --- |
-| Evaluation compute | Local macOS CPU with subprocess-isolated tests; no GPU required |
+| Measured API evaluation | Local macOS CPU with subprocess-isolated tests; API generation supplied patch proposals |
+| Prepared A100 comparison | One NVIDIA A100; `Qwen/Qwen2.5-Coder-7B-Instruct` in BF16, deterministic decoding, one shared model instance, and a 900 new-token limit |
+| GPU execution status | Source, notebook, dependency, and CPU interface validation complete; end-to-end A100 metrics are not yet claimed because no controllable Colab browser/Jupyter session was available |
 | Measured evaluation time | 114.63 seconds for both repair modes over 8 held-out defects; report generation and validation completed afterward |
 | Final verification | 9 deterministic tests passed in 4.22 seconds, including local patch-planner contracts |
 | Dataset | Twelve QuixBugs Python cases: four development and eight held-out, pinned to one commit |
@@ -389,12 +411,19 @@ are generated and compact, and subprocess controls are not a hardened sandbox.
 Future runs should add mutation strength, more repositories, and uncertainty over
 multiple model samples.
 
+The A100 path holds the repository map, prompts, diff budget, public/hidden tests,
+and rollback rules constant while changing the proposal backend. Its separate
+artifacts will support a direct local-versus-API comparison once the prepared
+notebook evaluation runs; no local-model repair rate is claimed yet.
+
 ### Evaluation Figures
 
 The measured run generated `project6/output/project6_report_assets/repair_quality.png`,
 `project6/output/project6_report_assets/procedure_diagram.svg`, case results,
 trajectories, representative samples, and `project6/output/project6_report.pdf`.
 The one-page PDF was rendered and checked for chart/table readability and margins.
+The A100 cells write their new trajectories, summary, charts, and report under
+`project6/output/gpu/` without replacing the measured API evidence.
 
 ### Future Optimization
 
@@ -412,6 +441,8 @@ Preflight found that the prompt supplied an absolute patch path while policy
 accepted only the relative manifest path; those concerns are now separate. The
 first notebook run also exposed a missing quote in `P06-C03`, before benchmark API
 calls. Both fixes, plus usage accounting and report validation, are recorded in
+the log. The later A100 extension changed only `P06-C01`, `P06-C02`, `P06-C08`,
+`P06-C09`, and `P06-C10`; the pinned-download cell `P06-C03` was preserved. See
 [`project6/debug_log/project6_debug_log.md`](project6/debug_log/project6_debug_log.md).
 
 ## Project 7: Secure Interoperable Agent Gateway
@@ -510,16 +541,24 @@ consolidation, evidence retrieval, abstention, and verifiable deletion.
   conflict status, and deletion tombstones in SQLite.
 - Implemented recent-window, lexical episodic, and hybrid episodic-plus-semantic
   retrieval with evidence IDs and compact context accounting.
+- Added normalized `all-MiniLM-L6-v2` event embeddings. The A100 path ranks
+  episodic memory by dense similarity and uses a fixed 0.70 dense, 0.25 lexical,
+  and 0.05 recency fusion for hybrid retrieval.
 - Added conflict abstention, consolidation, physical removal from retrievable
   stores, and post-deletion checks.
 - Added a cached Responses API answerer so the three-system, 80-question comparison
   fits within 240 calls and reruns do not repeat completed model requests.
+- Added a cached BF16 `Qwen2.5-7B-Instruct` grounded answerer with deterministic
+  decoding, preserving the same evidence IDs, lifecycle rules, and QA metrics.
 
 ### Compute Resources, Time, and Key Settings
 
 | Item | Configuration |
 | --- | --- |
-| Evaluation compute | Local macOS CPU; no GPU required because API latency dominated |
+| Measured API evaluation | Local macOS CPU; API latency dominated the completed run |
+| Prepared A100 comparison | One NVIDIA A100; `Qwen/Qwen2.5-7B-Instruct` in BF16 plus `sentence-transformers/all-MiniLM-L6-v2`, deterministic decoding, and a 300 new-token limit |
+| Dense hybrid settings | Normalized cosine similarity with fusion weights 0.70 dense, 0.25 lexical, and 0.05 recency; answer cache keyed by question and evidence context |
+| GPU execution status | Source, notebook, dependency, and CPU interface validation complete; end-to-end A100 metrics are not yet claimed because no controllable Colab browser/Jupyter session was available |
 | Measured evaluation time | 424.10 seconds for 80 QA items across 3 retrieval systems; report generation and validation completed afterward |
 | Final verification | 11 deterministic tests passed in 0.07 seconds, including local embedding/answerer contracts; lifecycle evaluation completed in under one second |
 | Dataset | LoCoMo samples 0 and 1, 40 QA per sample, plus deterministic lifecycle fixtures |
@@ -545,6 +584,11 @@ the lifecycle fixtures retain 100% hybrid exact match and 100% deletion complian
 across events, derived facts, retrieval, and tombstones. The fixed two-conversation
 subset is compact and does not establish general memory-agent quality.
 
+The A100 comparison changes both retrieval representation and answer backend while
+retaining the same LoCoMo selection, memory lifecycle, context accounting, and
+metrics. Its isolated output will make the new tradeoff visible, but no dense/local
+quality or runtime result is claimed before the notebook run completes.
+
 ### Evaluation Figures
 
 The measured run generated `project8/output/project8_report_assets/quality_context_tradeoff.png`,
@@ -552,11 +596,13 @@ The measured run generated `project8/output/project8_report_assets/quality_conte
 representative samples, and `project8/output/project8_report.pdf`. The final report
 uses token F1 and evidence recall rather than an all-zero exact-match chart; its
 rendered page was checked for legibility, spacing, deletion text, limits, and footer.
+The A100 cells write their QA traces, summary, charts, and report under
+`project8/output/gpu/`, preserving the 240-call API evaluation as the baseline.
 
 ### Future Optimization
 
-- Replace lexical retrieval with a versioned embedding index and compare hybrid
-  fusion methods under fixed context budgets.
+- Compare dense-only, lexical-only, reciprocal-rank, and weighted hybrid fusion
+  under fixed context budgets, tuning weights only on development conversations.
 - Add learned memory extraction with calibrated confidence and provenance.
 - Evaluate temporal interval queries, entity aliases, and multi-fact reasoning.
 - Test cryptographic deletion receipts and provider/index deletion semantics.
@@ -568,7 +614,10 @@ rendered page was checked for legibility, spacing, deletion text, limits, and fo
 The measured run completed all calls before `P08-C10` found a token-shaped string
 inside the raw upstream clone. Validation now excludes only that third-party clone
 while continuing to scan the selected subset and generated artifacts. Absolute
-notebook paths were sanitized, and `P08-C10` was rerun without model calls. See
+notebook paths were sanitized, and `P08-C10` was rerun without model calls. The
+A100 extension changed only `P08-C01`, `P08-C02`, `P08-C05`, `P08-C08`,
+`P08-C09`, and `P08-C10`; the pinned LoCoMo preparation cell `P08-C03` was
+preserved. See
 [`project8/debug_log/project8_debug_log.md`](project8/debug_log/project8_debug_log.md).
 
 ## Documentation Maintenance
