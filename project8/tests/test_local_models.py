@@ -2,7 +2,7 @@ import numpy as np
 
 from project8_agent.config import Project8Config
 from project8_agent.local_models import EmbeddingEventRetriever, extract_json_object
-from project8_agent.locomo import CachedLocalAnswerer
+from project8_agent.locomo import CachedLocalAnswerer,normalize_local_answer
 
 
 class FakeEncoder:
@@ -42,3 +42,10 @@ def test_cached_local_answerer_uses_structured_output(tmp_path):
 
 def test_extract_json_object_ignores_surrounding_text():
     assert extract_json_object('result {"answer":"ok"}')=={"answer":"ok"}
+
+
+def test_local_answer_normalization_repairs_common_schema_errors():
+    answer=normalize_local_answer({"answer":"","evidence_ids":"D1","abstained":"The provided context does not contain this fact."})
+    assert answer.abstained is True
+    assert answer.answer==""
+    assert answer.evidence_ids==["D1"]

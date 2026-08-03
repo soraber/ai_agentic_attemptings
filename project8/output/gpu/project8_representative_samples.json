@@ -1,0 +1,80 @@
+{
+  "best_hybrid": [],
+  "hybrid_failures": [
+    {
+      "answer": "Caroline went to the LGBTQ support group on 8 May, 2023.",
+      "context_tokens": 108,
+      "evidence_ids": [
+        "D1:3"
+      ],
+      "evidence_recall": 1.0,
+      "exact_match": false,
+      "gold": "7 May 2023",
+      "qa_index": 0,
+      "question": "When did Caroline go to the LGBTQ support group?",
+      "sample_id": "conv-26",
+      "system": "hybrid",
+      "token_f1": 0.28571428571428575
+    },
+    {
+      "answer": "Last year",
+      "context_tokens": 79,
+      "evidence_ids": [
+        "D1:14"
+      ],
+      "evidence_recall": 0.0,
+      "exact_match": false,
+      "gold": "2022",
+      "qa_index": 1,
+      "question": "When did Melanie paint a sunrise?",
+      "sample_id": "conv-26",
+      "system": "hybrid",
+      "token_f1": 0.0
+    },
+    {
+      "answer": "The provided context does not give specific information about the fields Caroline would likely pursue in her education. The conversation focuses more on general topics such as jobs, life experiences, art, and community service.",
+      "context_tokens": 77,
+      "evidence_ids": [],
+      "evidence_recall": 0.0,
+      "exact_match": false,
+      "gold": "Psychology, counseling certification",
+      "qa_index": 2,
+      "question": "What fields would Caroline be likely to pursue in her educaton?",
+      "sample_id": "conv-26",
+      "system": "hybrid",
+      "token_f1": 0.0
+    },
+    {
+      "answer": "There is no information in the provided context about Caroline researching anything specific.",
+      "context_tokens": 65,
+      "evidence_ids": [],
+      "evidence_recall": 0.0,
+      "exact_match": false,
+      "gold": "Adoption agencies",
+      "qa_index": 3,
+      "question": "What did Caroline research?",
+      "sample_id": "conv-26",
+      "system": "hybrid",
+      "token_f1": 0.0
+    },
+    {
+      "answer": "Caroline is likely a friend or acquaintance of Melanie, possibly someone who shares experiences or creates art that Melanie appreciates.",
+      "context_tokens": 60,
+      "evidence_ids": [
+        "D14:18",
+        "D14:20",
+        "D17:22",
+        "D17:26",
+        "D12:12"
+      ],
+      "evidence_recall": 0.0,
+      "exact_match": false,
+      "gold": "Transgender woman",
+      "qa_index": 4,
+      "question": "What is Caroline's identity?",
+      "sample_id": "conv-26",
+      "system": "hybrid",
+      "token_f1": 0.0
+    }
+  ]
+}

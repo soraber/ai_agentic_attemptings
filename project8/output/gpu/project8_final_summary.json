@@ -1,0 +1,65 @@
+{
+  "cache_hits": 90,
+  "deletion_compliance_pct": 100.0,
+  "device": "cuda",
+  "episodic": {
+    "exact_match_pct": 0.0,
+    "mean_context_tokens": 91.1,
+    "mean_evidence_recall": 0.15,
+    "mean_token_f1": 0.1000041206882756
+  },
+  "estimated_cost_usd": 0.0,
+  "evaluation_mode": "locomo_local_gpu",
+  "hybrid": {
+    "exact_match_pct": 0.0,
+    "mean_context_tokens": 87.25,
+    "mean_evidence_recall": 0.13125,
+    "mean_token_f1": 0.06631429357699108
+  },
+  "input_tokens": 69462,
+  "lifecycle_validation": {
+    "deletion_compliance_pct": 100.0,
+    "episodic": {
+      "exact_match_pct": 75.0,
+      "mean_context_tokens": 2.5,
+      "mean_evidence_recall": 0.875,
+      "mean_token_f1": 0.75,
+      "median_latency_ms": 0.23065400091581978
+    },
+    "hybrid": {
+      "exact_match_pct": 100.0,
+      "mean_context_tokens": 2.5,
+      "mean_evidence_recall": 0.75,
+      "mean_token_f1": 1.0,
+      "median_latency_ms": 0.4979225004717591
+    },
+    "project": "Long-Term Memory Agent",
+    "result_status": "measured",
+    "store_stats": {
+      "events": 6,
+      "facts": 6,
+      "tombstones": 1
+    },
+    "window": {
+      "exact_match_pct": 75.0,
+      "mean_context_tokens": 12.0,
+      "mean_evidence_recall": 0.875,
+      "mean_token_f1": 0.75,
+      "median_latency_ms": 0.32926699987001484
+    }
+  },
+  "local_model": "Qwen/Qwen2.5-7B-Instruct",
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "model_calls": 150,
+  "output_tokens": 6426,
+  "project": "Long-Term Memory Agent",
+  "qa_items": 80,
+  "result_status": "measured",
+  "retrieval_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "window": {
+    "exact_match_pct": 0.0,
+    "mean_context_tokens": 90.5,
+    "mean_evidence_recall": 0.0125,
+    "mean_token_f1": 0.006377857035751773
+  }
+}

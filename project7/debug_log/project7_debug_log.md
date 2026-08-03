@@ -46,3 +46,13 @@ verification, and preservation notes.
 - **Fix:** Added bounded retries and measured usage, updated the contract assertion, added the local skip-install path, and enabled the measured flags
 - **Verification:** Eight tests passed; live attack-case review rejected the malicious document; all 32 held-out cases completed with 32 model calls; report/privacy validation passed; rendered PDF had no clipping or overlap
 - **Preservation:** Dataset generation and deterministic gateway authorization logic were unchanged
+
+## 2026-08-03 - Final Artifact Verification
+
+- **Environment:** Local artifact and notebook review; no GPU execution requested by the implementation
+- **Notebook cells:** No Project 7 notebook cells changed
+- **Symptom:** Projects 5, 6, and 8 had explicit local-GPU backends, while Project 7 did not expose an equivalent A100 mode
+- **Root cause:** Project 7's core experiment is protocol policy and local side-effect control; its only model component is a bounded, non-authoritative API reviewer, so a GPU run would not be a like-for-like backend switch
+- **Fix:** Preserved the completed measured API evaluation instead of adding an unplanned local reviewer during finalization
+- **Verification:** Existing artifacts report 32 held-out cases, 0% defended attack success, 100% benign success, 100% trace completeness, 84.375% reviewer accuracy, and 72.47 seconds runtime; the final PDF renders cleanly
+- **Preservation:** No source, notebook, data, or measured output was modified

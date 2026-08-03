@@ -29,3 +29,14 @@ verification, and preservation notes.
 - **Root cause:** The initial implementation isolated the repair harness before adding a reusable GPU backend
 - **Fix:** Added one shared BF16 Qwen2.5-Coder backend, typed local patch parsing, separate GPU outputs, and patch-only notebook updates
 - **Verification:** Nine tests pass, including local-output parsing; the pinned QuixBugs download cell and prior measured artifacts were preserved
+
+## 2026-08-03 - Completed Colab A100 Evaluation
+
+- **Environment:** Colab A100-SXM4-40GB runtime; Qwen2.5-Coder-7B-Instruct in BF16
+- **Notebook cells:** Source changed in `P06-C01`, `P06-C02`, and `P06-C07`; `P06-C03` was restored to its prior source while retaining successful output
+- **Symptom:** The first Project 6 attempt inherited a prior model allocation and began offloading, making inference abnormally slow
+- **Root cause:** The completed Project 5 kernel still held GPU memory, so automatic device mapping could not place the Project 6 model cleanly
+- **Fix:** Added targeted stale-object cleanup and free-memory reporting, stopped the completed prior kernel, restarted from 39.08 GiB free, and kept pytest isolated with a 120-second limit
+- **Verification:** `P06-C07` passed 9 tests in 2.69 seconds; all 16 system-defect cases completed with 32 local calls; the PDF and output bundle were generated and visually checked
+- **Measured result:** Both local modes reached 0% verified repair and 100% rollback; medians were 10.50 seconds one-shot and 23.33 seconds repair-loop
+- **Preservation:** The pinned QuixBugs preparation logic, API artifacts, hidden tests, policy, and rollback boundary were not changed

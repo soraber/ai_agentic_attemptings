@@ -6,9 +6,10 @@ subset.
 
 ## Status
 
-The OpenAI-backed QuixBugs comparison has been executed and saved in `output/`.
-An A100 comparison is prepared under `output/gpu/` with one shared local BF16 code
-model; patch policy, public/hidden tests, and rollback remain unchanged.
+Both comparisons are complete. The API repair loop in `output/` reached 87.5%
+verified repair on eight held-out defects. The A100 Qwen comparison in
+`output/gpu/` reached 0% verified repair in both modes but preserved 100% rollback;
+patch policy, public/hidden tests, and acceptance rules remained unchanged.
 
 ## Architecture
 

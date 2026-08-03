@@ -6,9 +6,11 @@ PII masking, read-only execution, and export approval.
 
 ## Status
 
-The OpenAI-backed comparison has been executed and its measured artifacts are in
-`output/`. A separate A100 path is prepared in `output/gpu/` using dense schema
-retrieval and a local BF16 code model; it does not overwrite the API evidence.
+Both comparisons are complete. The API result in `output/` remains primary: its
+governed path reached 37.04% result-hash accuracy with 0% PII leakage. The A100
+Qwen comparison in `output/gpu/` retained 0% PII leakage but reached 0% result-hash
+accuracy, documenting the local planner's current limitation without overwriting
+the API evidence.
 
 ## Architecture
 

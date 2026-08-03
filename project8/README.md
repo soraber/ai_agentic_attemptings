@@ -6,9 +6,10 @@ consolidation, deletion tombstones, evidence citations, and abstention.
 
 ## Status
 
-The OpenAI-backed LoCoMo run and lifecycle evidence are saved in `output/`. A
-separate A100 path combines dense event embeddings, lexical/recency fusion, and a
-local BF16 answer model under `output/gpu/` without replacing existing evidence.
+Both comparisons are complete. API lexical episodic retrieval in `output/`
+reached 11.50% token F1 and 22.29% evidence recall. A100 dense episodic retrieval
+in `output/gpu/` reached 10.00% and 15.00%, respectively. Both runs preserved
+100% deletion compliance, and the local artifacts do not replace API evidence.
 
 ## Architecture
 

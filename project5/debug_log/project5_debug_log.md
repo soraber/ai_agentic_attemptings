@@ -41,3 +41,14 @@ verification, and preservation of prior user edits.
 - **Fix:** `P05-C01` now fast-forwards an existing Colab clone, `P05-C02` selects the isolated `local_gpu` backend, and `P05-C07` disables third-party pytest plugin autoload and enforces a 120-second timeout
 - **Verification:** The earlier A100 smoke execution confirmed `NVIDIA A100-SXM4-40GB` and MiniLM schema retrieval; the complete local-GPU evaluation did not run because the replacement server disconnected
 - **Preservation:** `P05-C03` dataset preparation and the complete OpenAI evaluation artifacts were not changed; remote debugging stopped after the user-defined 10-minute limit
+
+## 2026-08-03 - Completed Colab A100 Evaluation
+
+- **Environment:** Clean Colab A100-SXM4-40GB runtime; Qwen2.5-Coder-7B-Instruct and MiniLM
+- **Notebook cells:** No source cells changed in this final pass; outputs were populated for `P05-C01` through `P05-C10`
+- **Symptom:** The earlier A100 attempt had left an unusable remote-kernel state; Hugging Face also warned that the Colab secret channel was unavailable from VS Code
+- **Root cause:** The first issue was remote kernel lifecycle state. The token warning was non-blocking because both selected Hugging Face models are public
+- **Fix:** Reconnected to a clean A100 runtime, retained the bounded isolated test cell, and ran the complete notebook with artifacts exported separately
+- **Verification:** `P05-C07` passed 10 tests in 10.53 seconds; 40 held-out questions completed in 346.93 seconds with 91 local calls; report generation and artifact checks passed
+- **Measured result:** Governed result-hash accuracy 0%, unsafe blocking 84.62%, PII leakage 0%, and median governed latency 6,764.51 ms; the negative comparison is retained rather than promoted over the API result
+- **Preservation:** `P05-C03` source and all existing API artifacts remained unchanged; the A100 outputs live only under `output/gpu/`

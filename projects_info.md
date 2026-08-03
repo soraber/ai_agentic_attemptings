@@ -6,18 +6,18 @@ documentation pattern used in `ai_project_artifacts`: portfolio summary,
 repository map, methods, compute settings, results and judgment, future work, and
 debugging notes.
 
-> **Version:** ver 0.6: reconcile measured runs and A100-ready paths<br>
-> **Updated:** 2026-08-03 02:13 EDT
+> **Version:** ver 0.7: complete A100 comparisons and validation<br>
+> **Updated:** 2026-08-03 07:02 EDT
 
 ## Portfolio Summary
 
 | Project | Primary goal | Main comparison | Current result | Judgment |
 | --- | --- | --- | --- | --- |
 | 4. Durable Incident-Response Agent | Build a recoverable, approval-gated agent for simulated service incidents | Stateless linear loop vs. checkpointed LangGraph workflow | Measured API run: 32 paired observations per system, 64 model calls, and 13 final local tests passed | The durable path preserved task quality, eliminated duplicate effects and unsafe allows, and recovered every executed crash, at roughly 10x workflow latency |
-| 5. Governed Text-to-SQL Analyst | Answer analytics questions while enforcing database policy | One-shot SQL vs. schema-grounded governed repair | Measured API run: 40 held-out questions, 54 calls, and 10 tests; A100 comparison ready | Governance improved result-hash accuracy, repair, and PII safety; the prepared GPU run will test whether local inference improves the still-limited absolute SQL accuracy |
-| 6. Test-Driven Code-Repair Agent | Repair compact Python defects without accepting unsafe or overfit patches | One-shot patch vs. bounded test-driven repair loop | Measured API run: 8 defects per system, 18 calls, and 9 tests; A100 comparison ready | Iterative public-test feedback recovered one additional defect while hidden tests and exact rollback constrained acceptance; the same harness can now compare local and API planners |
+| 5. Governed Text-to-SQL Analyst | Answer analytics questions while enforcing database policy | One-shot SQL vs. schema-grounded governed repair | API: 40 held-out questions and 54 calls; A100: 40 questions and 91 local-model calls | API governance improved accuracy and safety; the local model retained zero PII leakage but did not produce correct result hashes, so it is a diagnostic comparison rather than the headline result |
+| 6. Test-Driven Code-Repair Agent | Repair compact Python defects without accepting unsafe or overfit patches | One-shot patch vs. bounded test-driven repair loop | API: 8 defects per system and 18 calls; A100: 8 defects per system and 32 local-model calls | API feedback recovered one additional defect; the local model produced no accepted repair but rollback remained perfect, isolating proposal quality from harness safety |
 | 7. Secure Interoperable Agent Gateway | Preserve utility while blocking protocol-layer attacks | Undefended vs. defended A2A/MCP-style workflow | Measured API run: 32 held-out cases, 32 review calls, and 8 final tests passed | The local controls eliminated included attacks without reducing benign utility; structured review was useful but correctly remained non-authoritative |
-| 8. Long-Term Memory Agent | Retrieve useful cross-session facts while honoring corrections, conflicts, and deletion | Recent window vs. episodic vs. hybrid memory | Measured API run: 240 cached answers and 12 tests; A100 comparison ready | Episodic retrieval beat the original lexical hybrid weighting; the prepared GPU run tests dense retrieval and local grounded answering while preserving lifecycle controls |
+| 8. Long-Term Memory Agent | Retrieve useful cross-session facts while honoring corrections, conflicts, and deletion | Recent window vs. episodic vs. hybrid memory | API: 240 grounded answers; A100: 150 new local-model calls plus 90 cache hits; 12 tests passed | Episodic retrieval led both runs; the API lexical result exceeded the local dense result, while lifecycle controls and deletion compliance remained intact |
 
 ## Repository Map
 
@@ -202,7 +202,7 @@ The full cell-specific history remains in
 | [`project5/tools/`](project5/tools/) | Dataset, notebook, report, and structure/privacy generators and validators |
 | [`project5/background/project5_background.md`](project5/background/project5_background.md) | Schema grounding, executable SQL evaluation, AST policy, repair, and governance concepts |
 | [`project5/debug_log/project5_debug_log.md`](project5/debug_log/project5_debug_log.md) | Cell-specific preparation history |
-| [`project5/output/`](project5/output/) | Measured API results and report; the A100 notebook writes its independent comparison to `output/gpu/` |
+| [`project5/output/`](project5/output/) | Measured API results and report plus the completed independent A100 comparison under `output/gpu/` |
 
 ### Project 6 Files
 
@@ -219,7 +219,7 @@ The full cell-specific history remains in
 | [`project6/tools/validate_project.py`](project6/tools/validate_project.py) | Checks structure, notebook order, manifest pin, local paths, and key-shaped strings |
 | [`project6/background/project6_background.md`](project6/background/project6_background.md) | Fault localization, constrained patches, feedback loops, hidden tests, and rollback concepts |
 | [`project6/debug_log/project6_debug_log.md`](project6/debug_log/project6_debug_log.md) | Cell-specific preparation history |
-| [`project6/output/`](project6/output/) | Measured API repair results and report; the A100 notebook writes its independent comparison to `output/gpu/` |
+| [`project6/output/`](project6/output/) | Measured API repair results and report plus the completed independent A100 comparison under `output/gpu/` |
 
 ### Project 7 Files
 
@@ -251,7 +251,7 @@ The full cell-specific history remains in
 | [`project8/tools/validate_project.py`](project8/tools/validate_project.py) | Checks structure, notebook order, source pin, local paths, and key-shaped strings |
 | [`project8/background/project8_background.md`](project8/background/project8_background.md) | Memory tiers, temporal retrieval, consolidation, conflicts, deletion, and evaluation concepts |
 | [`project8/debug_log/project8_debug_log.md`](project8/debug_log/project8_debug_log.md) | Cell-specific retrieval-debug history |
-| [`project8/output/`](project8/output/) | Measured API QA/lifecycle results and report; the A100 notebook writes its independent comparison to `output/gpu/` |
+| [`project8/output/`](project8/output/) | Measured API QA/lifecycle results and report plus the completed independent A100 comparison under `output/gpu/` |
 
 ## Project 5: Governed Text-to-SQL Analyst
 
@@ -290,15 +290,17 @@ row limits, PII masking, bounded repair, and approval before export.
 | Item | Configuration |
 | --- | --- |
 | Measured API evaluation | Local macOS CPU with isolated Python dependencies; API generation dominated the model work |
-| Prepared A100 comparison | One NVIDIA A100; `Qwen/Qwen2.5-Coder-7B-Instruct` in BF16 plus `sentence-transformers/all-MiniLM-L6-v2`, deterministic decoding, 500 new-token limit, schema top-k 5 |
-| GPU execution status | Source, notebook, dependency, and CPU interface validation complete; end-to-end A100 metrics are not yet claimed because no controllable Colab browser/Jupyter session was available |
+| Measured A100 comparison | One NVIDIA A100-SXM4-40GB; `Qwen/Qwen2.5-Coder-7B-Instruct` in BF16 plus `sentence-transformers/all-MiniLM-L6-v2`, deterministic decoding, 500 new-token limit, schema top-k 5 |
+| GPU execution status | Complete; all 40 held-out questions ran through baseline and governed paths, with artifacts isolated under `project5/output/gpu/` |
 | Measured evaluation time | 290.70 seconds for the final 40-case API comparison; report generation and validation completed afterward |
-| Final verification | 10 deterministic tests passed in 0.91 seconds, including local-model fallback contracts |
+| Measured A100 time | 346.93 seconds for the 40-case paired local-model comparison |
+| Final verification | API environment: 10 tests in 0.91 seconds; A100 notebook `P05-C07`: 10 tests in 10.53 seconds |
 | Dataset | 50 synthetic questions: 10 development and 40 held-out; checksum `8d861b67fb259c81ab830446d9f75ccd325942088c8b49413dc3c64e7144e11a` |
 | Query limits | Two repair attempts, 100 result rows, read-only local DuckDB, authorized region `NA` |
 | API planner | `gpt-5.6-luna`, low reasoning effort, strict Pydantic query plans |
 | API limits | 180 calls, 500 output tokens per call, two retries, USD 6.00 estimated cost |
 | Measured API use | 54 calls, 15,214 input tokens, 15,521 output tokens, USD 0.108340 estimated cost |
+| Measured A100 use | 91 local calls, 22,560 input tokens, 11,538 output tokens, USD 0 API cost |
 
 ### Results and Judgment
 
@@ -311,16 +313,29 @@ row limits, PII masking, bounded repair, and approval before export.
 | Repair success | 80.00% | 100.00% | Bounded feedback recovered every included repair case |
 | Median execution latency | 13.81 ms | 12.81 ms | This timer covers local execution after the shared frozen plan, not API generation |
 
+The completed A100 comparison produced a deliberately separate result:
+
+| A100 metric | One-shot | Governed | Judgment |
+| --- | ---: | ---: | --- |
+| Execution accuracy | 11.11% | 11.11% | The 7B local planner frequently emitted invalid or unusable plans |
+| Result-hash accuracy | 0.00% | 0.00% | Neither path produced a semantically exact held-out result |
+| Unsafe-query block rate | 100.00% | 84.62% | The local governed path exposed a policy/repair coverage gap that must be fixed before deployment |
+| PII leak rate | 0.00% | 0.00% | No measured local output exposed protected columns |
+| Repair success | 0.00% | 0.00% | Bounded feedback did not recover a local-model failure |
+| Median latency | 14.97 ms | 6,764.51 ms | Governed generation and repair added substantial local inference latency |
+
 The measured result supports the safety and repair design, but not a claim of high
 general text-to-SQL accuracy. Result hashes remain strict and expose many
 semantically wrong executable queries. Repeated model runs, stronger schema
 retrieval, and calibrated abstention should be prioritized before expanding the
 database or claim surface.
 
-The A100 path is an additional controlled comparison, not a replacement for these
-measured API results. It reuses the frozen-plan evaluation and governance stack so
-planner backend and schema retrieval can be varied without weakening execution
-policy. GPU score, runtime, and memory figures remain pending notebook execution.
+The A100 result is an additional controlled comparison, not a replacement for the
+measured API evidence. Reusing the same benchmark and governance stack shows that
+the smaller local planner is currently the limiting component. The zero PII leak
+rate is encouraging, but zero result-hash accuracy, failed repair, lower unsafe
+blocking, and high latency rule out presenting this configuration as an
+improvement.
 
 ### Evaluation Figures
 
@@ -328,7 +343,7 @@ The measured run generated `project5/output/project5_report_assets/quality_repai
 `project5/output/project5_report_assets/procedure_diagram.svg`, and
 `project5/output/project5_report.pdf`. The one-page PDF was rendered and checked
 for readable bars, table values, interpretation text, margins, and footer.
-The A100 cells write new summaries, traces, charts, and a report under
+The completed A100 run wrote its summary, traces, charts, and rendered report under
 `project5/output/gpu/`, keeping the measured API artifacts unchanged.
 
 ### Future Optimization
@@ -349,7 +364,9 @@ corrected smoke test passed, after which retries, token/cost accounting, and a
 local skip-install path supported the full run. Saved notebook paths were made
 repository-relative. The A100 extension changed only `P05-C01`, `P05-C02`,
 `P05-C06`, `P05-C08`, `P05-C09`, and `P05-C10`; the user-modified data cell
-`P05-C03` and its output were preserved. The full history is in
+`P05-C03` and its source were preserved. The final A100 pass changed no notebook
+source cells and populated outputs for `P05-C01` through `P05-C10`; the clean run
+used 39.08 GiB of initially free GPU memory and passed all ten tests. The full history is in
 [`project5/debug_log/project5_debug_log.md`](project5/debug_log/project5_debug_log.md).
 
 ## Project 6: Test-Driven Code-Repair Agent
@@ -384,15 +401,17 @@ restores the exact starting state after every rejected attempt.
 | Item | Configuration |
 | --- | --- |
 | Measured API evaluation | Local macOS CPU with subprocess-isolated tests; API generation supplied patch proposals |
-| Prepared A100 comparison | One NVIDIA A100; `Qwen/Qwen2.5-Coder-7B-Instruct` in BF16, deterministic decoding, one shared model instance, and a 900 new-token limit |
-| GPU execution status | Source, notebook, dependency, and CPU interface validation complete; end-to-end A100 metrics are not yet claimed because no controllable Colab browser/Jupyter session was available |
+| Measured A100 comparison | One NVIDIA A100-SXM4-40GB; `Qwen/Qwen2.5-Coder-7B-Instruct` in BF16, deterministic decoding, one shared model instance, and a 900 new-token limit |
+| GPU execution status | Complete; all eight held-out defects ran through both modes, with artifacts isolated under `project6/output/gpu/` |
 | Measured evaluation time | 138.92 seconds for both repair modes over 8 held-out defects; report generation and validation completed afterward |
-| Final verification | 9 deterministic tests passed in 4.22 seconds, including local patch-planner contracts |
+| Measured A100 time | 327.89 seconds of summed per-case latency; medians were 10.50 seconds one-shot and 23.33 seconds repair-loop |
+| Final verification | API environment: 9 tests in 4.22 seconds; A100 notebook `P06-C07`: 9 tests in 2.69 seconds |
 | Dataset | Twelve QuixBugs Python cases: four development and eight held-out, pinned to one commit |
 | Repair limits | Three attempts, 30 changed lines, one declared source file, 20-second tests, 12,000 output characters |
 | API planner | `gpt-5.6-sol`, medium reasoning effort, strict Pydantic patch proposals |
 | API limits | 220 calls, 900 output tokens per call, two retries, USD 8.00 estimated cost |
 | Measured API use | 18 calls, 22,988 input tokens, 4,324 output tokens, USD 0.244660 estimated cost |
+| Measured A100 use | 32 local calls, 27,588 input tokens, 8,326 output tokens, USD 0 API cost |
 
 ### Results and Judgment
 
@@ -405,16 +424,28 @@ restores the exact starting state after every rejected attempt.
 | Mean changed lines | 2.0 | 2.0 | The loop improved success without increasing average patch size |
 | Median latency | 6.57 s | 8.27 s | Additional feedback added modest end-to-end latency on this compact suite |
 
+The completed A100 comparison held the same patch policy and tests constant:
+
+| A100 metric | One-shot | Repair loop | Judgment |
+| --- | ---: | ---: | --- |
+| Verified repair rate | 0.00% | 0.00% | The 7B local planner did not produce an acceptable complete diff |
+| Hidden-test pass rate | 0.00% | 0.00% | No local candidate reached verified acceptance |
+| Overfit detected | 0.00% | 0.00% | Failures occurred before a public-only patch could be accepted |
+| Rollback success | 100.00% | 100.00% | Every rejected local proposal restored the exact source snapshot |
+| Mean changed lines | 6.625 | 4.875 | Feedback reduced average patch size but not repair success |
+| Median latency | 10.50 s | 23.33 s | The iterative loop more than doubled local latency without a successful repair |
+
 The measured comparison favors the bounded loop on this small pinned suite, while
 the result remains too small for a universal coding-agent claim. The hidden tests
 are generated and compact, and subprocess controls are not a hardened sandbox.
 Future runs should add mutation strength, more repositories, and uncertainty over
 multiple model samples.
 
-The A100 path holds the repository map, prompts, diff budget, public/hidden tests,
-and rollback rules constant while changing the proposal backend. Its separate
-artifacts will support a direct local-versus-API comparison once the prepared
-notebook evaluation runs; no local-model repair rate is claimed yet.
+The A100 run holds the repository map, prompts, diff budget, public/hidden tests,
+and rollback rules constant while changing the proposal backend. Its zero repair
+rate demonstrates that this local model and prompt need substantial improvement;
+the unchanged 100% rollback result also demonstrates that planner failure did not
+weaken the acceptance boundary.
 
 ### Evaluation Figures
 
@@ -422,8 +453,8 @@ The measured run generated `project6/output/project6_report_assets/repair_qualit
 `project6/output/project6_report_assets/procedure_diagram.svg`, case results,
 trajectories, representative samples, and `project6/output/project6_report.pdf`.
 The one-page PDF was rendered and checked for chart/table readability and margins.
-The A100 cells write their new trajectories, summary, charts, and report under
-`project6/output/gpu/` without replacing the measured API evidence.
+The completed A100 run wrote trajectories, summary, charts, and a rendered report
+under `project6/output/gpu/` without replacing the measured API evidence.
 
 ### Future Optimization
 
@@ -441,8 +472,10 @@ Preflight found that the prompt supplied an absolute patch path while policy
 accepted only the relative manifest path; those concerns are now separate. The
 first notebook run also exposed a missing quote in `P06-C03`, before benchmark API
 calls. Both fixes, plus usage accounting and report validation, are recorded in
-the log. The later A100 extension changed only `P06-C01`, `P06-C02`, `P06-C08`,
-`P06-C09`, and `P06-C10`; the pinned-download cell `P06-C03` was preserved. See
+the log. The completed A100 pass changed source only in `P06-C01`, `P06-C02`, and
+`P06-C07`; `P06-C03` was restored to its prior source while retaining successful
+output. A stale prior model first forced offload, so a clean restart released the
+GPU and exposed 39.08 GiB before the validated run. See
 [`project6/debug_log/project6_debug_log.md`](project6/debug_log/project6_debug_log.md).
 
 ## Project 7: Secure Interoperable Agent Gateway
@@ -475,7 +508,7 @@ exfiltration.
 | Item | Configuration |
 | --- | --- |
 | Evaluation compute | Local macOS CPU; no GPU required |
-| Measured evaluation time | 72.78 seconds for 32 structured reviews plus both deterministic gateway modes |
+| Measured evaluation time | 72.47 seconds for 32 structured reviews plus both deterministic gateway modes |
 | Final verification | 8 deterministic tests passed in 0.08 seconds |
 | Dataset | 40 cases: eight development and 32 held-out; checksum `b86768acd310ca836fe6b370f5babc6989200b2879bbea6eb622409c2e5e5927` |
 | Protocol controls | Agent-specific scopes, schema and metadata pinning, taint, redaction, approval, idempotency, and trace correlation |
@@ -556,16 +589,18 @@ consolidation, evidence retrieval, abstention, and verifiable deletion.
 | Item | Configuration |
 | --- | --- |
 | Measured API evaluation | Local macOS CPU; API latency dominated the completed run |
-| Prepared A100 comparison | One NVIDIA A100; `Qwen/Qwen2.5-7B-Instruct` in BF16 plus `sentence-transformers/all-MiniLM-L6-v2`, deterministic decoding, and a 300 new-token limit |
+| Measured A100 comparison | One NVIDIA A100-SXM4-40GB; `Qwen/Qwen2.5-7B-Instruct` in BF16 plus `sentence-transformers/all-MiniLM-L6-v2`, deterministic decoding, and a 300 new-token limit |
 | Dense hybrid settings | Normalized cosine similarity with fusion weights 0.70 dense, 0.25 lexical, and 0.05 recency; answer cache keyed by question and evidence context |
-| GPU execution status | Source, notebook, dependency, and CPU interface validation complete; end-to-end A100 metrics are not yet claimed because no controllable Colab browser/Jupyter session was available |
+| GPU execution status | Complete; all 240 system-question pairs were evaluated, with artifacts isolated under `project8/output/gpu/` |
 | Measured evaluation time | 424.10 seconds to populate 240 API answers; a fully cached reevaluation completed in 0.56 seconds before report generation |
-| Final verification | 12 deterministic tests passed in 0.07 seconds, including local embedding/answerer and cache-accounting contracts; lifecycle evaluation completed in under one second |
+| Measured A100 time | Approximately 4-5 minutes for the successful cached-resume run, including model loading, 150 new answers, report generation, and validation |
+| Final verification | API environment: 12 tests in 0.07 seconds; A100 notebook `P08-C07`: 12 tests in 0.53 seconds |
 | Dataset | LoCoMo samples 0 and 1, 40 QA per sample, plus deterministic lifecycle fixtures |
 | Memory settings | Working window 6 events, episodic top-k 5, SQLite facts/events/tombstones, evidence-cited retrieval |
 | API answerer | `gpt-5.6-luna`, low reasoning effort, strict grounded-answer schema and per-context cache |
 | API limits | 300 calls, 500 output tokens per call, two retries, USD 8.00 estimated cost |
 | Measured API use | 240 calls, 109,387 input tokens, 17,407 output tokens, USD 0.213829 estimated cost |
+| Measured A100 use | 150 new local calls plus 90 cache hits, 69,462 input tokens, 6,426 output tokens, USD 0 API cost |
 
 ### Results and Judgment
 
@@ -577,6 +612,16 @@ consolidation, evidence retrieval, abstention, and verifiable deletion.
 | LoCoMo mean context tokens | 90.5 | 71.3 | 69.6 |
 | Lifecycle exact match | 75.00% | 75.00% | 100.00% |
 
+The completed dense/local A100 comparison produced:
+
+| A100 metric | Recent window | Episodic | Hybrid |
+| --- | ---: | ---: | ---: |
+| LoCoMo exact match | 0.00% | 0.00% | 0.00% |
+| LoCoMo mean token F1 | 0.64% | 10.00% | 6.63% |
+| LoCoMo evidence recall | 1.25% | 15.00% | 13.13% |
+| LoCoMo mean context tokens | 90.5 | 91.1 | 87.2 |
+| Lifecycle exact match | 75.00% | 75.00% | 100.00% |
+
 Episodic retrieval is the strongest current LoCoMo baseline, while the hybrid
 recency bonus slightly lowers token F1 and evidence recall despite using the least
 context. Strict exact match exposes substantial answer-quality headroom. Separately,
@@ -586,8 +631,10 @@ subset is compact and does not establish general memory-agent quality.
 
 The A100 comparison changes both retrieval representation and answer backend while
 retaining the same LoCoMo selection, memory lifecycle, context accounting, and
-metrics. Its isolated output will make the new tradeoff visible, but no dense/local
-quality or runtime result is claimed before the notebook run completes.
+metrics. Dense episodic retrieval again led the local alternatives, but its 10.0%
+token F1 and 15.0% evidence recall remained below the API lexical episodic result
+of 11.5% and 22.3%. Both runs preserved 100% deletion compliance, so the measured
+gap is in retrieval/answer quality rather than lifecycle enforcement.
 
 ### Evaluation Figures
 
@@ -596,8 +643,10 @@ The measured run generated `project8/output/project8_report_assets/quality_conte
 representative samples, and `project8/output/project8_report.pdf`. The final report
 uses token F1 and evidence recall rather than an all-zero exact-match chart; its
 rendered page was checked for legibility, spacing, deletion text, limits, and footer.
-The A100 cells write their QA traces, summary, charts, and report under
-`project8/output/gpu/`, preserving the 240-call API evaluation as the baseline.
+The completed A100 run wrote QA traces, summary, charts, and a rendered report
+under `project8/output/gpu/`, preserving the 240-call API evaluation as the
+baseline. The local report was also checked for accurate dense-retrieval wording,
+legibility, spacing, and footer placement.
 
 ### Future Optimization
 
@@ -615,9 +664,12 @@ The measured run completed all calls before `P08-C10` found a token-shaped strin
 inside the raw upstream clone. Validation now excludes only that third-party clone
 while continuing to scan the selected subset and generated artifacts. Absolute
 notebook paths were sanitized, and `P08-C10` was rerun without model calls. The
-A100 extension changed only `P08-C01`, `P08-C02`, `P08-C05`, `P08-C08`,
-`P08-C09`, and `P08-C10`; the pinned LoCoMo preparation cell `P08-C03` was
-preserved. See
+A100 completion changed notebook source only in `P08-C01`, `P08-C02`, and
+`P08-C07`; the pinned LoCoMo preparation cell `P08-C03` remained unchanged. The
+VS Code kernel picker was bypassed through the authenticated Colab terminal after
+the 10-minute debug limit. The first inference run returned explanatory text in
+the boolean `abstained` field, so a strict normalization layer and regression test
+were added; 12 tests then passed and the 240-answer run completed. See
 [`project8/debug_log/project8_debug_log.md`](project8/debug_log/project8_debug_log.md).
 
 ## Documentation Maintenance

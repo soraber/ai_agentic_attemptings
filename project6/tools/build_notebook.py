@@ -27,6 +27,7 @@ PROJECT_ROOT=next((p.resolve() for p in candidates if (p/"config/default.json").
 if PROJECT_ROOT is None:
     repo=Path("/content/ai_agentic_attemptings")
     if not repo.exists(): subprocess.run(["git","clone","https://github.com/soraber/ai_agentic_attemptings.git",str(repo)],check=True)
+    else: subprocess.run(["git","-C",str(repo),"pull","--ff-only"],check=True)
     PROJECT_ROOT=repo/"project6"
 os.chdir(PROJECT_ROOT)
 if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
@@ -55,8 +56,12 @@ if RUN_API_EVAL and not os.getenv("OPENAI_API_KEY"):
     if not key: raise RuntimeError("OPENAI_API_KEY required for API mode")
     os.environ["OPENAI_API_KEY"]=key
 if RUN_LOCAL_GPU_EVAL:
-    import torch
+    import gc,torch
     if not torch.cuda.is_available(): raise RuntimeError("Select a Colab GPU runtime for local_gpu mode")
+    stale_names=("source_planner","schema_retriever","local_backend","planners","planner","embedding_retriever","local_answerer")
+    released=[name for name in stale_names if globals().pop(name,None) is not None]
+    gc.collect(); torch.cuda.empty_cache(); free_bytes,total_bytes=torch.cuda.mem_get_info()
+    print({"released_gpu_objects":released,"free_gpu_gib":round(free_bytes/2**30,2),"total_gpu_gib":round(total_bytes/2**30,2)})
 print(config.model_dump())"""),
 cell("P06-C03","code","""import subprocess,sys
 subprocess.run([sys.executable,"tools/fetch_quixbugs.py"],check=True)
@@ -71,8 +76,9 @@ cell("P06-C05","code","""print("One-shot fixture behavior is covered by tests/te
 cell("P06-C06","code","""from project6_agent.repository import build_repository_map
 symbols=build_repository_map(QUIXBUGS_ROOT/"python_programs")
 print({"mapped_symbols":len(symbols),"example":symbols[0].model_dump()})"""),
-cell("P06-C07","code","""import subprocess,sys
-result=subprocess.run([sys.executable,"-m","pytest","-q","tests"],text=True,capture_output=True); print(result.stdout)
+cell("P06-C07","code","""import os,subprocess,sys
+test_env=os.environ.copy(); test_env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"]="1"
+result=subprocess.run([sys.executable,"-m","pytest","-q","tests"],text=True,capture_output=True,env=test_env,timeout=120); print(result.stdout)
 if result.returncode: print(result.stderr); raise RuntimeError("Project 6 tests failed")"""),
 cell("P06-C08","code","""from project6_agent.agent import RepairAgent
 from project6_agent.evaluation import summarize_results

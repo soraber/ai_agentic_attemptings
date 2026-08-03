@@ -18,6 +18,32 @@ class GeneratedAnswer(BaseModel):
     abstained:bool=False
 
 
+ABSTENTION_PHRASES=("cannot determine","can't determine","does not contain","doesn't contain","not enough","not mentioned","not provided","missing","unsupported","conflict","unknown")
+
+
+def normalize_local_answer(payload:dict[str,Any])->GeneratedAnswer:
+    """Repair common open-model JSON type errors before strict validation."""
+    raw_answer=payload.get("answer","")
+    answer=raw_answer if isinstance(raw_answer,str) else str(raw_answer or "")
+    raw_evidence=payload.get("evidence_ids",[])
+    if isinstance(raw_evidence,str): evidence_ids=[raw_evidence]
+    elif isinstance(raw_evidence,list): evidence_ids=[str(value) for value in raw_evidence if value is not None]
+    else: evidence_ids=[]
+    raw_abstained=payload.get("abstained",False)
+    if isinstance(raw_abstained,bool): abstained=raw_abstained
+    elif isinstance(raw_abstained,(int,float)) and raw_abstained in (0,1): abstained=bool(raw_abstained)
+    elif isinstance(raw_abstained,str):
+        normalized=raw_abstained.strip().lower()
+        if normalized in {"true","yes","1"}: abstained=True
+        elif normalized in {"false","no","0"}: abstained=False
+        else:
+            abstained=any(phrase in normalized for phrase in ABSTENTION_PHRASES)
+            if not answer and not abstained: answer=raw_abstained.strip()
+    else: abstained=False
+    if abstained: answer=""
+    return GeneratedAnswer(answer=answer,evidence_ids=evidence_ids,abstained=abstained)
+
+
 STOPWORDS={"a","an","the","i","we","you","he","she","they","did","do","does","where","what","when","to","is","are","was","were"}
 
 
@@ -108,7 +134,7 @@ class CachedLocalAnswerer:
             self.cache_hits+=1
             return GeneratedAnswer.model_validate(self.cache[key])
         raw=self.backend.generate({"question":question,"context":context},self.config.local_max_new_tokens)
-        answer=GeneratedAnswer.model_validate(extract_json_object(raw)); self.cache[key]=answer.model_dump(mode="json"); self.cache_path.write_text(json.dumps(self.cache,indent=2,sort_keys=True)+"\n",encoding="utf-8"); return answer
+        answer=normalize_local_answer(extract_json_object(raw)); self.cache[key]=answer.model_dump(mode="json"); self.cache_path.write_text(json.dumps(self.cache,indent=2,sort_keys=True)+"\n",encoding="utf-8"); return answer
 
     def usage_summary(self)->dict:
         usage=dict(self.backend.usage_summary()) if hasattr(self.backend,"usage_summary") else {"model_calls":0,"input_tokens":0,"output_tokens":0,"estimated_cost_usd":0.0}

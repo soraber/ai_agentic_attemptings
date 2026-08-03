@@ -1,0 +1,102 @@
+{
+  "failed": [
+    {
+      "attempts": 1,
+      "bug_id": "gcd",
+      "changed_lines": 6,
+      "error": "PermissionError: patch must be a complete unified diff",
+      "hidden_passed": false,
+      "latency_seconds": 8.06591438400028,
+      "overfit_detected": false,
+      "public_passed": false,
+      "rollback_verified": true,
+      "system": "one_shot",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "reject_patch",
+        "rollback"
+      ],
+      "verified": false
+    },
+    {
+      "attempts": 3,
+      "bug_id": "gcd",
+      "changed_lines": 2,
+      "error": "PermissionError: patch must be a complete unified diff",
+      "hidden_passed": false,
+      "latency_seconds": 15.32757197400042,
+      "overfit_detected": false,
+      "public_passed": false,
+      "rollback_verified": true,
+      "system": "repair_loop",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "reject_patch",
+        "rollback",
+        "plan_patch",
+        "reject_patch",
+        "rollback",
+        "plan_patch",
+        "reject_patch",
+        "rollback"
+      ],
+      "verified": false
+    },
+    {
+      "attempts": 1,
+      "bug_id": "get_factors",
+      "changed_lines": 3,
+      "error": "PermissionError: patch must be a complete unified diff",
+      "hidden_passed": false,
+      "latency_seconds": 7.8109483839998575,
+      "overfit_detected": false,
+      "public_passed": false,
+      "rollback_verified": true,
+      "system": "one_shot",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "reject_patch",
+        "rollback"
+      ],
+      "verified": false
+    },
+    {
+      "attempts": 3,
+      "bug_id": "get_factors",
+      "changed_lines": 3,
+      "error": "PermissionError: patch must be a complete unified diff",
+      "hidden_passed": false,
+      "latency_seconds": 19.149942476999968,
+      "overfit_detected": false,
+      "public_passed": false,
+      "rollback_verified": true,
+      "system": "repair_loop",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "reject_patch",
+        "rollback",
+        "plan_patch",
+        "reject_patch",
+        "rollback",
+        "plan_patch",
+        "reject_patch",
+        "rollback"
+      ],
+      "verified": false
+    }
+  ],
+  "overfit": [],
+  "verified": []
+}

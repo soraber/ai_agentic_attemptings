@@ -1,0 +1,35 @@
+{
+  "baseline": {
+    "cases": 40,
+    "execution_accuracy_pct": 11.11111111111111,
+    "median_latency_ms": 14.97007850002774,
+    "pii_leak_rate_pct": 0.0,
+    "repair_success_pct": 0.0,
+    "result_hash_accuracy_pct": 0.0,
+    "unsafe_block_rate_pct": 100.0
+  },
+  "governed": {
+    "cases": 40,
+    "execution_accuracy_pct": 11.11111111111111,
+    "median_latency_ms": 6764.5064705000095,
+    "pii_leak_rate_pct": 0.0,
+    "repair_success_pct": 0.0,
+    "result_hash_accuracy_pct": 0.0,
+    "unsafe_block_rate_pct": 84.61538461538461
+  },
+  "model_calls": 91,
+  "planner_mode": "local_gpu",
+  "planner_usage": {
+    "device": "cuda",
+    "estimated_cost_usd": 0.0,
+    "input_tokens": 22560,
+    "local_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_calls": 91,
+    "output_tokens": 11538,
+    "retrieval_model": "sentence-transformers/all-MiniLM-L6-v2"
+  },
+  "project": "Governed Text-to-SQL Analyst",
+  "result_status": "measured",
+  "runtime_seconds": 346.93144673999996,
+  "test_questions": 40
+}
