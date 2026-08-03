@@ -1,7 +1,7 @@
 # Five Compact AI Agent Engineering Project Ideas
 
 > **Status:** Planning document; no performance result is claimed yet.<br>
-> **Updated:** 2026-08-02 EDT<br>
+> **Updated:** 2026-08-03 00:01 EDT<br>
 > **Execution limit:** Each completed project must run from a fresh Colab runtime in less than 6 hours.
 
 ## Selection Strategy
@@ -164,6 +164,9 @@ notebook must abort cleanly if it reaches the configured call or time budget.
 
 ## Project 5: Governed Text-to-SQL Analyst
 
+**Implementation:** [`project5/`](project5/) contains the prepared pre-execution
+scaffold; measured model-backed results are intentionally absent.
+
 **Keywords:** text-to-SQL, schema linking, SQL AST validation, DuckDB,
 self-correction, access control, PII protection
 
@@ -228,6 +231,9 @@ Database setup and deterministic policy tests should run without an API key.
 - Representative SQL repair and blocked-PII examples.
 
 ## Project 6: Test-Driven Code-Repair Agent
+
+**Implementation:** [`project6/`](project6/) contains the prepared pre-execution
+scaffold; measured QuixBugs repair results are intentionally absent.
 
 **Keywords:** coding agents, AST repository mapping, fault localization,
 constrained diffs, pytest feedback, rollback, regression testing
@@ -295,6 +301,9 @@ agent failures.
 
 ## Project 7: Secure Interoperable Agent Gateway
 
+**Implementation:** [`project7/`](project7/) contains the prepared pre-execution
+scaffold; measured API-backed results are intentionally absent.
+
 **Keywords:** MCP, A2A, capability discovery, scoped authorization,
 prompt-injection defense, taint tracking, distributed tracing
 
@@ -350,9 +359,9 @@ calls. The goal is security and interoperability, not lower latency.
 
 ### Workload Boundary
 
-Use 80-160 model calls. Expected execution is 60-120 minutes on a Colab CPU.
-Protocol, authorization, and failure-injection tests must also run deterministically
-without a model.
+Use at most 32 model calls for the optional held-out policy review. Expected
+execution is 60-120 minutes on a Colab CPU. Protocol, authorization, and
+failure-injection tests must also run deterministically without a model.
 
 ### Suggested Special Artifacts
 
@@ -362,6 +371,9 @@ without a model.
 - Correlated trace showing delegation, rejection, retry, and approval.
 
 ## Project 8: Long-Term Memory Agent
+
+**Implementation:** [`project8/`](project8/) contains the prepared pre-execution
+scaffold; measured LoCoMo model-backed results are intentionally absent.
 
 **Keywords:** long-term memory, episodic memory, semantic memory, temporal
 retrieval, conflict resolution, memory consolidation, deletion compliance

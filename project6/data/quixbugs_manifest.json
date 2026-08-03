@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/jkoppel/QuixBugs.git",
+  "commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+  "license": "Apache-2.0",
+  "cases": [
+    {"bug_id": "bitcount", "source": "python_programs/bitcount.py", "public_test": "python_testcases/test_bitcount.py", "split": "development"},
+    {"bug_id": "bucketsort", "source": "python_programs/bucketsort.py", "public_test": "python_testcases/test_bucketsort.py", "split": "development"},
+    {"bug_id": "find_first_in_sorted", "source": "python_programs/find_first_in_sorted.py", "public_test": "python_testcases/test_find_first_in_sorted.py", "split": "development"},
+    {"bug_id": "flatten", "source": "python_programs/flatten.py", "public_test": "python_testcases/test_flatten.py", "split": "development"},
+    {"bug_id": "gcd", "source": "python_programs/gcd.py", "public_test": "python_testcases/test_gcd.py", "split": "test"},
+    {"bug_id": "get_factors", "source": "python_programs/get_factors.py", "public_test": "python_testcases/test_get_factors.py", "split": "test"},
+    {"bug_id": "hanoi", "source": "python_programs/hanoi.py", "public_test": "python_testcases/test_hanoi.py", "split": "test"},
+    {"bug_id": "is_valid_parenthesization", "source": "python_programs/is_valid_parenthesization.py", "public_test": "python_testcases/test_is_valid_parenthesization.py", "split": "test"},
+    {"bug_id": "levenshtein", "source": "python_programs/levenshtein.py", "public_test": "python_testcases/test_levenshtein.py", "split": "test"},
+    {"bug_id": "lis", "source": "python_programs/lis.py", "public_test": "python_testcases/test_lis.py", "split": "test"},
+    {"bug_id": "mergesort", "source": "python_programs/mergesort.py", "public_test": "python_testcases/test_mergesort.py", "split": "test"},
+    {"bug_id": "quicksort", "source": "python_programs/quicksort.py", "public_test": "python_testcases/test_quicksort.py", "split": "test"}
+  ]
+}

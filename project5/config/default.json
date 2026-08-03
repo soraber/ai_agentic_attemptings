@@ -1,0 +1,16 @@
+{
+  "project_id": "project5",
+  "seed": 20260802,
+  "planner_mode": "deterministic",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "low",
+  "development_case_count": 10,
+  "test_case_count": 40,
+  "max_repair_attempts": 2,
+  "max_result_rows": 100,
+  "authorized_regions": ["NA"],
+  "max_model_calls": 180,
+  "max_output_tokens": 500,
+  "max_retries": 2,
+  "max_estimated_cost_usd": 6.0
+}

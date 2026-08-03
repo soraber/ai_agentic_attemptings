@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "governed-text-to-sql-agent"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+  "duckdb>=1.2,<2",
+  "sqlglot>=26,<30",
+  "pydantic>=2.7,<3",
+  "openai>=2,<3"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

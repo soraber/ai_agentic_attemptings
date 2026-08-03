@@ -1,0 +1,15 @@
+{
+  "project_id": "project6",
+  "seed": 20260802,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "medium",
+  "max_patch_attempts": 3,
+  "max_changed_lines": 30,
+  "test_timeout_seconds": 20,
+  "max_test_output_chars": 12000,
+  "max_model_calls": 220,
+  "max_output_tokens": 900,
+  "max_estimated_cost_usd": 8.0,
+  "development_case_count": 4,
+  "test_case_count": 8
+}

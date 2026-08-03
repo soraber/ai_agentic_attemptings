@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "secure-interoperable-agent-gateway"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["pydantic>=2.7,<3", "jsonschema>=4.23,<5", "openai>=2,<3"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,18 @@
+{
+  "events": [
+    {"event_id": "E01", "session_id": "S1", "timestamp": "2026-01-01T10:00:00Z", "speaker": "user", "text": "FACT hometown=Boston"},
+    {"event_id": "E02", "session_id": "S1", "timestamp": "2026-01-01T10:01:00Z", "speaker": "user", "text": "FACT favorite_color=blue"},
+    {"event_id": "E03", "session_id": "S1", "timestamp": "2026-01-01T10:02:00Z", "speaker": "user", "text": "FACT employer=Acme"},
+    {"event_id": "E04", "session_id": "S2", "timestamp": "2026-02-01T10:00:00Z", "speaker": "user", "text": "CORRECT favorite_color=green"},
+    {"event_id": "E05", "session_id": "S2", "timestamp": "2026-02-01T10:01:00Z", "speaker": "user", "text": "FACT pet=cat"},
+    {"event_id": "E06", "session_id": "S2", "timestamp": "2026-02-01T10:02:00Z", "speaker": "user", "text": "FACT pet=dog"},
+    {"event_id": "E07", "session_id": "S3", "timestamp": "2026-03-01T10:00:00Z", "speaker": "user", "text": "FACT private_note=delete-me"}
+  ],
+  "queries": [
+    {"query_id": "Q01", "question": "What is the hometown?", "fact_key": "hometown", "answer": "Boston", "evidence": ["E01"], "system_expectation": "answer"},
+    {"query_id": "Q02", "question": "What is the current favorite color?", "fact_key": "favorite_color", "answer": "green", "evidence": ["E04"], "system_expectation": "answer"},
+    {"query_id": "Q03", "question": "What is the pet?", "fact_key": "pet", "answer": null, "evidence": ["E05", "E06"], "system_expectation": "abstain"},
+    {"query_id": "Q04", "question": "What is the private note?", "fact_key": "private_note", "answer": null, "evidence": [], "system_expectation": "deleted"}
+  ],
+  "delete_event_ids": ["E07"]
+}

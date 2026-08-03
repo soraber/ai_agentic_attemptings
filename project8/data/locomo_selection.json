@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/snap-research/locomo.git",
+  "commit": "3eb6f2c585f5e1699204e3c3bdf7adc5c28cb376",
+  "source_path": "data/locomo10.json",
+  "sample_indices": [0, 1],
+  "qa_per_sample": 40,
+  "license": "MIT"
+}
