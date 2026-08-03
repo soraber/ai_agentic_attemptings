@@ -31,3 +31,13 @@ verification, and preservation of prior user edits.
 - **Fix:** Added normalized MiniLM schema retrieval, a shared BF16 Qwen2.5-Coder planner, isolated `output/gpu/` artifacts, and patch-only notebook updates
 - **Verification:** Ten CPU-side tests and the structure/privacy validator pass; changed cells were reset while `P05-C03` and its output were preserved
 - **Preservation:** Existing OpenAI metrics, traces, report, and all dataset-preparation content remain unchanged
+
+## 2026-08-03 - Colab A100 Runtime Disconnection
+
+- **Environment:** VS Code 2025.9.1 with the Google Colab extension; requested A100 runtime
+- **Notebook cells:** `P05-C01`, `P05-C02`, and `P05-C07`
+- **Symptom:** A first A100 kernel stayed busy after `pytest`; a replacement A100 server was removed immediately after Python selection and the notebook returned to `Select Kernel`
+- **Root cause:** The first run used an already-open stale notebook buffer with an unbounded test cell; the replacement failure occurred in the VS Code/Colab remote-server lifecycle before any notebook code executed
+- **Fix:** `P05-C01` now fast-forwards an existing Colab clone, `P05-C02` selects the isolated `local_gpu` backend, and `P05-C07` disables third-party pytest plugin autoload and enforces a 120-second timeout
+- **Verification:** The earlier A100 smoke execution confirmed `NVIDIA A100-SXM4-40GB` and MiniLM schema retrieval; the complete local-GPU evaluation did not run because the replacement server disconnected
+- **Preservation:** `P05-C03` dataset preparation and the complete OpenAI evaluation artifacts were not changed; remote debugging stopped after the user-defined 10-minute limit

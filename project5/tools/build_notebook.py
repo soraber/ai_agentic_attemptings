@@ -30,6 +30,7 @@ PROJECT_ROOT = next((p.resolve() for p in candidates if (p/"config/default.json"
 if PROJECT_ROOT is None:
     repo = Path("/content/ai_agentic_attemptings")
     if not repo.exists(): subprocess.run(["git", "clone", "https://github.com/soraber/ai_agentic_attemptings.git", str(repo)], check=True)
+    else: subprocess.run(["git", "-C", str(repo), "pull", "--ff-only"], check=True)
     PROJECT_ROOT = repo/"project5"
 os.chdir(PROJECT_ROOT)
 if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
@@ -89,8 +90,12 @@ if RUN_LOCAL_GPU_EVAL:
     schema_retriever = EmbeddingSchemaRetriever(SCHEMA_CATALOG, config.embedding_model, config.local_device)
     print({"dense_schema_matches": schema_retriever.retrieve(repair_case.question, config.schema_top_k)})
 print(result.model_dump())"""),
-    cell("P05-C07", "code", """import subprocess, sys
-result = subprocess.run([sys.executable, "-m", "pytest", "-q", "tests"], text=True, capture_output=True)
+    cell("P05-C07", "code", """import os, subprocess, sys
+pytest_env = {**os.environ, "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"}
+try:
+    result = subprocess.run([sys.executable, "-m", "pytest", "-q", "tests"], text=True, capture_output=True, env=pytest_env, timeout=120)
+except subprocess.TimeoutExpired as exc:
+    raise RuntimeError("Project 5 tests exceeded the 120-second Colab limit") from exc
 print(result.stdout)
 if result.returncode: print(result.stderr); raise RuntimeError("Project 5 tests failed")"""),
     cell("P05-C08", "code", """from project5_agent.analyst import DeterministicSQLPlanner, LocalSQLPlanner, OpenAISQLPlanner
