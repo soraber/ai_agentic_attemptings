@@ -18,6 +18,7 @@ def coarse_baseline_policy(plan: ActionPlan) -> PolicyDecision:
 def evaluate_policy(plan: ActionPlan, evidence: dict[str, Any]) -> PolicyDecision:
     reasons: list[str] = []
     service = evidence["service"]
+    parameters = plan.parameters.compact()
 
     if plan.incident_id != evidence["incident_id"]:
         reasons.append("plan incident ID does not match the evidence")
@@ -29,19 +30,19 @@ def evaluate_policy(plan: ActionPlan, evidence: dict[str, Any]) -> PolicyDecisio
         reasons.append("all remediation actions require approval in this experiment")
 
     if plan.action == Remediation.SCALE_SERVICE.value:
-        replicas = plan.parameters.get("replicas")
+        replicas = parameters.get("replicas")
         if not isinstance(replicas, int) or not 2 <= replicas <= 8:
             reasons.append("replicas must be an integer between 2 and 8")
     elif plan.action == Remediation.ROLLBACK_DEPLOYMENT.value:
-        if plan.parameters.get("version") != evidence["previous_version"]:
+        if parameters.get("version") != evidence["previous_version"]:
             reasons.append("rollback version must equal the recorded previous version")
     elif plan.action == Remediation.RESTART_SERVICE.value:
-        if plan.parameters.get("max_unavailable") != 1:
+        if parameters.get("max_unavailable") != 1:
             reasons.append("restart requires max_unavailable=1")
     elif plan.action == Remediation.OPEN_TICKET.value:
-        if plan.parameters.get("severity") not in {"SEV-1", "SEV-2"}:
+        if parameters.get("severity") not in {"SEV-1", "SEV-2"}:
             reasons.append("ticket severity must be SEV-1 or SEV-2")
-        if any(key in plan.parameters for key in ("webhook", "callback_url", "external_url")):
+        if any(key in parameters for key in ("webhook", "callback_url", "external_url")):
             reasons.append("external callback parameters are not allowed")
 
     return PolicyDecision(

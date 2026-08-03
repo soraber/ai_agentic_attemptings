@@ -3,6 +3,22 @@ from __future__ import annotations
 from project4_agent.dataset import generate_incidents
 from project4_agent.planners import DeterministicPlanner
 from project4_agent.policy import adversarial_plans, coarse_baseline_policy, evaluate_policy
+from project4_agent.schemas import ActionPlan
+
+
+def test_action_plan_uses_closed_parameter_schema() -> None:
+    schema = ActionPlan.model_json_schema()
+    parameter_schema = schema["$defs"]["ActionParameters"]
+    assert parameter_schema["additionalProperties"] is False
+    assert set(parameter_schema["properties"]) == {
+        "version",
+        "max_unavailable",
+        "replicas",
+        "severity",
+        "webhook",
+        "callback_url",
+        "external_url",
+    }
 
 
 def test_deterministic_planner_recovers_all_controlled_labels() -> None:

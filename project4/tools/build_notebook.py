@@ -58,6 +58,8 @@ if PROJECT_ROOT is None:
             ["git", "clone", "https://github.com/soraber/ai_agentic_attemptings.git", str(repo_root)],
             check=True,
         )
+    elif (repo_root / ".git").exists():
+        subprocess.run(["git", "-C", str(repo_root), "pull", "--ff-only"], check=True)
     PROJECT_ROOT = repo_root / "project4"
 
 os.chdir(PROJECT_ROOT)
@@ -66,6 +68,9 @@ subprocess.run(
     check=True,
 )
 subprocess.run([sys.executable, "-m", "pip", "install", "-e", ".", "--no-deps"], check=True)
+source_root = PROJECT_ROOT / "src"
+if str(source_root) not in sys.path:
+    sys.path.insert(0, str(source_root))
 dependency_check = subprocess.run(
     [sys.executable, "-m", "pip", "check"], text=True, capture_output=True
 )
@@ -90,10 +95,14 @@ RUN_FULL_EVAL = False
 config = load_config(PROJECT_ROOT / "config/default.json")
 
 if RUN_API_EVAL and not os.getenv("OPENAI_API_KEY"):
+    key = None
     if "google.colab" in sys.modules:
-        from google.colab import userdata
-        key = userdata.get("OPENAI_API_KEY")
-    else:
+        try:
+            from google.colab import userdata
+            key = userdata.get("OPENAI_API_KEY")
+        except Exception:
+            print("Colab Secrets is unavailable from this client; using a hidden prompt.")
+    if not key:
         key = getpass.getpass("OPENAI_API_KEY (input hidden): ")
     if not key:
         raise RuntimeError("OPENAI_API_KEY is required only when RUN_API_EVAL=True")

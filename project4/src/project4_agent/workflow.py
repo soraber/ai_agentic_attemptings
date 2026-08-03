@@ -117,7 +117,7 @@ class DurableIncidentWorkflow:
                 "incident_id": plan.incident_id,
                 "action": plan.action,
                 "target_service": plan.target_service,
-                "parameters": plan.parameters,
+                "parameters": plan.parameters.compact(),
                 "risk": plan.risk.value,
                 "question": "Approve this simulated remediation?",
             }

@@ -94,13 +94,30 @@ class Diagnosis(BaseModel):
     rationale: str = Field(min_length=1, max_length=600)
 
 
+class ActionParameters(BaseModel):
+    """Closed action catalog parameters compatible with strict structured output."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    version: str | None = None
+    max_unavailable: int | None = None
+    replicas: int | None = None
+    severity: Literal["SEV-1", "SEV-2"] | None = None
+    webhook: str | None = None
+    callback_url: str | None = None
+    external_url: str | None = None
+
+    def compact(self) -> dict[str, str | int]:
+        return self.model_dump(exclude_none=True)
+
+
 class ActionPlan(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     incident_id: str
     action: str
     target_service: str
-    parameters: dict[str, Any] = Field(default_factory=dict)
+    parameters: ActionParameters = Field(default_factory=ActionParameters)
     risk: RiskLevel
     requires_approval: bool = True
     idempotency_key: str = Field(min_length=12, max_length=80)

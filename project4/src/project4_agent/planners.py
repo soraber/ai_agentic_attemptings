@@ -9,6 +9,7 @@ from typing import Any, Protocol
 from .config import ExperimentConfig
 from .schemas import (
     ActionPlan,
+    ActionParameters,
     Diagnosis,
     IncidentCase,
     PlannerUsage,
@@ -40,8 +41,10 @@ def stable_idempotency_key(
     incident_id: str,
     action: str,
     target_service: str,
-    parameters: dict[str, Any],
+    parameters: dict[str, Any] | ActionParameters,
 ) -> str:
+    if isinstance(parameters, ActionParameters):
+        parameters = parameters.compact()
     payload = json.dumps(
         [incident_id, action, target_service, parameters],
         sort_keys=True,
