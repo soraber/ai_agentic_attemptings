@@ -16,11 +16,11 @@ class ExperimentConfig(BaseModel):
     model: str = "gpt-5.6-luna"
     reasoning_effort: str = "low"
     max_model_calls: int = Field(default=120, ge=1)
-    max_output_tokens: int = Field(default=450, ge=64)
+    max_output_tokens: int = Field(default=2048, ge=64)
     max_retries: int = Field(default=2, ge=0, le=5)
     max_estimated_cost_usd: float = Field(default=5.0, ge=0)
-    input_usd_per_million: float = Field(default=1.0, ge=0)
-    output_usd_per_million: float = Field(default=6.0, ge=0)
+    input_usd_per_million: float = Field(default=0.2, ge=0)
+    output_usd_per_million: float = Field(default=1.2, ge=0)
     development_case_count: int = Field(default=8, ge=1)
     test_case_count: int = Field(default=16, ge=1)
     evaluation_repetitions: int = Field(default=2, ge=1, le=5)

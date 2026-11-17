@@ -48,12 +48,22 @@ def apply_unified_diff(root: str | Path, diff: str) -> None:
 
 
 class RepairWorkspace:
-    def __init__(self, source: str | Path, destination: str | Path):
+    def __init__(self, source: str | Path, destination: str | Path, excluded_paths: list[str] | None = None):
         self.source = Path(source)
         self.destination = Path(destination)
+        if (self.destination.resolve() == self.source.resolve()
+                or self.destination.resolve().is_relative_to(self.source.resolve())
+                or self.source.resolve().is_relative_to(self.destination.resolve())):
+            raise PermissionError("Repair workspace must be separate from source")
+        if any(path.is_symlink() for path in self.source.rglob("*")):
+            raise PermissionError("Source workspace must not contain symlinks")
+        excluded = set(excluded_paths or [])
+        def ignore(directory, names):
+            return [name for name in names if name in {".git", "__pycache__", ".pytest_cache"}
+                    or (Path(directory) / name).relative_to(self.source).as_posix() in excluded]
         if self.destination.exists():
             shutil.rmtree(self.destination)
-        shutil.copytree(self.source, self.destination)
+        shutil.copytree(self.source, self.destination, ignore=ignore)
         self._snapshot = self._read_files()
 
     def _read_files(self) -> dict[str, bytes]:

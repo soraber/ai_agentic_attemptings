@@ -4,7 +4,7 @@ import json
 from types import SimpleNamespace
 
 from project6_agent.config import Project6Config
-from project6_agent.planners import OpenAIPatchPlanner
+from project6_agent.planners import OpenAIPatchPlanner, PatchCallBudget
 from project6_agent.schemas import PatchProposal
 
 
@@ -45,5 +45,27 @@ def test_openai_planner_uses_relative_allowlisted_path_and_records_usage(tmp_pat
         "model_calls": 1,
         "input_tokens": 500,
         "output_tokens": 200,
-        "estimated_cost_usd": 0.0085,
+        "estimated_cost_usd": 0.006,
     }
+
+
+def test_budget_is_shared_across_planners_and_failed_calls(tmp_path):
+    import pytest
+    config = Project6Config(max_model_calls=1, max_retries=0)
+    budget = PatchCallBudget(config)
+    source = tmp_path / "a.py"
+    source.write_text("x=1\n")
+    def fail(**kwargs):
+        raise ValueError("authored provider failure")
+    client = SimpleNamespace(responses=SimpleNamespace(parse=fail))
+    first = OpenAIPatchPlanner(config, source, "a", client=client, budget=budget)
+    second = OpenAIPatchPlanner(config, source, "b", client=client, budget=budget)
+    with pytest.raises(ValueError, match="authored provider failure"):
+        first.propose("failed", 0)
+    assert budget.calls == 1 and budget.reserved > 0
+    with pytest.raises(RuntimeError, match="Shared"):
+        second.propose("failed", 0)
+    assert second.calls == 0
+    with pytest.raises(ValueError, match="Shared budget"):
+        OpenAIPatchPlanner(config.model_copy(update={"max_output_tokens": 4096}), source, "c",
+                           client=client, budget=budget)

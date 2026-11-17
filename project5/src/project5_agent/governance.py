@@ -46,6 +46,10 @@ def validate_plan(plan: QueryPlan, max_result_rows: int = 100) -> PolicyDecision
         reasons.append("query-plan tables do not match SQL AST tables")
     if set(columns) & PII_COLUMNS:
         reasons.append("direct PII column selection is forbidden")
+    if any(not isinstance(star.parent, exp.Count) for star in tree.find_all(exp.Star)):
+        reasons.append("explicit projected columns are required")
+    if any(table.catalog or table.db for table in tree.find_all(exp.Table)):
+        reasons.append("qualified relations outside the restricted snapshot are forbidden")
 
     function_names = {
         function.sql_name().lower()

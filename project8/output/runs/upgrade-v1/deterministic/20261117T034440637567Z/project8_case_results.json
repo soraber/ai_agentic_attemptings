@@ -1,0 +1,186 @@
+[
+  {
+    "abstained": false,
+    "answer": "Boston",
+    "conflict": false,
+    "context_words": 12,
+    "evidence_ids": [
+      "E01"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": true,
+    "gold": "Boston",
+    "latency_ms": 0.1805420033633709,
+    "query_id": "Q01",
+    "system": "window",
+    "token_f1": 1.0
+  },
+  {
+    "abstained": false,
+    "answer": "Boston",
+    "conflict": false,
+    "context_words": 2,
+    "evidence_ids": [
+      "E01"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": true,
+    "gold": "Boston",
+    "latency_ms": 0.1539999502710998,
+    "query_id": "Q01",
+    "system": "episodic",
+    "token_f1": 1.0
+  },
+  {
+    "abstained": false,
+    "answer": "Boston",
+    "conflict": false,
+    "context_words": 2,
+    "evidence_ids": [
+      "E01"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": true,
+    "gold": "Boston",
+    "latency_ms": 0.20445795962587,
+    "query_id": "Q01",
+    "system": "hybrid",
+    "token_f1": 1.0
+  },
+  {
+    "abstained": false,
+    "answer": "green",
+    "conflict": false,
+    "context_words": 12,
+    "evidence_ids": [
+      "E04"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": true,
+    "gold": "green",
+    "latency_ms": 0.0877920538187027,
+    "query_id": "Q02",
+    "system": "window",
+    "token_f1": 1.0
+  },
+  {
+    "abstained": false,
+    "answer": "green",
+    "conflict": false,
+    "context_words": 4,
+    "evidence_ids": [
+      "E04"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": true,
+    "gold": "green",
+    "latency_ms": 0.09658298222348094,
+    "query_id": "Q02",
+    "system": "episodic",
+    "token_f1": 1.0
+  },
+  {
+    "abstained": false,
+    "answer": "green",
+    "conflict": false,
+    "context_words": 4,
+    "evidence_ids": [
+      "E04"
+    ],
+    "evidence_recall": 1.0,
+    "exact_match": true,
+    "gold": "green",
+    "latency_ms": 0.20008301362395287,
+    "query_id": "Q02",
+    "system": "hybrid",
+    "token_f1": 1.0
+  },
+  {
+    "abstained": false,
+    "answer": "dog",
+    "conflict": false,
+    "context_words": 12,
+    "evidence_ids": [
+      "E06"
+    ],
+    "evidence_recall": 0.5,
+    "exact_match": false,
+    "gold": null,
+    "latency_ms": 0.12091698590666056,
+    "query_id": "Q03",
+    "system": "window",
+    "token_f1": 0.0
+  },
+  {
+    "abstained": false,
+    "answer": "dog",
+    "conflict": false,
+    "context_words": 4,
+    "evidence_ids": [
+      "E06"
+    ],
+    "evidence_recall": 0.5,
+    "exact_match": false,
+    "gold": null,
+    "latency_ms": 0.14029198791831732,
+    "query_id": "Q03",
+    "system": "episodic",
+    "token_f1": 0.0
+  },
+  {
+    "abstained": true,
+    "answer": null,
+    "conflict": true,
+    "context_words": 4,
+    "evidence_ids": [],
+    "evidence_recall": 0.0,
+    "exact_match": true,
+    "gold": null,
+    "latency_ms": 0.22920797346159816,
+    "query_id": "Q03",
+    "system": "hybrid",
+    "token_f1": 1.0
+  },
+  {
+    "abstained": true,
+    "answer": null,
+    "conflict": false,
+    "context_words": 12,
+    "evidence_ids": [],
+    "evidence_recall": 1.0,
+    "exact_match": true,
+    "gold": null,
+    "latency_ms": 0.13583397958427668,
+    "query_id": "Q04",
+    "system": "window",
+    "token_f1": 1.0
+  },
+  {
+    "abstained": true,
+    "answer": null,
+    "conflict": false,
+    "context_words": 0,
+    "evidence_ids": [],
+    "evidence_recall": 1.0,
+    "exact_match": true,
+    "gold": null,
+    "latency_ms": 0.10808400111272931,
+    "query_id": "Q04",
+    "system": "episodic",
+    "token_f1": 1.0
+  },
+  {
+    "abstained": true,
+    "answer": null,
+    "conflict": false,
+    "context_words": 0,
+    "evidence_ids": [],
+    "evidence_recall": 1.0,
+    "exact_match": true,
+    "gold": null,
+    "latency_ms": 0.18733402248471975,
+    "query_id": "Q04",
+    "system": "hybrid",
+    "token_f1": 1.0
+  }
+]

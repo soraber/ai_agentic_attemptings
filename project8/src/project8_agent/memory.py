@@ -19,21 +19,32 @@ class MemoryStore:
     def _setup(self):
         with self.connect() as c:
             c.executescript("""CREATE TABLE IF NOT EXISTS events(event_id TEXT PRIMARY KEY,session_id TEXT,timestamp TEXT,speaker TEXT,text TEXT); CREATE TABLE IF NOT EXISTS facts(fact_id INTEGER PRIMARY KEY AUTOINCREMENT,key TEXT,value TEXT,source_event_id TEXT,valid_from TEXT,superseded_at TEXT,superseded_by TEXT); CREATE TABLE IF NOT EXISTS tombstones(event_id TEXT PRIMARY KEY,deleted_at REAL);""")
+            c.execute("CREATE TABLE IF NOT EXISTS extraction_provenance(event_id TEXT,key TEXT,quote TEXT,extractor_version TEXT,consent_json TEXT,PRIMARY KEY(event_id,key))")
     def reset(self):
-        with self.connect() as c: c.execute("DELETE FROM events"); c.execute("DELETE FROM facts"); c.execute("DELETE FROM tombstones")
+        with self.connect() as c: c.execute("DELETE FROM events"); c.execute("DELETE FROM facts"); c.execute("DELETE FROM tombstones"); c.execute("DELETE FROM extraction_provenance")
     def ingest(self,event:MemoryEvent):
         with self.connect() as c:
-            c.execute("INSERT OR REPLACE INTO events VALUES(?,?,?,?,?)",(event.event_id,event.session_id,event.timestamp,event.speaker,event.text))
+            c.execute("BEGIN IMMEDIATE")
+            if c.execute("SELECT 1 FROM tombstones WHERE event_id=?", (event.event_id,)).fetchone():
+                return False
+            prior=c.execute("SELECT * FROM events WHERE event_id=?", (event.event_id,)).fetchone()
+            if prior:
+                if dict(prior) != event.model_dump(): raise ValueError("Event IDs are immutable; issue a new correction event")
+                return False
+            c.execute("INSERT INTO events VALUES(?,?,?,?,?)",(event.event_id,event.session_id,event.timestamp,event.speaker,event.text))
             match=FACT_PATTERN.match(event.text)
             if match:
                 mode,key,value=match.groups()
                 if mode=="CORRECT": c.execute("UPDATE facts SET superseded_at=?,superseded_by=? WHERE key=? AND superseded_at IS NULL",(event.timestamp,event.event_id,key))
                 c.execute("INSERT INTO facts(key,value,source_event_id,valid_from) VALUES(?,?,?,?)",(key,value,event.event_id,event.timestamp))
+            return True
     def delete_event(self,event_id:str):
         with self.connect() as c:
+            c.execute("DELETE FROM extraction_provenance WHERE event_id=?",(event_id,))
             c.execute("DELETE FROM facts WHERE source_event_id=?",(event_id,)); c.execute("DELETE FROM events WHERE event_id=?",(event_id,)); c.execute("INSERT OR REPLACE INTO tombstones VALUES(?,?)",(event_id,time.time()))
     def deletion_verified(self,event_id:str)->bool:
         with self.connect() as c:
+            if c.execute("SELECT 1 FROM extraction_provenance WHERE event_id=?",(event_id,)).fetchone(): return False
             return c.execute("SELECT COUNT(*) FROM events WHERE event_id=?",(event_id,)).fetchone()[0]==0 and c.execute("SELECT COUNT(*) FROM facts WHERE source_event_id=?",(event_id,)).fetchone()[0]==0 and c.execute("SELECT COUNT(*) FROM tombstones WHERE event_id=?",(event_id,)).fetchone()[0]==1
     def recent(self,limit:int)->list[sqlite3.Row]:
         with self.connect() as c: return c.execute("SELECT * FROM events ORDER BY timestamp DESC,event_id DESC LIMIT ?",(limit,)).fetchall()
@@ -67,8 +78,8 @@ class MemoryStore:
                 parsed=FACT_PATTERN.match(row["text"])
                 if parsed and parsed.group(2)==query.fact_key: matches.append((row,parsed.group(3)))
             if matches: answer=matches[0][1]; evidence=[matches[0][0]["event_id"]]
-        context_tokens=sum(len(row["text"].split()) for row in rows)
+        context_words=sum(len(row["text"].split()) for row in rows)
         abstained=answer is None or conflict
-        return MemoryAnswer(query_id=query.query_id,system=system,answer=None if conflict else answer,evidence_ids=evidence,abstained=abstained,conflict=conflict,context_tokens=context_tokens,latency_ms=(time.perf_counter()-started)*1000)
+        return MemoryAnswer(query_id=query.query_id,system=system,answer=None if conflict else answer,evidence_ids=evidence,abstained=abstained,conflict=conflict,context_words=context_words,latency_ms=(time.perf_counter()-started)*1000)
     def stats(self)->dict[str,int]:
         with self.connect() as c: return {name:c.execute(f"SELECT COUNT(*) FROM {name}").fetchone()[0] for name in ["events","facts","tombstones"]}

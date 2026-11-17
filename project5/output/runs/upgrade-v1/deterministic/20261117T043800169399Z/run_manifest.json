@@ -1,0 +1,18 @@
+{
+  "generated_at_utc": "20261117T043800169399Z",
+  "model_calls": 0,
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "python": "3.11.15",
+  "scope": "authored deterministic controls; not model quality",
+  "source_sha256": {
+    "src/project5_agent/__init__.py": "298c4d49248e3119fdef2292cf6d223f1ad7fa810a6f3a9a83e6553e532081cf",
+    "src/project5_agent/analyst.py": "22fde581692a2f150c41bc4b41279aaf2cecdcc4a0962c616f19adc2693a45b4",
+    "src/project5_agent/config.py": "373a102b58562fae7bbb26ad75e3e2e7e600ae82da7ab0161593538727dfbf20",
+    "src/project5_agent/dataset.py": "6e63783f5fe2d53afd7658beddeadea032f871352bee4049c8f088582e82e4bf",
+    "src/project5_agent/evaluation.py": "c0a348e8c627fd6956099ea82968af8ecc17047b7774ba11901bba2104454bdf",
+    "src/project5_agent/execution.py": "653f54ba6e8d1eedddef6da479e894a456ed2eb2749fd638d912f48e6629e247",
+    "src/project5_agent/governance.py": "74c6607398f9075acb375a74ae0ff85e0d037c3c30989be269ee2d8ae20c3de2",
+    "src/project5_agent/local_models.py": "23f4adb37dfca5c17f3a8cda18d319cfadbb0f9b370adc280840cbfcb580ec71",
+    "src/project5_agent/schemas.py": "9a4f18a731b0f5341514150a533ea7f87fd3d12cfc50a3836f7c58c5f9e10878"
+  }
+}

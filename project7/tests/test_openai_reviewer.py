@@ -28,5 +28,5 @@ def test_openai_reviewer_records_usage() -> None:
         "model_calls": 1,
         "input_tokens": 300,
         "output_tokens": 100,
-        "estimated_cost_usd": 0.0009,
+        "estimated_cost_usd": 0.00018,
     }

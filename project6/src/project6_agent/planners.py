@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import threading
 import time
 from pathlib import Path
 
@@ -106,6 +107,10 @@ class LocalPatchPlanner:
         self.allowed_path = allowed_path
         self.backend = backend
         self.calls = 0
+        self.repository_context = {}
+
+    def set_context(self, symbols: list, locations: list) -> None:
+        self.repository_context = {"symbols": symbols, "failure_locations": locations}
 
     def propose(self, failure: str, attempt: int) -> PatchProposal:
         if self.calls >= self.config.max_model_calls:
@@ -116,6 +121,7 @@ class LocalPatchPlanner:
             "allowed_path": self.allowed_path,
             "source": self.source_path.read_text(encoding="utf-8")[:16000],
             "sanitized_test_failure": failure[-6000:],
+            "repository_context": self.repository_context,
             "constraints": {
                 "unified_diff": True,
                 "max_changed_lines": self.config.max_changed_lines,
@@ -128,6 +134,33 @@ class LocalPatchPlanner:
         return PatchProposal.model_validate(extract_json_object(raw))
 
 
+class PatchCallBudget:
+    """Shared experiment budget; failed calls retain a conservative reservation."""
+    def __init__(self, config):
+        self.config = config
+        self.calls = 0
+        self.charged = 0.0
+        self.reserved = 0.0
+        self.lock = threading.Lock()
+
+    def reserve(self, prompt, schema):
+        upper_input = len(prompt.encode()) + len(json.dumps(schema.model_json_schema()).encode()) + 1024
+        amount = (upper_input * self.config.input_price_per_million_usd +
+                  self.config.max_output_tokens * self.config.output_price_per_million_usd) / 1e6
+        with self.lock:
+            if self.calls >= self.config.max_model_calls or self.charged + self.reserved + amount > self.config.max_estimated_cost_usd:
+                raise RuntimeError("Shared Project 6 model-call/cost budget exhausted")
+            self.calls += 1
+            self.reserved += amount
+        return amount
+
+    def settle(self, reservation, input_tokens, output_tokens):
+        with self.lock:
+            self.reserved = max(0.0, self.reserved - reservation)
+            self.charged += (input_tokens * self.config.input_price_per_million_usd +
+                             output_tokens * self.config.output_price_per_million_usd) / 1e6
+
+
 class OpenAIPatchPlanner:
     def __init__(
         self,
@@ -136,16 +169,25 @@ class OpenAIPatchPlanner:
         bug_id: str,
         allowed_path: str | None = None,
         client: object | None = None,
+        budget: PatchCallBudget | None = None,
     ):
         if client is None:
             from openai import OpenAI
 
-            client = OpenAI()
+            client = OpenAI(max_retries=0, timeout=60)
         self.client = client
         self.config = config
         self.source_path = Path(source_path)
         self.allowed_path = allowed_path or self.source_path.name
         self.bug_id = bug_id
+        if budget is not None and (
+            budget.config.model != config.model
+            or budget.config.max_output_tokens < config.max_output_tokens
+            or budget.config.input_price_per_million_usd < config.input_price_per_million_usd
+            or budget.config.output_price_per_million_usd < config.output_price_per_million_usd
+        ):
+            raise ValueError("Shared budget does not cover this planner's model, tokens, or prices")
+        self.budget = budget or PatchCallBudget(config)
         self.calls = 0
         self.input_tokens = 0
         self.output_tokens = 0
@@ -165,17 +207,6 @@ class OpenAIPatchPlanner:
             "estimated_cost_usd": round(self.estimated_cost_usd, 6),
         }
 
-    def _check_budget(self, prompt: str) -> None:
-        if self.calls >= self.config.max_model_calls:
-            raise RuntimeError("Project 6 model-call budget exhausted")
-        estimated_input_tokens = max(1, (len(prompt) + 3) // 4)
-        projected_cost = (
-            (self.input_tokens + estimated_input_tokens) * self.config.input_price_per_million_usd
-            + (self.output_tokens + self.config.max_output_tokens) * self.config.output_price_per_million_usd
-        ) / 1_000_000
-        if projected_cost > self.config.max_estimated_cost_usd:
-            raise RuntimeError("Project 6 estimated API-cost budget exhausted")
-
     def _record_usage(self, response: object) -> None:
         usage = getattr(response, "usage", None)
         if usage is None:
@@ -191,6 +222,7 @@ class OpenAIPatchPlanner:
             "allowed_path": self.allowed_path,
             "source": self.source_path.read_text(encoding="utf-8")[:16000],
             "sanitized_test_failure": failure[-6000:],
+            "repository_context": getattr(self, "repository_context", {}),
             "constraints": {
                 "unified_diff": True,
                 "max_changed_lines": self.config.max_changed_lines,
@@ -199,19 +231,25 @@ class OpenAIPatchPlanner:
             },
         }
         serialized_prompt = json.dumps(prompt)
+        return self._parse_proposal(PatchProposal, serialized_prompt)
+
+    def _parse_proposal(self, schema, serialized_prompt):
         last_error: Exception | None = None
         for retry in range(self.config.max_retries + 1):
-            self._check_budget(serialized_prompt)
+            reservation = self.budget.reserve(serialized_prompt, schema)
             self.calls += 1
             try:
                 response = self.client.responses.parse(
                     model=self.config.model,
                     input=serialized_prompt,
-                    text_format=PatchProposal,
+                    text_format=schema,
                     reasoning={"effort":self.config.reasoning_effort},
                     max_output_tokens=self.config.max_output_tokens,
                 )
+                before = (self.input_tokens, self.output_tokens)
                 self._record_usage(response)
+                if getattr(response, "usage", None) is not None:
+                    self.budget.settle(reservation, self.input_tokens - before[0], self.output_tokens - before[1])
                 if response.output_parsed is None:
                     raise ValueError("No structured PatchProposal returned")
                 return response.output_parsed
@@ -221,3 +259,6 @@ class OpenAIPatchPlanner:
                     raise
                 time.sleep(0.5 * (2**retry))
         raise RuntimeError("Project 6 patch planner failed") from last_error
+
+    def set_context(self, symbols: list, locations: list) -> None:
+        self.repository_context = {"symbols": symbols, "failure_locations": locations}

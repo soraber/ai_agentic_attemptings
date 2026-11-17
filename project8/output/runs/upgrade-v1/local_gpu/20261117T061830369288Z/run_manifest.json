@@ -1,0 +1,14 @@
+{
+  "stage": "project8",
+  "started_utc": "20261117T063601085695Z",
+  "status": "failed",
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "python": "3.11.17",
+  "seed_note": "Notebook seeds retained; authored checks and model scores are distinct.",
+  "notebook_sha256": "289908b282a1a7febd9e5e07ed771171a54341eb3d30db06dced1ab0015d92d0",
+  "error_type": "RuntimeError",
+  "error": "Project 8 tests failed",
+  "seconds": 16.897813243998826,
+  "peak_gpu_allocated_bytes": 152367104,
+  "finished_utc": "20261117T063617983754Z"
+}

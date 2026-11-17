@@ -1,0 +1,174 @@
+{
+  "failed": [
+    {
+      "attempts": 1,
+      "bug_id": "lis",
+      "changed_lines": 2,
+      "error": "ValueError: error: corrupt patch at line 11",
+      "hidden_passed": false,
+      "latency_seconds": 4.041482875007205,
+      "overfit_detected": false,
+      "public_passed": false,
+      "rollback_verified": true,
+      "system": "one_shot",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "reject_patch",
+        "rollback"
+      ],
+      "verified": false
+    },
+    {
+      "attempts": 3,
+      "bug_id": "lis",
+      "changed_lines": 2,
+      "error": "ValueError: error: corrupt patch at line 11",
+      "hidden_passed": false,
+      "latency_seconds": 10.583228541945573,
+      "overfit_detected": false,
+      "public_passed": false,
+      "rollback_verified": true,
+      "system": "repair_loop",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "reject_patch",
+        "rollback",
+        "plan_patch",
+        "reject_patch",
+        "rollback",
+        "plan_patch",
+        "reject_patch",
+        "rollback"
+      ],
+      "verified": false
+    },
+    {
+      "attempts": 3,
+      "bug_id": "quicksort",
+      "changed_lines": 3,
+      "error": "ValueError: error: corrupt patch at line 14",
+      "hidden_passed": false,
+      "latency_seconds": 10.328558292007074,
+      "overfit_detected": false,
+      "public_passed": false,
+      "rollback_verified": true,
+      "system": "repair_loop",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "reject_patch",
+        "rollback",
+        "plan_patch",
+        "reject_patch",
+        "rollback",
+        "plan_patch",
+        "reject_patch",
+        "rollback"
+      ],
+      "verified": false
+    }
+  ],
+  "overfit": [],
+  "verified": [
+    {
+      "attempts": 1,
+      "bug_id": "gcd",
+      "changed_lines": 2,
+      "error": null,
+      "hidden_passed": true,
+      "latency_seconds": 3.5216825419920497,
+      "overfit_detected": false,
+      "public_passed": true,
+      "rollback_verified": true,
+      "system": "repair_loop",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "apply_patch",
+        "public_tests",
+        "final_hidden_evaluation",
+        "accept"
+      ],
+      "verified": true
+    },
+    {
+      "attempts": 1,
+      "bug_id": "gcd",
+      "changed_lines": 2,
+      "error": null,
+      "hidden_passed": true,
+      "latency_seconds": 3.406687500013504,
+      "overfit_detected": false,
+      "public_passed": true,
+      "rollback_verified": true,
+      "system": "one_shot",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "apply_patch",
+        "public_tests",
+        "final_hidden_evaluation",
+        "accept"
+      ],
+      "verified": true
+    },
+    {
+      "attempts": 1,
+      "bug_id": "get_factors",
+      "changed_lines": 2,
+      "error": null,
+      "hidden_passed": true,
+      "latency_seconds": 3.840855999966152,
+      "overfit_detected": false,
+      "public_passed": true,
+      "rollback_verified": true,
+      "system": "repair_loop",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "apply_patch",
+        "public_tests",
+        "final_hidden_evaluation",
+        "accept"
+      ],
+      "verified": true
+    },
+    {
+      "attempts": 1,
+      "bug_id": "get_factors",
+      "changed_lines": 2,
+      "error": null,
+      "hidden_passed": true,
+      "latency_seconds": 3.5317230410291813,
+      "overfit_detected": false,
+      "public_passed": true,
+      "rollback_verified": true,
+      "system": "one_shot",
+      "trajectory": [
+        "map_repository",
+        "run_public_tests",
+        "localize_failure",
+        "plan_patch",
+        "apply_patch",
+        "public_tests",
+        "final_hidden_evaluation",
+        "accept"
+      ],
+      "verified": true
+    }
+  ]
+}

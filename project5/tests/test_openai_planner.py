@@ -37,7 +37,9 @@ def test_openai_planner_records_usage_and_identifiers(project5_data) -> None:
 
     assert planner.plan(case) == plan
     assert responses.prompt["question_id"] == case.question_id
-    assert responses.prompt["category"] == case.category
+    assert "category" not in responses.prompt
+    assert "gold_sql" not in responses.prompt
+    assert "total_amount DOUBLE" in responses.prompt["retrieved_schema"]["orders"]
     assert planner.usage_summary() == {
         "model_calls": 1,
         "input_tokens": 120,

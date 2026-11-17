@@ -6,10 +6,116 @@ documentation pattern used in `ai_project_artifacts`: portfolio summary,
 repository map, methods, compute settings, results and judgment, future work, and
 debugging notes.
 
-> **Version:** ver 0.7: complete A100 comparisons and validation<br>
-> **Updated:** 2026-08-03 07:02 EDT
+> **Version:** ver 0.12: completed memory ablation and paired analysis<br>
+> **Updated:** 2026-11-17 02:35 EST
 
-## Portfolio Summary
+## Upgrade Evidence
+
+The sections below retain the historical experiments, not measurements of the
+upgraded implementation. See [upgrade_plan.md](upgrade_plan.md) for exact notebook
+cell changes, completed steps, and remaining work, and the [upgrade debug log](debug_log/upgrade_debug_log.md)
+for implementation issues. No historical outputs were overwritten or pushed.
+
+| Project | Implemented And Verified | New Evidence / Remaining Gate |
+| --- | --- | --- |
+| 4 | Parameter-bound expiring approvals; atomic idempotency; whole-workflow process restart; separate local action process with reconciliation before retry | 23 CPU tests. [New API run](project4/output/runs/upgrade-v1/openai/20261117T053319313741Z/project4_final_summary.json): root-cause accuracy 100%, remediation accuracy 65.6%; no durable duplicate effects. Only five durable crash trials actually executed, all recovered. Reviewer/actions remain simulated; no distributed exactly-once guarantee. |
+| 5 | Physical authorized-row/PII-free snapshots, disabled external I/O, query timeout/row cap, introspected schema, bounded failed calls, final value scoring separate from exact hashes | 25 CPU tests; 22 then-current tests also passed on Colab. [New GPU run](project5/output/runs/upgrade-v1/local_gpu/20261117T064159242835Z/): no observed PII exposure, but weak planning. [Frozen-SQL value scoring](project5/output/runs/upgrade-v1/local_gpu/20261117T064159242835Z/value_scoring_v2/summary.json) matched 5/27 baseline vs 2/27 governed answerable cases. Three otherwise correct queries were blocked because model table metadata omitted nested references. Strict alias-sensitive hash scores remain 0%. |
+| 6 | Generated code requires Docker; secrets/network restricted; hidden tests used once after selection; localization enters planner context; optional exact source edits and shared API budget | [Two real-container checks](project6/output/runs/upgrade-v1/docker/20261117T054654314647Z/sandbox_validation.json) passed. [API/Docker test run](project6/output/runs/upgrade-v1/openai/20261117T053902107808Z/project6_final_summary.json): one-shot 7/8 vs repair-loop 6/8. [Separate development comparison](project6/output/runs/upgrade-v1/development_edits/20261117T055338129249Z/development_summary.json): structured edits 4/4 versus unified diffs 2/4; not a new holdout score. |
+| 7 | Real MCP v2.3 stdio server/client, trusted launch identity, persisted approvals and idempotency, strict API schema conversion, bounded model/tool loop | [New model-to-MCP run](project7/output/runs/upgrade-v1/model_mcp/20261117T054505255155Z/model_mcp_summary.json): two benign tasks passed; six synthetic attack cases with one heuristic adaptive escalation each produced no observed leaks/unauthorized effects. Small authored set, not general injection resistance. Remote authentication remains pending. |
+| 8 | Tombstones survive replay/cache-format changes; dependent caches are invalidated; source-bound consent; bounded neighboring turns; fresh/cached timing and retrieved/cited recall separated | 26 CPU tests; 23 then-current tests passed in Colab. [Same-answerer GPU ablation](project8/output/runs/upgrade-v1/local_gpu/20261117T064159242835Z/) is complete with 50 questions and 250 fresh calls. Dense episodic F1 0.1565 versus lexical 0.1159; paired interval includes zero. Authored lifecycle tests validate deletion behavior, not natural-language extraction quality or provider retention. |
+
+The CPU checks run in an isolated Python 3.11 environment captured in
+`requirements-upgrade-cpu.lock.txt`. Secret-free CI is added but has not been run
+on GitHub. Model runs and fixture runs have separate directories and source-hash
+manifests. No GPU result or model improvement is inferred from CPU tests. Projects 5/8
+resolve model and embedding commits before loading; actual GPU environment locks,
+timing, peak memory, and per-case scores accompany completed runs. The prepared
+queue uses a separate inference environment because CrewAI's MCP 1.x requirement
+conflicts with Project 7's tested MCP 2.x transport. Both GPU runs are complete,
+and the A100 is idle. Historical reports/runbooks describe their
+original stacks; consult the upgrade checklist for the new execution boundaries.
+The full CPU run passes 107 tests with all notebook syntax checks. Two Docker-only
+checks are skipped in that suite but passed separately in real containers.
+
+### New Run Resources And Judgment
+
+| Run | Resources And Settings | Observations And Limits |
+| --- | --- | --- |
+| Project 4 | Local Python 3.11 orchestration, OpenAI GPT-5.6 Luna, low reasoning, 2,048 maximum output tokens; 64 calls, 48,086 input/13,407 output tokens; 170.34 seconds; estimated $0.025706 | Frozen decisions shared between arms. Durable statuses: 11 resolved, seven operator-rejected, 14 evidence-verification blocks. Duplicate-effect cases: baseline 50%, durable 0%. Recovery denominators are 16 baseline and five durable, not a matched set of executed crashes. Workflow-only latency excludes the shared planner calls. |
+| Project 5 | One Colab A100 40 GB, Python 3.11.17, Qwen2.5-Coder-7B in BF16; model revision `c03e6d358207e414f1eca0bb1891e29f1db0e242`; 84 calls, 39,433 input/12,298 output tokens; 516.39 seconds including setup, 410.55 seconds evaluator time; peak allocated memory about 14.37 GiB. Maximum 500 new tokens, 180 calls, two repairs, five retrieved schema tables | 40 held-out questions, 27 answerable and 13 unsafe/ambiguous. Result-value equivalence: 18.5% baseline vs 7.4% governed; this is a fixed-fixture check, not general SQL correctness. Intentional unsafe policy/abstention: 0% vs 38.5%; both arms had execution/repair errors on 55% of all cases. End-to-end p50/p95: 4.66/6.54 seconds baseline, 11.44/19.41 governed. Local GPU API charge is zero, not zero compute cost. |
+| Project 6 | Local Docker Desktop 4.99.0 / Engine 29.9.3 on ARM64; each executor 1 CPU, 512 MiB RAM, 64-process cap, no network, read-only mount. GPT-5.6 Sol, low reasoning, 2,048 output tokens; 20 calls, 28,886 input/4,574 output tokens; 80.03 cumulative trial seconds; estimated $0.207024 | Eight public benchmark bugs, one-shot vs at most three attempts; arm order seeded/randomized. Final tests never feed back to the planner. One-shot outperformed the loop by one case; this sample does not establish general superiority. Public benchmark contamination is possible. The next experiment should test edit-format reliability on development bugs, then use a fresh evaluation set. |
+| Project 7 | Local MCP SDK 2.3.0 stdio plus OpenAI GPT-5.6 Luna; five model turns per trial, bounded tools, 1,024 output tokens, $5 cap; 42 calls, 18,227 input/1,445 output tokens; median 3.57 seconds/trial; estimated $0.005379 | Two benign cases and six attack cases, each attack tried twice with a response-conditioned heuristic escalation. No hostile tool attempts, canary leaks, or unauthorized effects were observed. This validates the narrow path, not resistance to sophisticated/adaptive attackers. Gateway rejection is separately established by transport tests. Final-answer semantic quality is not independently graded. |
+| Project 8 | One Colab A100 40 GB; Qwen2.5-7B-Instruct BF16, revision `a09a35458c702b33eeacc393d103063234e8bc28`; MiniLM revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`. 401.02 seconds including setup, 14.38 GiB peak allocation; 250 calls plus 50 cache hits, 115,801 input/10,303 output tokens, $0 API charge. Greedy 300-token outputs, shared 300-call cap; recent window six events, retrieval five events including neighboring-turn expansion | Same answerer, prompt and decoding across lexical/dense arms, 25 questions from each of two conversations. Dense episodic exact match 6%, lexical 2%; two lexical JSON/validation failures remain in scores. Same-window cached outputs are not faster inference. Retrieval and citation recall are separate; lifecycle deletion compliance is a separate authored fixture, not a natural-language QA guarantee. |
+
+Prices were checked on 2026-11-17 against the official
+[Luna](https://developers.openai.com/api/docs/models/gpt-5.6-luna) and
+[Sol](https://developers.openai.com/api/docs/models/gpt-5.6-sol) model pages.
+Costs use uncached token rates and are estimates, not billing statements. The
+four-development-bug edit comparison took 159.21 seconds and 12 calls, estimated
+$0.097064. Structured edits used four calls; unified diffs used eight and failed
+two cases with malformed patches. This diagnoses an interface weakness, not a
+general repair-accuracy gain. Its saved source hashes are end-of-run snapshots;
+the effective configuration is recorded separately. New
+results do not overwrite historical figures or PDFs. No credentials were persisted
+in these runs, and the MCP/test-container environments do not inherit API keys.
+
+Project 4 also has [local deterministic load evidence](project4/output/runs/upgrade-v1/load/20261117T060455018600Z/load_summary.json):
+32 requests at each concurrency of 1, 4, and 8, all resolved with exactly 32 effects
+per condition. Worker-entry-to-completion p95 was 10.91, 35.83, and 87.90 ms;
+throughput was approximately 105, 128, and 116 requests/s. This sub-second,
+cold-initialization smoke test excludes model latency, human approval wait, and
+pending executor-queue wait. It is not a serving-capacity estimate or evidence to
+migrate storage. Per-node p50/p95 separates successful, interrupted, and failed spans.
+
+Interpretation changes: Project 5's old baseline used different data-access
+boundaries and PII accounting; Project 6's old hidden tests influenced patch
+selection; Project 7's old scores covered protocol-shaped fixtures; Project 8's
+old API/local comparison changed both answerer and retrieval. These historical
+values remain visible for traceability, not as controlled evidence for new code.
+
+Project 5's value metric ignores column aliases but retains column positions,
+duplicate rows, NULL values, and ordering requested by the reference query, using
+numeric tolerances of 1e-6 absolute / 1e-9 relative. The original strict hashes
+are retained. The corrected metric re-executes frozen SQL inside the same physical
+tenant snapshot and never returns gold-query feedback to the model. Missing
+`orders.region` columns and inconsistent nested-table metadata are model/interface
+failures, not reasons to weaken data restrictions. Improve schema/contract use on
+development questions, then reserve a fresh holdout for any next model comparison.
+
+### Project 8 Matched Retrieval Results
+
+Each row uses the same 50-question slice. F1 and recall are fractions; fresh
+latency includes retrieval and generation, including the first dense index build.
+
+| Retrieval / Memory | Exact Match | Token F1 | Retrieved Recall | Cited Recall | Fresh p50 / p95 Seconds |
+| --- | --- | --- | --- | --- | --- |
+| Lexical / recent window | 0% | 0.0022 | 0.0000 | 0.0000 | 0.899 / 1.947 |
+| Lexical / episodic | 2% | 0.1159 | 0.2567 | 0.2367 | 1.307 / 2.377 |
+| Dense / episodic | 6% | 0.1565 | 0.2717 | 0.2517 | 1.330 / 2.297 |
+| Lexical / hybrid | 2% | 0.0830 | 0.2000 | 0.1800 | 1.311 / 2.345 |
+| Dense / hybrid | 4% | 0.1193 | 0.2217 | 0.2017 | 1.226 / 2.314 |
+
+The dense-arm recent-window control reuses 50 identical cached answers, so its
+sub-millisecond latency is not shown as a serving improvement. Episodic abstentions
+were 29/50 lexical and 27/50 dense; window abstained on 49/50. Lexical episodic and
+hybrid each had one `ValueError`, retained as failed answers rather than excluded.
+
+[Paired analysis](project8/output/runs/upgrade-v1/local_gpu/20261117T064159242835Z/paired_analysis_v1.json)
+uses 2,000 within-conversation paired question resamples: dense-minus-lexical F1
+is +0.0405, CI [-0.0330, 0.1206] for episodic, and +0.0363,
+CI [-0.0197, 0.1040] for hybrid. These descriptive intervals condition on just
+two conversations, do not establish generalization, and are not adjusted for
+multiple comparisons. Neither establishes a reliable F1 gain. Low retrieved
+recall is an important bottleneck; a larger independent temporal-memory set and
+development-only retrieval/context experiments should precede deployment claims.
+
+Reproduce the offline analysis with
+`python project8/tools/analyze_saved_ablation.py <saved-run-directory>`.
+The command refuses to overwrite an existing analysis; it never makes model calls
+or changes the original results. The historical 80-question run is not a matched
+baseline for this 50-question experiment.
+
+## Historical Portfolio Summary
 
 | Project | Primary goal | Main comparison | Current result | Judgment |
 | --- | --- | --- | --- | --- |
@@ -208,7 +314,7 @@ The full cell-specific history remains in
 
 | File | Purpose |
 | --- | --- |
-| [`project6/project6_test_driven_code_repair.ipynb`](project6/project6_test_driven_code_repair.ipynb) | Stable cells `P06-C00` through `P06-C10` for pinned data, mapping, patching, tests, evaluation, and export |
+| [`project6/project6_test_driven_code_repair.ipynb`](project6/project6_test_driven_code_repair.ipynb) | Stable cells `P06-C00` through `P06-C12` for pinned data, mapping, patching, tests, evaluation, export, and the optional development edit-interface comparison |
 | [`project6/RUNBOOK.md`](project6/RUNBOOK.md) | QuixBugs preparation, execution modes, budgets, evidence checks, and troubleshooting |
 | [`project6/data/quixbugs_manifest.json`](project6/data/quixbugs_manifest.json) | Twelve-case manifest pinned to one exact upstream commit |
 | [`project6/src/project6_agent/`](project6/src/project6_agent/) | AST repository map, API and BF16 local patch planners, diff policy, subprocess runner, repair loop, rollback, and evaluation |

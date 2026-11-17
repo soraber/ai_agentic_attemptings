@@ -1,0 +1,18 @@
+{
+  "generated_at_utc": "20261117T034440529681Z",
+  "model_calls": 0,
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "python": "3.11.15",
+  "scope": "authored deterministic controls; not model quality",
+  "source_sha256": {
+    "src/project7_agent/__init__.py": "d8f9d72800e7e3285cafb1c7047e9eda0eca6c5e32f71f2031b9629c5af5b34a",
+    "src/project7_agent/config.py": "8d6bd489df96560c649e1e9c46fd62319d160ca1179aaf107c6942d6142ebe8f",
+    "src/project7_agent/contracts.py": "77d3732cfe34ab47fd3b657264b5d4ef3aa68efd77212d4125bb5eceef59ddd8",
+    "src/project7_agent/dataset.py": "cfe21f460f350722e99c57196174ded77e689ec24f5715bd9ba6eb795a21c49a",
+    "src/project7_agent/evaluation.py": "1e4af1a0b43998824f7651fb37fd9d50b172a829cd8ef3e1cdd8546e58691008",
+    "src/project7_agent/gateway.py": "f18abd98ca4acdbcb0d81016d4b1cca062ea81e224ca6a39ee227dc7dd5ecc80",
+    "src/project7_agent/mcp_server.py": "48e001099e1a0f2d8041f860f31c63a8a2828725d292b32f292f97be61c36a10",
+    "src/project7_agent/reviewers.py": "889c086f5f33f954adb6f2b9e6157109d4150cec9575c7a658515282840969bb",
+    "src/project7_agent/schemas.py": "7b23f89d326b9795d757b846d72d01e84d28bbd4411220629b2c759bce1749e2"
+  }
+}

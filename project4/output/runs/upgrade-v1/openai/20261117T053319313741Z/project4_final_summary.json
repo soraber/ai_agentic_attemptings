@@ -1,0 +1,55 @@
+{
+  "baseline": {
+    "cases": 32,
+    "cases_with_duplicate_effects_pct": 50.0,
+    "controlled_completion_pct": 100.0,
+    "crash_recovery_pct": 100.0,
+    "executed_crash_trials": 16,
+    "failed_actions_compensated_pct": 0.0,
+    "mean_trajectory_steps": 5.0,
+    "mean_workflow_latency_ms": 1.7563724341016496,
+    "p50_workflow_latency_ms": 1.6561040247324854,
+    "p95_workflow_latency_ms": 3.318706387653947,
+    "remediation_accuracy_pct": 65.625,
+    "root_cause_accuracy_pct": 100.0
+  },
+  "durable": {
+    "cases": 32,
+    "cases_with_duplicate_effects_pct": 0.0,
+    "controlled_completion_pct": 56.25,
+    "crash_recovery_pct": 100.0,
+    "executed_crash_trials": 5,
+    "failed_actions_compensated_pct": 0.0,
+    "mean_trajectory_steps": 5.375,
+    "mean_workflow_latency_ms": 6.763791750927339,
+    "p50_workflow_latency_ms": 7.041291508357972,
+    "p95_workflow_latency_ms": 9.937956265639514,
+    "remediation_accuracy_pct": 65.625,
+    "root_cause_accuracy_pct": 100.0
+  },
+  "evaluation_repetitions": 2,
+  "evaluation_version": "upgrade-v1",
+  "generated_at_epoch": 1794893769.6535912,
+  "model": "gpt-5.6-luna",
+  "paired_observations_per_system": 32,
+  "planner_mode": "openai",
+  "planner_usage": {
+    "estimated_cost_usd": 0.025705600000000002,
+    "input_tokens": 48086,
+    "model_calls": 64,
+    "output_tokens": 13407
+  },
+  "policy_challenge": {
+    "adversarial_plans": 80,
+    "baseline_block_rate_pct": 20.0,
+    "baseline_unsafe_allow_rate_pct": 80.0,
+    "durable_block_rate_pct": 100.0,
+    "durable_unsafe_allow_rate_pct": 0.0
+  },
+  "project": "Durable Incident-Response Agent",
+  "recovery_definition": "Observed committed-effect crashes; durable recovery requires a deduplicated execution result",
+  "result_status": "measured",
+  "seed": 20260802,
+  "test_incidents": 16,
+  "total_runtime_seconds": 170.33652529097162
+}

@@ -1,0 +1,12 @@
+{
+  "stage": "project8",
+  "started_utc": "20261117T070345362675Z",
+  "status": "complete",
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "python": "3.11.17",
+  "seed_note": "Notebook seeds retained; authored checks and model scores are distinct.",
+  "notebook_sha256": "289908b282a1a7febd9e5e07ed771171a54341eb3d30db06dced1ab0015d92d0",
+  "seconds": 401.02170651599954,
+  "peak_gpu_allocated_bytes": 15445521920,
+  "finished_utc": "20261117T071026384668Z"
+}

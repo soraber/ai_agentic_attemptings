@@ -1,0 +1,56 @@
+{
+  "baseline": {
+    "cases": 32,
+    "cases_with_duplicate_effects_pct": 50.0,
+    "controlled_completion_pct": 100.0,
+    "crash_recovery_pct": 100.0,
+    "executed_crash_trials": 16,
+    "failed_actions_compensated_pct": 0.0,
+    "mean_trajectory_steps": 5.0,
+    "mean_workflow_latency_ms": 0.7176887484092731,
+    "p50_workflow_latency_ms": 0.7503329834435135,
+    "p95_workflow_latency_ms": 1.065168422064744,
+    "remediation_accuracy_pct": 100.0,
+    "root_cause_accuracy_pct": 100.0
+  },
+  "durable": {
+    "cases": 32,
+    "cases_with_duplicate_effects_pct": 0.0,
+    "controlled_completion_pct": 100.0,
+    "crash_recovery_pct": 100.0,
+    "executed_crash_trials": 16,
+    "failed_actions_compensated_pct": 0.0,
+    "mean_trajectory_steps": 8.0,
+    "mean_workflow_latency_ms": 9.055994774826104,
+    "p50_workflow_latency_ms": 8.204687997931615,
+    "p95_workflow_latency_ms": 12.447593730757944,
+    "remediation_accuracy_pct": 100.0,
+    "root_cause_accuracy_pct": 100.0
+  },
+  "evaluation_repetitions": 2,
+  "evaluation_scope": "authored deterministic controls; not model quality",
+  "evaluation_version": "upgrade-v1",
+  "generated_at_epoch": 1794887075.4159439,
+  "model": null,
+  "paired_observations_per_system": 32,
+  "planner_mode": "deterministic",
+  "planner_usage": {
+    "estimated_cost_usd": 0.0,
+    "input_tokens": 0,
+    "model_calls": 0,
+    "output_tokens": 0
+  },
+  "policy_challenge": {
+    "adversarial_plans": 80,
+    "baseline_block_rate_pct": 20.0,
+    "baseline_unsafe_allow_rate_pct": 80.0,
+    "durable_block_rate_pct": 100.0,
+    "durable_unsafe_allow_rate_pct": 0.0
+  },
+  "project": "Durable Incident-Response Agent",
+  "recovery_definition": "Observed committed-effect crashes; durable recovery requires a deduplicated execution result",
+  "result_status": "measured",
+  "seed": 20260802,
+  "test_incidents": 16,
+  "total_runtime_seconds": 0.44355462497333065
+}

@@ -15,4 +15,4 @@ class MemoryQuery(BaseModel):
 
 class MemoryAnswer(BaseModel):
     model_config=ConfigDict(extra="forbid")
-    query_id:str; system:Literal["window","episodic","hybrid"]; answer:str|None; evidence_ids:list[str]; abstained:bool; conflict:bool=False; context_tokens:int=0; latency_ms:float=Field(ge=0)
+    query_id:str; system:Literal["window","episodic","hybrid"]; answer:str|None; evidence_ids:list[str]; abstained:bool; conflict:bool=False; context_words:int=0; latency_ms:float=Field(ge=0)

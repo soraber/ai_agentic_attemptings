@@ -1,0 +1,14 @@
+{
+  "stage": "project5",
+  "started_utc": "20261117T063557026370Z",
+  "status": "failed",
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "python": "3.11.17",
+  "seed_note": "Notebook seeds retained; authored checks and model scores are distinct.",
+  "notebook_sha256": "fabcd346ba74b8b178137be32e779ab1a6d67aa47b7b110244fc4de0d56673a8",
+  "error_type": "CalledProcessError",
+  "error": "Command '['/content/portfolio_upgrade_20261117T044102897726Z/venv/bin/python', 'tools/generate_dataset.py']' returned non-zero exit status 1.",
+  "seconds": 0.29341239700079313,
+  "peak_gpu_allocated_bytes": 0,
+  "finished_utc": "20261117T063557320020Z"
+}

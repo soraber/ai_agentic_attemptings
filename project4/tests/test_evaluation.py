@@ -7,6 +7,7 @@ def _row(*, crash_injected: bool, crash_recovered: bool, terminal_status: str) -
     return {
         "crash_injected": crash_injected,
         "crash_recovered": crash_recovered,
+        "crash_observed": crash_recovered,
         "terminal_status": terminal_status,
         "root_cause_correct": True,
         "remediation_correct": True,
@@ -32,3 +33,13 @@ def test_crash_recovery_excludes_workflows_stopped_before_execution() -> None:
 
     assert summary["executed_crash_trials"] == 1
     assert summary["crash_recovery_pct"] == 100.0
+
+
+def test_observed_failed_recovery_stays_in_denominator():
+    recovered = _row(crash_injected=True, crash_recovered=True, terminal_status="resolved")
+    failed = _row(crash_injected=True, crash_recovered=False, terminal_status="runtime_error")
+    failed["crash_observed"] = True
+    blocked = _row(crash_injected=True, crash_recovered=False, terminal_status="blocked_verification")
+    summary = _summarize_system([recovered, failed, blocked])
+    assert summary["executed_crash_trials"] == 2
+    assert summary["crash_recovery_pct"] == 50.0

@@ -14,7 +14,11 @@ CELLS=[
 cell("P07-C00","markdown","""# Project 7: Secure Interoperable Agent Gateway
 
 Compare local A2A/MCP-style workflows with defenses disabled and enabled across
-benign and attack cases. Credentials, records, effects, and canaries are synthetic."""),
+benign and attack cases. Credentials, records, effects, and canaries are synthetic.
+
+Upgrade v1 adds a real MCP v2 stdio server/client and persistent, approval-bound
+effects. Fixture attack metrics do not measure adaptive model prompt injection.
+A2A envelopes remain illustrative; no remote authentication or A2A conformance is claimed."""),
 cell("P07-C01","code","""from pathlib import Path
 import os,subprocess,sys
 candidates=[Path.cwd(),Path.cwd()/"project7",Path("/content/ai_agentic_attemptings/project7")]
@@ -62,7 +66,19 @@ attack=next(c for c in development_cases if c.category!="benign")
 print(SecureGateway().process(attack,False).model_dump())"""),
 cell("P07-C06","code","""secure=SecureGateway().process(attack,True)
 assert not secure.attack_succeeded
-print({"status":secure.status,"trace_events":[e["event"] for e in secure.trace]})"""),
+print({"status":secure.status,"trace_events":[e["event"] for e in secure.trace]})
+from mcp import Client, StdioServerParameters
+runtime = PROJECT_ROOT/"output/runtime/upgrade-v1"
+runtime.mkdir(parents=True, exist_ok=True)
+parameters = StdioServerParameters(command=sys.executable, args=["-m", "project7_agent.mcp_server"],
+    env={"PATH": os.defpath, "PYTHONPATH": str(PROJECT_ROOT/"src"),
+         "PYTHONDONTWRITEBYTECODE": "1", "PROJECT7_LEDGER": str(runtime/"mcp.sqlite")})
+async with Client(parameters, read_timeout_seconds=10) as client:
+    tools = await client.list_tools()
+    print({"mcp_tools": [tool.name for tool in tools.tools]})
+    response = await client.call_tool("policy_search", {"query": "purchase approval"})
+    assert not response.is_error
+    print(response.structured_content)"""),
 cell("P07-C07","code","""import subprocess,sys
 result=subprocess.run([sys.executable,"-m","pytest","-q","tests"],text=True,capture_output=True)
 print(result.stdout)
@@ -70,19 +86,29 @@ if result.returncode:
     print(result.stderr)
     raise RuntimeError("Project 7 tests failed")"""),
 cell("P07-C08","code","""from project7_agent.evaluation import evaluate_project7
-from project7_agent.reviewers import OpenAIPolicyReviewer
+from project7_agent.model_evaluation import evaluate_model_gateway, CallBudget
+from datetime import datetime, timezone
 if not RUN_FULL_EVAL:
     print("Set RUN_FULL_EVAL=True after P07-C07 passes.")
 else:
-    reviewer=OpenAIPolicyReviewer(config) if RUN_API_EVAL else None
-    summary=evaluate_project7(cases,PROJECT_ROOT/"output",reviewer=reviewer)
-    print(summary)"""),
+    result_dir=PROJECT_ROOT/"output/runs/upgrade-v1"/datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    summary=evaluate_project7(cases,result_dir,reviewer=None)
+    print(summary)
+    if RUN_API_EVAL:
+        from openai import OpenAI
+        with OpenAI(max_retries=0, timeout=60) as api:
+            model_summary = await evaluate_model_gateway(api, result_dir/"model_mcp", model=config.model,
+                budget=CallBudget(max_calls=config.max_model_calls, max_cost=config.max_estimated_cost_usd,
+                    input_price=config.input_price_per_million_usd, output_price=config.output_price_per_million_usd))
+        print(model_summary)  # Separate from authored fixture scores and historical advisory reviews."""),
 cell("P07-C09","code","""import json
-path=PROJECT_ROOT/"output/project7_representative_samples.json"
+if "result_dir" not in globals(): raise RuntimeError("Run P07-C08 first; historical results are not reused")
+path=result_dir/"project7_representative_samples.json"
 print(json.loads(path.read_text()) if path.exists() else "Run P07-C08 first.")"""),
 cell("P07-C10","code","""import subprocess,sys
-if (PROJECT_ROOT/"output/project7_final_summary.json").exists():
-    subprocess.run([sys.executable,"tools/generate_report.py"],check=True)
+if "result_dir" not in globals(): raise RuntimeError("Run P07-C08 first; historical results are not reused")
+if (result_dir/"project7_final_summary.json").exists():
+    subprocess.run([sys.executable,"tools/generate_report.py","--summary",str(result_dir/"project7_final_summary.json"),"--output",str(result_dir/"project7_report.pdf")],check=True)
     subprocess.run([sys.executable,"tools/validate_project.py","--require-results"],check=True)
 else:
     print("Measured summary absent; report generation skipped.")""")]

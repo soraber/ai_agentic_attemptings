@@ -15,7 +15,12 @@ CELLS=[
 cell("P08-C00","markdown","""# Project 8: Long-Term Memory Agent
 
 Compare recent-window, episodic, and hybrid semantic/temporal memory. Test
-corrections, conflicts, evidence, consolidation, and deletion across all stores."""),
+corrections, conflicts, evidence, consolidation, and deletion across implemented stores.
+
+Upgrade v1 prevents deleted-event replay, versions answer caches, and separates
+retrieval recall from cited-evidence recall. Context size is measured in words.
+An optional validated natural-language extractor has event-bound consent and provenance checks.
+Model extraction accuracy and provider-level deletion are not established by fixtures."""),
 cell("P08-C01","code","""from pathlib import Path
 import os,subprocess,sys
 candidates=[Path.cwd(),Path.cwd()/"project8",Path("/content/ai_agentic_attemptings/project8")]
@@ -77,9 +82,25 @@ if RUN_LOCAL_GPU_EVAL:
     from project8_agent.locomo import conversation_events
     embedding_retriever=EmbeddingEventRetriever(config.embedding_model,config.local_device)
     sample_events=conversation_events(subset[0]); print({"dense_retrieval":[item["event_id"] for item in embedding_retriever.retrieve(sample_events,subset[0]["qa"][0]["question"],"hybrid",config.working_window_size,config.episodic_top_k)]})"""),
-cell("P08-C06","code","""for event_id in lifecycle["delete_event_ids"]: store.delete_event(event_id)
+cell("P08-C06","code","""from project8_agent.answer_cache import forget_memory
+for event_id in lifecycle["delete_event_ids"]:
+    forget_memory(store, event_id, "lifecycle", retrievers=[embedding_retriever] if embedding_retriever else [])
+    old = next((item for item in lifecycle["events"] if item["event_id"] == event_id), None)
+    if old: assert not store.ingest(MemoryEvent.model_validate(old))
 correction=MemoryQuery.model_validate(lifecycle["queries"][1]); conflict=MemoryQuery.model_validate(lifecycle["queries"][2])
-print(store.answer(correction,"hybrid").model_dump()); print(store.answer(conflict,"hybrid").model_dump()); assert all(store.deletion_verified(e) for e in lifecycle["delete_event_ids"])"""),
+print(store.answer(correction,"hybrid").model_dump()); print(store.answer(conflict,"hybrid").model_dump()); assert all(store.deletion_verified(e) for e in lifecycle["delete_event_ids"])
+
+# Authored extraction fixture: validates storage controls, not LLM extraction quality.
+from project8_agent.extraction import Extraction,ExtractedFact,RetentionConsent,event_digest,ingest_extraction
+natural_store=MemoryStore(runtime/"natural_demo.sqlite")
+event=MemoryEvent(event_id="natural-demo-1",session_id="demo",timestamp="2026-01-01T12:00:00+00:00",speaker="demo-user",text="I live in Boston.")
+consent=RetentionConsent(subject=event.speaker,event_digest=event_digest(event),allowed_keys=["home_city"],retain=True)
+extraction=Extraction(facts=[ExtractedFact(key="home_city",value="Boston",source_event_id=event.event_id,evidence_quote=event.text)])
+ingest_extraction(natural_store,event,extraction,consent,"authored-fixture-v1")
+forget_memory(natural_store,event.event_id,"natural-demo")
+assert natural_store.deletion_verified(event.event_id)
+assert not ingest_extraction(natural_store,event,extraction,consent,"authored-fixture-v1")
+print("Natural-event consent/provenance/deletion fixture passed; no provider call was made")"""),
 cell("P08-C07","code","""import os,subprocess,sys
 test_env=os.environ.copy(); test_env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"]="1"
 try:
@@ -89,23 +110,41 @@ except subprocess.TimeoutExpired as exc:
 print(result.stdout)
 if result.returncode: print(result.stderr); raise RuntimeError("Project 8 tests failed")"""),
 cell("P08-C08","code","""from project8_agent.evaluation import evaluate_lifecycle
-from project8_agent.locomo import CachedLocalAnswerer, evaluate_locomo
+from project8_agent.locomo import CachedLocalAnswerer, CachedOpenAIAnswerer, evaluate_locomo
+from datetime import datetime, timezone
 if not RUN_FULL_EVAL: print("Set RUN_FULL_EVAL=True after P08-C07 passes.")
 else:
+    result_dir=PROJECT_ROOT/"output/runs/upgrade-v1"/EVAL_BACKEND/datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    result_dir.mkdir(parents=True, exist_ok=False)
     lifecycle_summary=evaluate_lifecycle(PROJECT_ROOT/"data/lifecycle_cases.json",runtime/"evaluation.sqlite",runtime/"lifecycle_output")
     if RUN_LOCAL_GPU_EVAL:
-        result_dir=PROJECT_ROOT/"output/gpu"; local_answerer=CachedLocalAnswerer(config,runtime/"locomo_local_answer_cache.json")
-        summary=evaluate_locomo(subset_path,config,runtime/"unused.json",result_dir,lifecycle_summary,answerer=local_answerer,retriever=embedding_retriever,evaluation_mode="locomo_local_gpu")
+        import copy,random
+        # Two retrievers, three memory systems: bound worst-case calls before generation.
+        qa_limit=min(80,config.max_model_calls//6)
+        if qa_limit < len(subset): raise RuntimeError("Model-call budget cannot cover every conversation")
+        rng=random.Random(2026); ablation_subset=copy.deepcopy(subset)
+        for i,sample in enumerate(ablation_subset):
+            count=qa_limit//len(subset)+(i < qa_limit%len(subset))
+            sample["qa"]=rng.sample(sample["qa"],min(count,len(sample["qa"])))
+        ablation_path=result_dir/"ablation_subset.json"
+        ablation_path.write_text(json.dumps(ablation_subset,indent=2))
+        local_answerer=CachedLocalAnswerer(config,runtime/"upgrade_v1_local_answer_cache.json")
+        summaries={}
+        for retrieval_name, retriever in [("lexical", None), ("dense", embedding_retriever)]:
+            summaries[retrieval_name]=evaluate_locomo(ablation_path,config,runtime/"unused.json",result_dir/retrieval_name,lifecycle_summary,answerer=local_answerer,retriever=retriever,evaluation_mode="locomo_local_gpu")
+        print("Same-answerer retrieval ablation:", summaries)
+        result_dir=result_dir/"dense"; summary=summaries["dense"]
     elif RUN_API_EVAL:
-        summary=evaluate_locomo(subset_path,config,runtime/"locomo_answer_cache.json",PROJECT_ROOT/"output",lifecycle_summary)
+        summary=evaluate_locomo(subset_path,config,runtime/"upgrade_v1_api_answer_cache.json",result_dir,lifecycle_summary)
     else:
-        summary=evaluate_lifecycle(PROJECT_ROOT/"data/lifecycle_cases.json",runtime/"evaluation.sqlite",PROJECT_ROOT/"output")
+        summary=evaluate_lifecycle(PROJECT_ROOT/"data/lifecycle_cases.json",runtime/"evaluation.sqlite",result_dir)
     print(summary)"""),
 cell("P08-C09","code","""import json
-result_dir=PROJECT_ROOT/("output/gpu" if RUN_LOCAL_GPU_EVAL else "output")
+if "result_dir" not in globals(): raise RuntimeError("Run P08-C08 first; historical results are not reused")
 path=result_dir/"project8_representative_samples.json"; print(json.loads(path.read_text()) if path.exists() else "Run P08-C08 first.")"""),
 cell("P08-C10","code","""import subprocess,sys
-result_dir=PROJECT_ROOT/("output/gpu" if RUN_LOCAL_GPU_EVAL else "output"); summary_path=result_dir/"project8_final_summary.json"
+if "result_dir" not in globals(): raise RuntimeError("Run P08-C08 first; historical results are not reused")
+summary_path=result_dir/"project8_final_summary.json"
 if summary_path.exists():
     subprocess.run([sys.executable,"tools/generate_report.py","--summary",str(summary_path),"--output",str(result_dir/"project8_report.pdf")],check=True); subprocess.run([sys.executable,"tools/validate_project.py"]+([] if RUN_LOCAL_GPU_EVAL else ["--require-results"]),check=True)
 else: print("Measured summary absent; report generation skipped.")""")]

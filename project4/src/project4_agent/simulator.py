@@ -55,6 +55,9 @@ class ActionExecutor:
                 );
                 """
             )
+            columns = {row[1] for row in connection.execute("PRAGMA table_info(execution_ledger)")}
+            if "plan_hash" not in columns:
+                connection.execute("ALTER TABLE execution_ledger ADD COLUMN plan_hash TEXT")
 
     def reset(self) -> None:
         with self._connect() as connection:
@@ -93,14 +96,6 @@ class ActionExecutor:
         if simulate_timeout:
             raise ToolTimeout(f"simulated timeout for {plan.incident_id}")
 
-        if idempotent:
-            prior = self._lookup(plan.idempotency_key)
-            if prior is not None:
-                payload = json.loads(prior["result_json"])
-                payload["deduplicated"] = True
-                payload["latency_ms"] = (time.perf_counter() - started) * 1000
-                return ExecutionResult.model_validate(payload)
-
         effect_id = f"effect-{uuid.uuid4().hex[:16]}"
         status = "failed" if force_failure else "completed"
         result = ExecutionResult(
@@ -116,6 +111,10 @@ class ActionExecutor:
 
         with self._connect() as connection:
             connection.execute("BEGIN IMMEDIATE")
+            if idempotent:
+                replay = self._replay(connection, plan.idempotency_key, plan.action_digest(), started)
+                if replay is not None:
+                    return replay
             connection.execute(
                 """INSERT INTO effects
                    (effect_id, idempotency_key, incident_id, action, target_service, status, created_at)
@@ -134,8 +133,8 @@ class ActionExecutor:
                 connection.execute(
                     """INSERT INTO execution_ledger
                        (idempotency_key, incident_id, action, target_service, status,
-                        effect_id, result_json, created_at)
-                       VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                        effect_id, result_json, created_at, plan_hash)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                     (
                         plan.idempotency_key,
                         plan.incident_id,
@@ -145,6 +144,7 @@ class ActionExecutor:
                         effect_id,
                         result.model_dump_json(),
                         time.time(),
+                        plan.action_digest(),
                     ),
                 )
 
@@ -157,13 +157,6 @@ class ActionExecutor:
     def compensate(self, plan: ActionPlan, effect_id: str | None) -> ExecutionResult:
         started = time.perf_counter()
         compensation_key = f"{plan.idempotency_key}:compensate"
-        prior = self._lookup(compensation_key)
-        if prior is not None:
-            payload = json.loads(prior["result_json"])
-            payload["deduplicated"] = True
-            payload["latency_ms"] = (time.perf_counter() - started) * 1000
-            return ExecutionResult.model_validate(payload)
-
         compensation_effect = f"comp-{uuid.uuid4().hex[:16]}"
         result = ExecutionResult(
             incident_id=plan.incident_id,
@@ -177,6 +170,9 @@ class ActionExecutor:
         )
         with self._connect() as connection:
             connection.execute("BEGIN IMMEDIATE")
+            replay = self._replay(connection, compensation_key, plan.action_digest() + ":" + str(effect_id), started)
+            if replay is not None:
+                return replay
             connection.execute(
                 """INSERT INTO effects
                    (effect_id, idempotency_key, incident_id, action, target_service, status, created_at)
@@ -194,8 +190,8 @@ class ActionExecutor:
             connection.execute(
                 """INSERT INTO execution_ledger
                    (idempotency_key, incident_id, action, target_service, status,
-                    effect_id, result_json, created_at)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                    effect_id, result_json, created_at, plan_hash)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 (
                     compensation_key,
                     plan.incident_id,
@@ -205,9 +201,21 @@ class ActionExecutor:
                     compensation_effect,
                     result.model_dump_json(),
                     time.time(),
+                    plan.action_digest() + ":" + str(effect_id),
                 ),
             )
         return result
+
+    @staticmethod
+    def _replay(connection, key: str, digest: str, started: float):
+        prior = connection.execute("SELECT * FROM execution_ledger WHERE idempotency_key=?", (key,)).fetchone()
+        if prior is None:
+            return None
+        if prior["plan_hash"] != digest:
+            raise PermissionError("Idempotency key has a different or unverified action binding")
+        payload = json.loads(prior["result_json"])
+        payload.update(deduplicated=True, latency_ms=(time.perf_counter()-started)*1000)
+        return ExecutionResult.model_validate(payload)
 
     def _lookup(self, idempotency_key: str) -> sqlite3.Row | None:
         with self._connect() as connection:
@@ -215,3 +223,8 @@ class ActionExecutor:
                 "SELECT * FROM execution_ledger WHERE idempotency_key = ?",
                 (idempotency_key,),
             ).fetchone()
+
+    def reconcile(self, plan: ActionPlan) -> ExecutionResult | None:
+        """Read the committed, parameter-bound outcome without issuing an action."""
+        with self._connect() as connection:
+            return self._replay(connection, plan.idempotency_key, plan.action_digest(), time.perf_counter())

@@ -55,6 +55,7 @@ def _case_result(
     approved: bool | None,
     terminal_status: str,
     crash_injected: bool,
+    crash_observed: bool,
     crash_recovered: bool,
     duplicate_effects: int,
     compensation_used: bool,
@@ -73,6 +74,7 @@ def _case_result(
             "approved": approved,
             "terminal_status": terminal_status,
             "crash_injected": crash_injected,
+            "crash_observed": crash_observed,
             "crash_recovered": crash_recovered,
             "duplicate_effects": duplicate_effects,
             "compensation_used": compensation_used,
@@ -88,12 +90,7 @@ def _case_result(
 
 
 def _summarize_system(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    nonexecuting_statuses = {"rejected_by_operator", "blocked_policy"}
-    crash_rows = [
-        row
-        for row in rows
-        if row["crash_injected"] and row["terminal_status"] not in nonexecuting_statuses
-    ]
+    crash_rows = [row for row in rows if row["crash_observed"]]
     failed_action_rows = [row for row in rows if row["terminal_status"] in {"action_failed", "compensated"}]
     latencies = [float(row["workflow_latency_ms"]) for row in rows]
     return {
@@ -197,6 +194,7 @@ def evaluate_project(
                     approved=None,
                     terminal_status=baseline["terminal_status"],
                     crash_injected=crash_injected,
+                    crash_observed=baseline["crash_observed"],
                     crash_recovered=baseline["crash_recovered"],
                     duplicate_effects=_duplicate_primary_effects(
                         baseline_executor,
@@ -221,6 +219,7 @@ def evaluate_project(
             thread_id = f"r{repetition}-{case.evidence.incident_id}"
             durable_started = time.perf_counter()
             crash_recovered = False
+            crash_observed = False
             error: str | None = None
             paused: dict[str, Any] = {}
             decision: ApprovalDecision | None = None
@@ -234,8 +233,9 @@ def evaluate_project(
                     try:
                         final_state = workflow.resume_approval(thread_id, decision)
                     except InjectedCrash:
-                        crash_recovered = True
+                        crash_observed = True
                         final_state = workflow.recover_after_crash(thread_id)
+                        crash_recovered = bool(final_state.get("execution", {}).get("deduplicated"))
                 else:
                     final_state = paused
             except Exception as exc:
@@ -261,6 +261,7 @@ def evaluate_project(
                     approved=decision.approved if decision is not None else None,
                     terminal_status=terminal_status,
                     crash_injected=crash_injected,
+                    crash_observed=crash_observed,
                     crash_recovered=crash_recovered,
                     duplicate_effects=_duplicate_primary_effects(
                         durable_executor, case.evidence.incident_id, plan.action
@@ -278,6 +279,8 @@ def evaluate_project(
     durable_rows = [row for row in rows if row["system"] == "durable"]
     summary = {
         "project": "Durable Incident-Response Agent",
+        "evaluation_version": "upgrade-v1",
+        "recovery_definition": "Observed committed-effect crashes; durable recovery requires a deduplicated execution result",
         "generated_at_epoch": time.time(),
         "planner_mode": config.planner_mode,
         "model": config.model if config.planner_mode == "openai" else None,
@@ -292,6 +295,9 @@ def evaluate_project(
         "total_runtime_seconds": time.perf_counter() - started,
         "result_status": "measured",
     }
+    from .telemetry import summarize_node_spans
+    summary["node_timing"] = summarize_node_spans(trace.records)
+    summary["node_timing_scope"] = "Node execution only; excludes checkpoint scheduling and human wait. Frozen planner calls are replayed."
     samples = {
         "crash_examples": [row for row in rows if row["crash_injected"]][:4],
         "compensation_examples": [row for row in rows if row["compensation_used"]][:4],

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import hashlib,json,re,statistics,time
+import hashlib,json,random,re,statistics,time
 from pathlib import Path
 from typing import Any
 
@@ -9,6 +9,7 @@ from pydantic import BaseModel,ConfigDict,Field
 from .config import Project8Config
 from .evaluation import token_f1
 from .local_models import TransformersAnswerBackend, extract_json_object
+from .answer_cache import AnswerCache
 
 
 class GeneratedAnswer(BaseModel):
@@ -83,7 +84,7 @@ class CachedOpenAIAnswerer:
             from openai import OpenAI
 
             client=OpenAI()
-        self.client=client; self.config=config; self.model_name=config.model; self.cache_path=Path(cache_path); self.cache_path.parent.mkdir(parents=True,exist_ok=True); self.cache=json.loads(self.cache_path.read_text()) if self.cache_path.exists() else {}; self.calls=0; self.cache_hits=0; self.input_tokens=0; self.output_tokens=0
+        self.client=client; self.config=config; self.model_name=config.model; self.cache_path=Path(cache_path); self.cache=AnswerCache(cache_path); self.calls=0; self.cache_hits=0; self.input_tokens=0; self.output_tokens=0
 
     @property
     def estimated_cost_usd(self)->float:
@@ -105,10 +106,12 @@ class CachedOpenAIAnswerer:
         self.input_tokens+=int(getter("input_tokens",0) or 0); self.output_tokens+=int(getter("output_tokens",0) or 0)
 
     def answer(self,sample_id:str,question:str,system:str,context:list[dict[str,str]])->GeneratedAnswer:
-        key=hashlib.sha256(json.dumps([self.config.model,sample_id,question,system,context],sort_keys=True).encode()).hexdigest()
-        if key in self.cache:
+        settings={"model":self.config.model,"reasoning_effort":self.config.reasoning_effort,"max_output_tokens":self.config.max_output_tokens,"schema":GeneratedAnswer.model_json_schema()}
+        key=self.cache.key(settings,sample_id,question,system,context)
+        cached=self.cache.get(key)
+        if cached is not None:
             self.cache_hits+=1
-            return GeneratedAnswer.model_validate(self.cache[key])
+            return GeneratedAnswer.model_validate(cached)
         prompt={"question":question,"context":context,"instructions":"Answer only from context. Cite dialogue event IDs. Abstain if unsupported or conflicting."}; serialized_prompt=json.dumps(prompt); last_error:Exception|None=None
         for retry in range(self.config.max_retries+1):
             self._check_budget(serialized_prompt); self.calls+=1
@@ -116,7 +119,7 @@ class CachedOpenAIAnswerer:
                 response=self.client.responses.parse(model=self.config.model,input=serialized_prompt,text_format=GeneratedAnswer,reasoning={"effort":self.config.reasoning_effort},max_output_tokens=self.config.max_output_tokens)
                 self._record_usage(response)
                 if response.output_parsed is None: raise ValueError("No structured memory answer returned")
-                self.cache[key]=response.output_parsed.model_dump(mode="json"); self.cache_path.write_text(json.dumps(self.cache,indent=2,sort_keys=True)+"\n",encoding="utf-8"); return response.output_parsed
+                self.cache.put(key,response.output_parsed.model_dump(mode="json"),sample_id,context); return response.output_parsed
             except Exception as exc:
                 last_error=exc
                 if retry==self.config.max_retries: raise
@@ -126,42 +129,103 @@ class CachedOpenAIAnswerer:
 
 class CachedLocalAnswerer:
     def __init__(self,config:Project8Config,cache_path:str|Path,backend:object|None=None):
-        self.config=config; self.model_name=config.local_model; self.backend=backend or TransformersAnswerBackend(config.local_model,config.local_device); self.cache_path=Path(cache_path); self.cache_path.parent.mkdir(parents=True,exist_ok=True); self.cache=json.loads(self.cache_path.read_text()) if self.cache_path.exists() else {}; self.cache_hits=0
+        self.config=config; self.model_name=config.local_model; self.backend=backend or TransformersAnswerBackend(config.local_model,config.local_device); self.cache_path=Path(cache_path); self.cache=AnswerCache(cache_path); self.cache_hits=0; self.calls=0
 
     def answer(self,sample_id:str,question:str,system:str,context:list[dict[str,str]])->GeneratedAnswer:
-        key=hashlib.sha256(json.dumps([self.model_name,sample_id,question,system,context],sort_keys=True).encode()).hexdigest()
-        if key in self.cache:
+        settings={"model":self.model_name,"model_revision":getattr(self.backend,'model_revision',None),"max_new_tokens":self.config.local_max_new_tokens,"do_sample":False,"schema":GeneratedAnswer.model_json_schema()}
+        key=self.cache.key(settings,sample_id,question,system,context)
+        cached=self.cache.get(key)
+        if cached is not None:
             self.cache_hits+=1
-            return GeneratedAnswer.model_validate(self.cache[key])
+            return GeneratedAnswer.model_validate(cached)
+        if self.calls >= self.config.max_model_calls:
+            raise RuntimeError("Project 8 model-call budget exhausted")
+        self.calls += 1
         raw=self.backend.generate({"question":question,"context":context},self.config.local_max_new_tokens)
-        answer=normalize_local_answer(extract_json_object(raw)); self.cache[key]=answer.model_dump(mode="json"); self.cache_path.write_text(json.dumps(self.cache,indent=2,sort_keys=True)+"\n",encoding="utf-8"); return answer
+        answer=normalize_local_answer(extract_json_object(raw)); self.cache.put(key,answer.model_dump(mode="json"),sample_id,context); return answer
 
     def usage_summary(self)->dict:
         usage=dict(self.backend.usage_summary()) if hasattr(self.backend,"usage_summary") else {"model_calls":0,"input_tokens":0,"output_tokens":0,"estimated_cost_usd":0.0}
         usage["cache_hits"]=self.cache_hits
+        usage["model_calls"]=self.calls
         return usage
 
 
 def _normalize(value:str)->str: return " ".join(re.findall(r"[a-z0-9]+",value.lower()))
 
 
+def neighboring_context(events, anchors, max_events, radius=1):
+    positions = {event['event_id']: index for index, event in enumerate(events)}
+    chosen = []
+    for anchor in anchors:
+        position = positions[anchor['event_id']]
+        neighbors = [position] + [index for delta in range(1, radius+1)
+                                   for index in [position-delta, position+delta]]
+        for index in neighbors:
+            if 0 <= index < len(events) and index not in chosen:
+                chosen.append(index)
+                if len(chosen) == max_events:
+                    return [events[index] for index in sorted(chosen)]
+    return [events[index] for index in sorted(chosen)]
+
+
 def evaluate_locomo(subset_path:str|Path,config:Project8Config,cache_path:str|Path,output_dir:str|Path,lifecycle_summary:dict|None=None,client:object|None=None,answerer:object|None=None,retriever:object|None=None,evaluation_mode:str="locomo_api")->dict:
     subset=json.loads(Path(subset_path).read_text()); answerer=answerer or CachedOpenAIAnswerer(config,cache_path,client); rows=[]; output_dir=Path(output_dir)
+    usage_before=dict(answerer.usage_summary())
+    rng = random.Random(config.seed)
     for sample in subset:
         events=conversation_events(sample)
         for index,qa in enumerate(sample["qa"]):
-            for system in ["window","episodic","hybrid"]:
-                context=retriever.retrieve(events,qa["question"],system,config.working_window_size,config.episodic_top_k) if retriever is not None else retrieve(events,qa["question"],system,config.working_window_size,config.episodic_top_k); answer=answerer.answer(sample["sample_id"],qa["question"],system,context); gold=str(qa["answer"]); evidence=set(qa.get("evidence",[])); rows.append({"sample_id":sample["sample_id"],"qa_index":index,"system":system,"question":qa["question"],"gold":gold,"answer":answer.answer,"exact_match":_normalize(answer.answer)==_normalize(gold),"token_f1":token_f1(answer.answer,gold),"evidence_recall":len(set(answer.evidence_ids)&evidence)/len(evidence) if evidence else 1.0,"context_tokens":sum(len(item["text"].split()) for item in context),"evidence_ids":answer.evidence_ids})
+            systems = ["window", "episodic", "hybrid"]
+            rng.shuffle(systems)
+            for system in systems:
+                started = time.perf_counter()
+                context=retriever.retrieve(events,qa["question"],system,config.working_window_size,config.episodic_top_k) if retriever is not None else retrieve(events,qa["question"],system,config.working_window_size,config.episodic_top_k)
+                if system != 'window':
+                    context = neighboring_context(events, context, config.episodic_top_k, config.neighbor_turns)
+                retrieval_seconds = time.perf_counter() - started
+                call_before = answerer.usage_summary()
+                answer_started = time.perf_counter()
+                error = None
+                try:
+                    answer=answerer.answer(sample["sample_id"],qa["question"],system,context)
+                except Exception as exc:
+                    error = type(exc).__name__
+                    answer = GeneratedAnswer(answer="", evidence_ids=[], abstained=False)
+                answer_seconds = time.perf_counter() - answer_started
+                call_after = answerer.usage_summary()
+                gold=str(qa["answer"]); evidence=set(qa.get("evidence",[])); retrieved_ids={item["event_id"] for item in context}
+                cited_recall=len(set(answer.evidence_ids)&evidence)/len(evidence) if evidence else None
+                rows.append({"sample_id":sample["sample_id"],"qa_index":index,"system":system,"question":qa["question"],"gold":gold,"answer":answer.answer,"exact_match":error is None and _normalize(answer.answer)==_normalize(gold),"token_f1":token_f1(answer.answer,gold) if error is None else 0.0,"cited_evidence_recall":cited_recall,"retrieved_evidence_recall":len(retrieved_ids&evidence)/len(evidence) if evidence else None,"citation_id_validity":len(set(answer.evidence_ids)&retrieved_ids)/len(set(answer.evidence_ids)) if answer.evidence_ids else 0.0,"context_words":sum(len(item["text"].split()) for item in context),"retrieved_event_ids":sorted(retrieved_ids),"evidence_ids":answer.evidence_ids,
+                    "error": error, "abstained": answer.abstained,
+                    "retrieval_seconds": retrieval_seconds, "answer_seconds": answer_seconds,
+                    "latency_seconds": time.perf_counter() - started,
+                    "cache_hit": call_after.get("cache_hits", 0) > call_before.get("cache_hits", 0),
+                    "usage": {key: call_after.get(key, 0)-call_before.get(key, 0)
+                              for key in ["model_calls", "input_tokens", "output_tokens", "cache_hits"]}})
     def summarize(system):
-        selected=[r for r in rows if r["system"]==system]; return {"exact_match_pct":100*sum(r["exact_match"] for r in selected)/len(selected),"mean_token_f1":statistics.fmean(r["token_f1"] for r in selected),"mean_evidence_recall":statistics.fmean(r["evidence_recall"] for r in selected),"mean_context_tokens":statistics.fmean(r["context_tokens"] for r in selected)}
-    selected_model=getattr(answerer,"model_name",config.model); usage=dict(answerer.usage_summary()); prior_path=output_dir/"project8_final_summary.json"
-    if usage.get("cache_hits",0) and prior_path.exists():
-        prior=json.loads(prior_path.read_text())
-        if prior.get("result_status")=="measured" and prior.get("evaluation_mode")==evaluation_mode and prior.get("model")==selected_model:
-            for key in ("model_calls","input_tokens","output_tokens","estimated_cost_usd"):
-                usage[key]=prior.get(key,0)+usage.get(key,0)
-            usage["usage_source"]="cumulative measured cache population"
-    summary={"project":"Long-Term Memory Agent","result_status":"measured","evaluation_mode":evaluation_mode,"qa_items":sum(len(s["qa"]) for s in subset),"window":summarize("window"),"episodic":summarize("episodic"),"hybrid":summarize("hybrid"),"model":selected_model,"retrieval_model":getattr(retriever,"model_name","lexical"),**usage,"deletion_compliance_pct":lifecycle_summary.get("deletion_compliance_pct",0) if lifecycle_summary else 0,"lifecycle_validation":lifecycle_summary}
+        selected=[r for r in rows if r["system"]==system]
+        def mean(key):
+            values=[row[key] for row in selected if row[key] is not None]
+            return statistics.fmean(values) if values else None
+        latency = {}
+        for category, timed in [('fresh', [r for r in selected if not r['cache_hit']]),
+                                ('cached', [r for r in selected if r['cache_hit']])]:
+            values = sorted(r['latency_seconds'] for r in timed)
+            latency[category] = {'count': len(values), 'p50_seconds': statistics.median(values) if values else None,
+                                 'p95_seconds': values[min(len(values)-1, int(.95*len(values)))] if values else None}
+        return {"exact_match_pct":100*sum(r["exact_match"] for r in selected)/len(selected),"mean_token_f1":mean("token_f1"),"mean_evidence_recall":mean("cited_evidence_recall"),"mean_cited_evidence_recall":mean("cited_evidence_recall"),"mean_retrieved_evidence_recall":mean("retrieved_evidence_recall"),"mean_context_words":mean("context_words"),
+                "errors": sum(r['error'] is not None for r in selected), "latency": latency}
+    selected_model=getattr(answerer,"model_name",config.model); usage=dict(answerer.usage_summary())
+    for key in ("model_calls","cache_hits","input_tokens","output_tokens","estimated_cost_usd"):
+        usage[key]=usage.get(key,0)-usage_before.get(key,0)
+    usage["usage_source"]="incremental current-arm calls; prior cache population excluded"
+    summary={"project":"Long-Term Memory Agent","result_status":"measured","evaluation_version":"upgrade-v1","evidence_recall_definition":"mean_evidence_recall is the legacy alias for cited-evidence recall; retrieval is scored separately","evaluation_mode":evaluation_mode,"qa_items":sum(len(s["qa"]) for s in subset),"window":summarize("window"),"episodic":summarize("episodic"),"hybrid":summarize("hybrid"),"model":selected_model,"retrieval_model":getattr(retriever,"model_name","lexical"),**usage,"deletion_compliance_pct":lifecycle_summary.get("deletion_compliance_pct") if lifecycle_summary else None,"lifecycle_validation":lifecycle_summary}
+    summary.update(subset_sha256=hashlib.sha256(Path(subset_path).read_bytes()).hexdigest(),
+                   retrieval_revision=getattr(retriever, 'model_revision', None),
+                   config=config.model_dump(mode='json'),
+                   latency_scope='Retrieval plus answer; fresh and cached paths separated. First dense retrieval includes index construction; not a warmed serving benchmark.',
+                   result_status='measured_with_errors' if any(row['error'] for row in rows) else 'measured')
     output_dir.mkdir(parents=True,exist_ok=True); (output_dir/"project8_case_results.json").write_text(json.dumps(rows,indent=2,sort_keys=True)+"\n",encoding="utf-8"); (output_dir/"project8_final_summary.json").write_text(json.dumps(summary,indent=2,sort_keys=True)+"\n",encoding="utf-8"); samples={"best_hybrid":[r for r in rows if r["system"]=="hybrid" and r["exact_match"]][:5],"hybrid_failures":[r for r in rows if r["system"]=="hybrid" and not r["exact_match"]][:5]}; (output_dir/"project8_representative_samples.json").write_text(json.dumps(samples,indent=2,sort_keys=True)+"\n",encoding="utf-8");
     with (output_dir/"project8_traces.jsonl").open("w",encoding="utf-8") as handle:
         for row in rows: handle.write(json.dumps(row,sort_keys=True)+"\n")

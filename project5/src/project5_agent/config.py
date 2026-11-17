@@ -19,6 +19,7 @@ class Project5Config(BaseModel):
     test_case_count: int = 40
     max_repair_attempts: int = Field(default=2, ge=0, le=3)
     max_result_rows: int = Field(default=100, ge=1, le=1000)
+    query_timeout_seconds: float = Field(default=5.0, gt=0, le=30)
     authorized_regions: list[str] = ["NA"]
     max_model_calls: int = Field(default=180, ge=1)
     max_output_tokens: int = Field(default=500, ge=64)

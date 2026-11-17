@@ -1,0 +1,54 @@
+{
+  "status": "complete",
+  "generated_at_utc": "20261117T053902107808Z",
+  "python": "3.11.15",
+  "config": {
+    "project_id": "project6",
+    "seed": 20260802,
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "max_patch_attempts": 3,
+    "max_changed_lines": 30,
+    "test_timeout_seconds": 20.0,
+    "max_test_output_chars": 12000,
+    "execution_backend": "docker",
+    "sandbox_image": "project6-test-runner:upgrade-v1",
+    "max_model_calls": 220,
+    "max_output_tokens": 2048,
+    "max_retries": 0,
+    "max_estimated_cost_usd": 8.0,
+    "input_price_per_million_usd": 4.0,
+    "output_price_per_million_usd": 20.0,
+    "local_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "local_device": "cuda",
+    "local_max_new_tokens": 900,
+    "development_case_count": 4,
+    "test_case_count": 8
+  },
+  "sandbox": {
+    "backend": "docker",
+    "image": "project6-test-runner:upgrade-v1",
+    "image_id": "sha256:19a2265982b2917682aa103032a3ae614f58e42a6e7f76c84014bcc53b47e67c"
+  },
+  "dataset_commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+  "pricing_source": "https://developers.openai.com/api/docs/models/gpt-5.6-sol",
+  "pricing_checked": "2026-11-17",
+  "source_sha256": {
+    "src/project6_agent/__init__.py": "2ccab756d2ffe7dde6fdbd7c8bc66bf577639d28b03fab5d838ed2634018aef7",
+    "src/project6_agent/agent.py": "84f482d2ee52974cb231ad9ab618a1a870eec9d994b4196f97c8b81333aaad69",
+    "src/project6_agent/config.py": "83099429c7db2d229f635efc23a4efd084865d98d3a9b5807d595ac3449ae877",
+    "src/project6_agent/evaluation.py": "93a3f9cad5528ab2bc3e38157c8ab210f2f5699b50d29ebc7ab06c2fde40e002",
+    "src/project6_agent/patching.py": "9db1f7dadd98639ff72683c9403ef1d0d4ed0d2fd7b45a81266f69ce68c1d2ab",
+    "src/project6_agent/planners.py": "a846f6f5dd0db29bcfc2a8413c50b177f4a3e35da1b6c3a62a3b2ef6212eda77",
+    "src/project6_agent/quixbugs.py": "625d9bcebe7e40dfa756a5596dc68b4e21e191378f0709dcf6ea716907747c5b",
+    "src/project6_agent/repository.py": "16f5bfcee6859b5140fb57a2dd928f9425b4dc168bc6a1960e713aacf0c2ff28",
+    "src/project6_agent/runner.py": "ef8758cfd6df1de9c7838fa5b1e0a8e75845435b6e5486951aea63e63e8b709f",
+    "src/project6_agent/schemas.py": "673ffb7d5499e2352734bac8d84ed3ec4de246a3ac35d593b960aa04c1b867ef"
+  },
+  "usage": {
+    "model_calls": 20,
+    "input_tokens": 28886,
+    "output_tokens": 4574,
+    "estimated_cost_usd": 0.20702399999999999
+  }
+}

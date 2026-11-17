@@ -3,3 +3,13 @@
 **/__pycache__/
 **/.pytest_cache/
 *.pyc
+**/output/runs/**/runtime/
+
+.env
+.env.*
+temp_info.txt
+llm-api.txt
+colab_tool.py
+*.pem
+*.key
+*.code-workspace

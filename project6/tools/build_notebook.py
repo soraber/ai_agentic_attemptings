@@ -19,7 +19,12 @@ cell("P06-C00","markdown","""# Project 6: Test-Driven Code-Repair Agent
 
 Compare a one-shot patch with a three-attempt repair loop using AST mapping,
 failure localization, constrained unified diffs, public and hidden tests, and
-exact rollback. Gold corrected programs never enter planner context."""),
+exact rollback. Gold corrected programs never enter planner context.
+
+Upgrade v1: generated code requires Docker isolation. Hidden tests are used only
+once after public-test candidate selection. Historical scores are not new results.
+Build the executor on a Docker-enabled host: `docker build -f tools/Dockerfile.sandbox
+-t project6-test-runner:upgrade-v1 .`. Standard Colab may not provide this runtime."""),
 cell("P06-C01","code","""from pathlib import Path
 import os,subprocess,sys
 candidates=[Path.cwd(),Path.cwd()/"project6",Path("/content/ai_agentic_attemptings/project6")]
@@ -82,36 +87,76 @@ result=subprocess.run([sys.executable,"-m","pytest","-q","tests"],text=True,capt
 if result.returncode: print(result.stderr); raise RuntimeError("Project 6 tests failed")"""),
 cell("P06-C08","code","""from project6_agent.agent import RepairAgent
 from project6_agent.evaluation import summarize_results
-from project6_agent.planners import LocalPatchPlanner, OpenAIPatchPlanner, TransformersPatchBackend
+from project6_agent.planners import LocalPatchPlanner, OpenAIPatchPlanner, PatchCallBudget, TransformersPatchBackend
+from project6_agent.structured_edits import OpenAIStructuredEditPlanner
 from project6_agent.quixbugs import prepare_case
+from project6_agent.runner import sandbox_preflight
+from datetime import datetime, timezone
+import json
 if not RUN_FULL_EVAL:
     print("Set RUN_FULL_EVAL=True and RUN_API_EVAL=True after P06-C07 passes.")
 else:
-    result_dir=PROJECT_ROOT/("output/gpu" if RUN_LOCAL_GPU_EVAL else "output")
+    if config.execution_backend != "docker": raise RuntimeError("Model-generated patches require Docker, not trusted_fixture mode")
+    if RUN_LOCAL_GPU_EVAL and config.edit_format != "unified_diff":
+        raise RuntimeError("Structured edits currently require API mode; no untested local-model adapter")
+    sandbox = sandbox_preflight(config.sandbox_image)
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    result_dir=PROJECT_ROOT/"output/runs/upgrade-v1"/EVAL_BACKEND/run_id
+    result_dir.mkdir(parents=True, exist_ok=False)
+    (result_dir/"run_config.json").write_text(json.dumps({"config": config.model_dump(), "sandbox": sandbox}, indent=2))
     results=[]; planners=[]; agent=RepairAgent(config); runtime=result_dir/"runtime/quixbugs"; runtime.mkdir(parents=True,exist_ok=True)
     local_backend=TransformersPatchBackend(config) if RUN_LOCAL_GPU_EVAL else None
+    api_budget = PatchCallBudget(config) if RUN_API_EVAL else None
     for case in test_cases:
         prepared=prepare_case(QUIXBUGS_ROOT,case,runtime/f"source-{case['bug_id']}")
         for system in ["one_shot","repair_loop"]:
             if RUN_LOCAL_GPU_EVAL:
                 planner=LocalPatchPlanner(config,prepared["root"]/prepared["source"],case["bug_id"],prepared["source"],local_backend)
             else:
-                planner=OpenAIPatchPlanner(config,prepared["root"]/prepared["source"],case["bug_id"],allowed_path=prepared["source"])
+                planner_class = OpenAIStructuredEditPlanner if config.edit_format == "structured_edits" else OpenAIPatchPlanner
+                planner=planner_class(config,prepared["root"]/prepared["source"],case["bug_id"],allowed_path=prepared["source"],budget=api_budget)
             planners.append(planner)
             results.append(agent.run(case["bug_id"],system,prepared["root"],runtime/f"work-{case['bug_id']}-{system}",[prepared["source"]],prepared["public_tests"],prepared["hidden_tests"],planner))
     usage=local_backend.usage_summary() if RUN_LOCAL_GPU_EVAL else {"model_calls":sum(p.calls for p in planners),"input_tokens":sum(p.input_tokens for p in planners),"output_tokens":sum(p.output_tokens for p in planners),"estimated_cost_usd":round(sum(p.estimated_cost_usd for p in planners),6)}
     selected_model=config.local_model if RUN_LOCAL_GPU_EVAL else config.model
+    if api_budget is not None: usage["reserved_unreported_cost_usd"] = api_budget.reserved
     summary=summarize_results(results,result_dir,planner_usage=usage,model=selected_model,evaluation_backend=EVAL_BACKEND); print(summary)"""),
 cell("P06-C09","code","""import json
-result_dir=PROJECT_ROOT/("output/gpu" if RUN_LOCAL_GPU_EVAL else "output")
+if "result_dir" not in globals(): raise RuntimeError("Run P06-C08 first; historical results are not reused")
 path=result_dir/"project6_representative_samples.json"
 print(json.loads(path.read_text()) if path.exists() else "Run the paired evaluator first.")"""),
 cell("P06-C10","code","""import subprocess,sys
-result_dir=PROJECT_ROOT/("output/gpu" if RUN_LOCAL_GPU_EVAL else "output"); summary_path=result_dir/"project6_final_summary.json"
+if "result_dir" not in globals(): raise RuntimeError("Run P06-C08 first; historical results are not reused")
+summary_path=result_dir/"project6_final_summary.json"
 if summary_path.exists():
     subprocess.run([sys.executable,"tools/generate_report.py","--summary",str(summary_path),"--output",str(result_dir/"project6_report.pdf")],check=True)
     subprocess.run([sys.executable,"tools/validate_project.py"]+([] if RUN_LOCAL_GPU_EVAL else ["--require-results"]),check=True)
 else: print("Measured summary absent; report generation skipped.")""")]
+
+CELLS.extend([
+cell("P06-C11", "markdown", """## Development-Only Edit Interface Comparison
+
+This optional local/Docker experiment compares model-written unified diffs with
+exact source replacements on the four development bugs, under the same three-attempt
+budget. The harness validates unique, non-overlapping anchors, Python syntax, paths,
+and changed-line limits before generating a diff. It does not retry using final-test
+feedback or overwrite the eight-bug test results. Run setup/config/data/tests first;
+the test-set evaluation cell is not required. This is API-only, not a GPU workload."""),
+cell("P06-C12", "code", """RUN_EDIT_FORMAT_DEVELOPMENT = False
+if RUN_EDIT_FORMAT_DEVELOPMENT:
+    import os
+    from datetime import datetime, timezone
+    from openai import OpenAI
+    from project6_agent.edit_comparison import compare_development_edits
+    if not os.getenv("OPENAI_API_KEY"):
+        raise RuntimeError("Use the hidden API-key prompt in the configuration cell; never paste a key into source")
+    development_output = PROJECT_ROOT/"output/runs/upgrade-v1/development_edits"/datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    development_config = config.model_copy(update={"max_output_tokens": 2048, "reasoning_effort": "low", "max_retries": 0})
+    with OpenAI(max_retries=0, timeout=60) as api:
+        development_summary = compare_development_edits(api, development_config, PROJECT_ROOT, development_output)
+    print(development_summary)
+else:
+    print("Development-only comparison not requested; no API calls.")""")])
 
 
 def main():

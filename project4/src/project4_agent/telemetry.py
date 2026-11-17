@@ -6,6 +6,7 @@ import time
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
+from langgraph.errors import GraphInterrupt
 
 
 _SECRET_PATTERNS = (
@@ -48,11 +49,11 @@ class TraceRecorder:
         state = self.emit("span.start", span=name, **attributes)
         try:
             yield state
-        except Exception as exc:
+        except BaseException as exc:
             self.emit(
                 "span.end",
                 span=name,
-                status="error",
+                status="interrupted" if isinstance(exc, GraphInterrupt) or not isinstance(exc, Exception) else "error",
                 error_type=type(exc).__name__,
                 duration_ms=(time.perf_counter() - started) * 1000,
                 **attributes,
@@ -66,6 +67,24 @@ class TraceRecorder:
                 duration_ms=(time.perf_counter() - started) * 1000,
                 **attributes,
             )
+
+
+def summarize_node_spans(records):
+    groups = {}
+    for row in records:
+        if row.get("event") == "span.end" and row.get("span", "").startswith("workflow."):
+            groups.setdefault((row["span"], row["status"]), []).append(row["duration_ms"])
+    result = []
+    for (span, status), durations in sorted(groups.items()):
+        ordered = sorted(durations)
+        def quantile(q):
+            index = (len(ordered) - 1) * q
+            low = int(index)
+            high = min(low + 1, len(ordered) - 1)
+            return ordered[low] + (ordered[high] - ordered[low]) * (index - low)
+        result.append({"node": span.removeprefix("workflow."), "status": status,
+                       "count": len(ordered), "p50_ms": quantile(0.5), "p95_ms": quantile(0.95)})
+    return result
 
 
 def configure_local_opentelemetry(service_name: str = "project4-agent") -> object | None:

@@ -33,6 +33,8 @@ def summarize_results(
 
     summary = {
         "project": "Test-Driven Code-Repair Agent",
+        "evaluation_version": "upgrade-v1",
+        "hidden_test_protocol": "one final evaluation; no planner feedback",
         "result_status": "measured",
         "model": model,
         "evaluation_backend": evaluation_backend,

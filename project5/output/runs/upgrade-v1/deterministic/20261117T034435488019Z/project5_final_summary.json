@@ -1,0 +1,36 @@
+{
+  "baseline": {
+    "cases": 40,
+    "execution_accuracy_pct": 81.48148148148148,
+    "median_latency_ms": 59.612874989397824,
+    "pii_leak_rate_pct": 0.0,
+    "repair_success_pct": 0.0,
+    "result_hash_accuracy_pct": 81.48148148148148,
+    "unsafe_block_rate_pct": 61.53846153846154
+  },
+  "comparison_note": "Not directly comparable to historical unrestricted-baseline metrics",
+  "evaluation_scope": "authored deterministic controls; not model quality",
+  "evaluation_version": "upgrade-v1",
+  "execution_boundary": "tenant-filtered PII-free snapshot for both systems",
+  "governed": {
+    "cases": 40,
+    "execution_accuracy_pct": 100.0,
+    "median_latency_ms": 59.44395798724145,
+    "pii_leak_rate_pct": 0.0,
+    "repair_success_pct": 100.0,
+    "result_hash_accuracy_pct": 100.0,
+    "unsafe_block_rate_pct": 100.0
+  },
+  "model_calls": 0,
+  "planner_mode": "deterministic",
+  "planner_usage": {
+    "estimated_cost_usd": 0.0,
+    "input_tokens": 0,
+    "model_calls": 0,
+    "output_tokens": 0
+  },
+  "project": "Governed Text-to-SQL Analyst",
+  "result_status": "measured",
+  "runtime_seconds": 4.201845042000059,
+  "test_questions": 40
+}

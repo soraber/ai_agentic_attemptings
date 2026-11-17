@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED = [f"P06-C{index:02d}" for index in range(11)]
+EXPECTED = [f"P06-C{index:02d}" for index in range(13)]
 
 
 def main() -> None:

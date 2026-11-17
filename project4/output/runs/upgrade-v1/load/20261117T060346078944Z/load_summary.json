@@ -1,0 +1,234 @@
+{
+  "scope": "local closed-loop deterministic workflow load; includes cold initialization, no API or human wait",
+  "model_calls": 0,
+  "concurrency_runs": [
+    {
+      "concurrency": 1,
+      "requests": 32,
+      "seconds": 0.31432620802661404,
+      "throughput_requests_per_second": 101.80506487480216,
+      "p50_ms": 9.29775001714006,
+      "p95_ms": 11.015744059113784,
+      "resolved": 32,
+      "effects": 32,
+      "errors": 0,
+      "node_timing": [
+        {
+          "node": "approval",
+          "status": "error",
+          "count": 32,
+          "p50_ms": 0.1025205128826201,
+          "p95_ms": 0.21795594366267323
+        },
+        {
+          "node": "approval",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.13587498688139021,
+          "p95_ms": 0.18933545507024974
+        },
+        {
+          "node": "close",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.11158350389450788,
+          "p95_ms": 0.15952310641296208
+        },
+        {
+          "node": "diagnose",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.2267085073981434,
+          "p95_ms": 0.3444581350777298
+        },
+        {
+          "node": "execute",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.7170415192376822,
+          "p95_ms": 1.0123875079443676
+        },
+        {
+          "node": "plan",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.17054149066098034,
+          "p95_ms": 0.24408333410974592
+        },
+        {
+          "node": "policy",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.14541650307364762,
+          "p95_ms": 0.21552470570895815
+        },
+        {
+          "node": "validate",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.13150001177564263,
+          "p95_ms": 0.21609025134239346
+        },
+        {
+          "node": "verify",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.13787549687549472,
+          "p95_ms": 0.22441456094384193
+        }
+      ]
+    },
+    {
+      "concurrency": 4,
+      "requests": 32,
+      "seconds": 0.2447316250181757,
+      "throughput_requests_per_second": 130.7554755035171,
+      "p50_ms": 29.967708484036848,
+      "p95_ms": 35.61060186766554,
+      "resolved": 32,
+      "effects": 32,
+      "errors": 0,
+      "node_timing": [
+        {
+          "node": "approval",
+          "status": "error",
+          "count": 32,
+          "p50_ms": 0.44216652167961,
+          "p95_ms": 1.059564953902736
+        },
+        {
+          "node": "approval",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.974895985564217,
+          "p95_ms": 1.5206147829303518
+        },
+        {
+          "node": "close",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.6140000186860561,
+          "p95_ms": 2.6652813685359433
+        },
+        {
+          "node": "diagnose",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 1.057146000675857,
+          "p95_ms": 2.8373729466693476
+        },
+        {
+          "node": "execute",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 3.234207979403436,
+          "p95_ms": 6.61495013628155
+        },
+        {
+          "node": "plan",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 1.1557289690244943,
+          "p95_ms": 2.423106250353157
+        },
+        {
+          "node": "policy",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 1.0676045203581452,
+          "p95_ms": 2.8665125399129465
+        },
+        {
+          "node": "validate",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 0.6792289786972106,
+          "p95_ms": 2.040187659440562
+        },
+        {
+          "node": "verify",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 1.094312989152968,
+          "p95_ms": 2.653270642622374
+        }
+      ]
+    },
+    {
+      "concurrency": 8,
+      "requests": 32,
+      "seconds": 0.2827798750367947,
+      "throughput_requests_per_second": 113.16222555030208,
+      "p50_ms": 64.94529198971577,
+      "p95_ms": 96.13731476129033,
+      "resolved": 32,
+      "effects": 32,
+      "errors": 0,
+      "node_timing": [
+        {
+          "node": "approval",
+          "status": "error",
+          "count": 32,
+          "p50_ms": 1.1007919965777546,
+          "p95_ms": 3.4593084739753976
+        },
+        {
+          "node": "approval",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 2.159041498089209,
+          "p95_ms": 4.30881260544993
+        },
+        {
+          "node": "close",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 1.8381250265520066,
+          "p95_ms": 13.807685457868487
+        },
+        {
+          "node": "diagnose",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 2.089603978674859,
+          "p95_ms": 5.478766289888881
+        },
+        {
+          "node": "execute",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 7.263895531650633,
+          "p95_ms": 36.832754057832055
+        },
+        {
+          "node": "plan",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 2.012833021581173,
+          "p95_ms": 4.711027044686489
+        },
+        {
+          "node": "policy",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 2.1927709749434143,
+          "p95_ms": 5.701885788585059
+        },
+        {
+          "node": "validate",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 1.6093129815999418,
+          "p95_ms": 3.312464547343552
+        },
+        {
+          "node": "verify",
+          "status": "ok",
+          "count": 32,
+          "p50_ms": 1.9962080114055425,
+          "p95_ms": 4.493318760069087
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "status": "complete",
+  "model_calls": 0,
+  "parent_records_sha256": "96c1363604856d03a8cc082cbb8dc988102790634bfe81b3a74d7ac979bcce00",
+  "test_cases_sha256": "19f4e251bdc489b731cd1c0e0547625cb632427340da43c15f46c902e54a79f4",
+  "metric_source_sha256": "2d0823b4c63d4bfc996887f61472e01f060fb0d3a57b67e82d35539e2d21d294",
+  "metric_definition": "Aliases ignored; column positions, duplicates, NULLs and gold ORDER BY retained; numeric abs tolerance 1e-6, relative 1e-9. Fixed-fixture equivalence, not general query correctness. No feedback reaches the planner.",
+  "baseline": {
+    "cases": 40,
+    "execution_accuracy_pct": 29.62962962962963,
+    "result_hash_accuracy_pct": 0.0,
+    "value_result_accuracy_pct": 18.51851851851852,
+    "value_result_cases": 27,
+    "value_evaluation_errors": 0,
+    "unsafe_block_rate_pct": 23.076923076923077,
+    "unsafe_policy_or_abstention_pct": 0.0,
+    "execution_or_repair_error_pct": 55.0,
+    "planning_error_pct": 0.0,
+    "pii_leak_rate_pct": 0.0,
+    "repair_success_pct": 0.0,
+    "median_latency_ms": 76.53980700069951,
+    "end_to_end_p50_ms": 4660.558755001148,
+    "end_to_end_p95_ms": 6539.619917000891
+  },
+  "governed": {
+    "cases": 40,
+    "execution_accuracy_pct": 18.51851851851852,
+    "result_hash_accuracy_pct": 0.0,
+    "value_result_accuracy_pct": 7.407407407407407,
+    "value_result_cases": 27,
+    "value_evaluation_errors": 0,
+    "unsafe_block_rate_pct": 61.53846153846154,
+    "unsafe_policy_or_abstention_pct": 38.46153846153846,
+    "execution_or_repair_error_pct": 55.0,
+    "planning_error_pct": 0.0,
+    "pii_leak_rate_pct": 0.0,
+    "repair_success_pct": 0.0,
+    "median_latency_ms": 7410.7556560002195,
+    "end_to_end_p50_ms": 11444.088109999939,
+    "end_to_end_p95_ms": 19407.814764999785
+  }
+}

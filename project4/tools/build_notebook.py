@@ -33,6 +33,10 @@ checkpoints state, pauses for human approval, deduplicates replayed side effects
 and compensates failed actions. All tools are local simulations. Final figures
 must be generated from measured output, never placeholder values.
 
+Upgrade v1 binds approvals to an action digest and expiry, and checks replay
+inside the ledger transaction. Tests include concurrent delivery and real process
+exit; a separately deployed action service and reviewer authentication remain pending.
+
 **Cell IDs are stable.** Record any future edit by ID in
 `debug_log/project4_debug_log.md`.
 """,
@@ -207,6 +211,9 @@ print({"paused": True, "approved": decision.approved, "terminal_status": final_s
         """
 # Deterministic reliability checks: data isolation, policy attacks, replay, crash recovery, and compensation.
 import subprocess, sys
+from importlib.metadata import version
+from packaging.version import Version
+assert Version(version("langgraph-checkpoint-sqlite")) >= Version("3.1.3")
 
 completed = subprocess.run(
     [sys.executable, "-m", "pytest", "-q", "tests"],
@@ -217,6 +224,9 @@ print(completed.stdout)
 if completed.returncode:
     print(completed.stderr)
     raise RuntimeError("Project 4 deterministic tests failed")
+RUN_LOCAL_LOAD_TEST = False
+if RUN_LOCAL_LOAD_TEST:
+    subprocess.run([sys.executable, "tools/benchmark_workflow.py"], check=True, timeout=180)
 """,
     ),
     cell(
@@ -226,17 +236,22 @@ if completed.returncode:
 # Paired evaluation. API mode makes 64 structured calls by default (16 cases x 2 calls x 2 repetitions).
 from project4_agent.evaluation import evaluate_project
 from project4_agent.planners import DeterministicPlanner, OpenAIPlanner
+from datetime import datetime, timezone
+import json
 
 if not RUN_FULL_EVAL:
     print("Full evaluation is disabled. Set RUN_FULL_EVAL=True in P04-C02 after P04-C07 passes.")
 else:
     source_planner = OpenAIPlanner(config) if RUN_API_EVAL else DeterministicPlanner()
+    result_dir = PROJECT_ROOT / "output/runs/upgrade-v1" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    result_dir.mkdir(parents=True, exist_ok=False)
+    (result_dir / "run_config.json").write_text(json.dumps(config.model_dump(), indent=2))
     summary = evaluate_project(
         cases,
         source_planner,
         config,
-        PROJECT_ROOT / "output",
-        PROJECT_ROOT / "output/runtime/evaluation",
+        result_dir,
+        result_dir / "runtime/evaluation",
     )
     print(summary)
 """,
@@ -248,7 +263,8 @@ else:
 # Error analysis uses persisted evidence so notebook display cannot diverge from the report.
 import json
 
-samples_path = PROJECT_ROOT / "output/project4_representative_samples.json"
+if "result_dir" not in globals(): raise RuntimeError("Run P04-C08 first; historical results are not reused")
+samples_path = result_dir / "project4_representative_samples.json"
 if not samples_path.exists():
     print("No measured samples yet; run P04-C08 with RUN_FULL_EVAL=True.")
 else:
@@ -267,13 +283,14 @@ else:
 # Build measured charts/PDF and validate the final artifact contract.
 import subprocess, sys
 
-summary_path = PROJECT_ROOT / "output/project4_final_summary.json"
+if "result_dir" not in globals(): raise RuntimeError("Run P04-C08 first; historical results are not reused")
+summary_path = result_dir / "project4_final_summary.json"
 if not summary_path.exists():
     print("No measured summary yet; report generation is intentionally skipped.")
 else:
-    subprocess.run([sys.executable, "tools/generate_report.py"], check=True)
+    subprocess.run([sys.executable, "tools/generate_report.py", "--summary", str(summary_path), "--output", str(result_dir / "project4_report.pdf")], check=True)
     subprocess.run([sys.executable, "tools/validate_project.py", "--require-results"], check=True)
-    print("Project 4 artifacts are complete:", PROJECT_ROOT / "output")
+    print("Project 4 run artifacts:", result_dir)
 """,
     ),
 ]

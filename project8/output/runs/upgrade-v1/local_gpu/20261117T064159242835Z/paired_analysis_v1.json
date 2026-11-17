@@ -1,0 +1,127 @@
+{
+  "analysis_version": "paired-v1",
+  "comparisons": {
+    "episodic": {
+      "cited_evidence_recall": {
+        "ci95": [
+          -0.13,
+          0.15833333333333333
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.015,
+        "pairs": 50
+      },
+      "exact_match": {
+        "ci95": [
+          0.0,
+          0.1
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.04,
+        "pairs": 50
+      },
+      "retrieved_evidence_recall": {
+        "ci95": [
+          -0.12999999999999998,
+          0.16004166666666644
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.015,
+        "pairs": 50
+      },
+      "token_f1": {
+        "ci95": [
+          -0.03296434455242506,
+          0.1206316738031908
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.04052875244206513,
+        "pairs": 50
+      }
+    },
+    "hybrid": {
+      "cited_evidence_recall": {
+        "ci95": [
+          -0.10333333333333332,
+          0.14174999999999957
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.021666666666666664,
+        "pairs": 50
+      },
+      "exact_match": {
+        "ci95": [
+          0.0,
+          0.06
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.02,
+        "pairs": 50
+      },
+      "retrieved_evidence_recall": {
+        "ci95": [
+          -0.10170833333333335,
+          0.14166666666666666
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.021666666666666664,
+        "pairs": 50
+      },
+      "token_f1": {
+        "ci95": [
+          -0.019739114755213828,
+          0.10399215406452243
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.036270377518055535,
+        "pairs": 50
+      }
+    },
+    "window": {
+      "cited_evidence_recall": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.0,
+        "pairs": 50
+      },
+      "exact_match": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.0,
+        "pairs": 50
+      },
+      "retrieved_evidence_recall": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.0,
+        "pairs": 50
+      },
+      "token_f1": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "conversations": 2,
+        "dense_minus_lexical": 0.0,
+        "pairs": 50
+      }
+    }
+  },
+  "limitations": "Conditional on two selected conversations, not new-conversation generalization. Questions may remain dependent; intervals are descriptive and not corrected for multiple comparisons. Generation failures stay in the answer scores. Cached window outputs are paired identical controls, not a latency comparison.",
+  "method": "Paired question bootstrap within each fixed conversation; percentile 95% intervals.",
+  "resamples": 2000,
+  "seed": 2026,
+  "source_sha256": {
+    "dense": "3974d336a0f0fd4b4a9541ad09583a0180367fcd197f08f787df16cb6bd32d56",
+    "lexical": "4e2ca213bdbd1d5defbc6523f5b2d98c8e0fa34da1d4ec46dcfc74c689461319"
+  }
+}

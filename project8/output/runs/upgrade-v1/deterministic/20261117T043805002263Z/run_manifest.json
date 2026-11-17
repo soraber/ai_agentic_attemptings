@@ -1,0 +1,18 @@
+{
+  "generated_at_utc": "20261117T043805002263Z",
+  "model_calls": 0,
+  "platform": "macOS-27.2.1-arm64-arm-64bit",
+  "python": "3.11.15",
+  "scope": "authored deterministic controls; not model quality",
+  "source_sha256": {
+    "src/project8_agent/__init__.py": "5c6089c0155f776001d37ebaaab1d7f232385828582501318ba0340043a3bb53",
+    "src/project8_agent/answer_cache.py": "255737f36d8716937a472a519dd577920fa605eda3e537be7087eb7c7ac66325",
+    "src/project8_agent/config.py": "fbba37a39221e803604911927add84946e8e0ed4ba591f588a9c2a8ccb5515fd",
+    "src/project8_agent/evaluation.py": "20811cbd84ed3310a9274ee2bc53af2254c6db099ba02632c18d93b2bbc7aa8a",
+    "src/project8_agent/extraction.py": "a289d36f2ce2f0bc5b5a436610ce18be90403e30abc591547e9a9b64892fcc02",
+    "src/project8_agent/local_models.py": "ddf413b2b30e8c38f42f184dbc8b849e17f6435ef15397c1b14de3c71befea66",
+    "src/project8_agent/locomo.py": "2f8d33783a5b51c24799614844211c62c34bce57318c3c4234ddf41b21b5b219",
+    "src/project8_agent/memory.py": "bc8464ace24cbff0ce196b548913f9460916ca5cae63ab14a61a5b2516e208ad",
+    "src/project8_agent/schemas.py": "0a88a324e1e2c8089e4662467aad6479eb19af3b26a817ce2f1af02fda6935d2"
+  }
+}

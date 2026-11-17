@@ -25,14 +25,17 @@ class TransformersJSONGenerator:
     def __init__(self, model_name: str, device: str = "cuda"):
         import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
+        from huggingface_hub import HfApi
 
         if device.startswith("cuda") and not torch.cuda.is_available():
             raise RuntimeError("Local GPU mode requires a CUDA-enabled PyTorch runtime")
         self.model_name = model_name
+        self.model_revision = HfApi().model_info(model_name).sha
         self.device = device
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name, revision=self.model_revision)
         self.model = AutoModelForCausalLM.from_pretrained(
             model_name,
+            revision=self.model_revision,
             torch_dtype=torch.bfloat16 if device.startswith("cuda") else torch.float32,
             device_map="auto" if device.startswith("cuda") else None,
             low_cpu_mem_usage=True,
@@ -78,6 +81,7 @@ class TransformersJSONGenerator:
             "output_tokens": self.output_tokens,
             "estimated_cost_usd": 0.0,
             "local_model": self.model_name,
+            "model_revision": self.model_revision,
             "device": self.device,
         }
 
@@ -87,11 +91,13 @@ class EmbeddingSchemaRetriever:
 
     def __init__(self, catalog: dict[str, str], model_name: str, device: str = "cuda"):
         from sentence_transformers import SentenceTransformer
+        from huggingface_hub import HfApi
 
         self.tables = sorted(catalog)
         self.model_name = model_name
+        self.model_revision = HfApi().model_info(model_name).sha
         self.device = device
-        self.encoder = SentenceTransformer(model_name, device=device)
+        self.encoder = SentenceTransformer(model_name, device=device, revision=self.model_revision)
         documents = [f"table {name}: {catalog[name]}" for name in self.tables]
         self.embeddings = self.encoder.encode(
             documents,

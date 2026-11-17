@@ -1,0 +1,32 @@
+{
+  "evaluation_backend": "openai_docker",
+  "evaluation_version": "upgrade-v1",
+  "hidden_test_protocol": "one final evaluation; no planner feedback",
+  "model": "gpt-5.6-sol",
+  "one_shot": {
+    "cases": 8,
+    "hidden_pass_rate_pct": 87.5,
+    "mean_changed_lines": 2.0,
+    "median_latency_seconds": 3.786602958018193,
+    "overfit_rate_pct": 0.0,
+    "rollback_success_pct": 100.0,
+    "verified_repair_rate_pct": 87.5
+  },
+  "planner_usage": {
+    "estimated_cost_usd": 0.20702399999999999,
+    "input_tokens": 28886,
+    "model_calls": 20,
+    "output_tokens": 4574
+  },
+  "project": "Test-Driven Code-Repair Agent",
+  "repair_loop": {
+    "cases": 8,
+    "hidden_pass_rate_pct": 75.0,
+    "mean_changed_lines": 2.125,
+    "median_latency_seconds": 4.431273333466379,
+    "overfit_rate_pct": 0.0,
+    "rollback_success_pct": 100.0,
+    "verified_repair_rate_pct": 75.0
+  },
+  "result_status": "measured"
+}

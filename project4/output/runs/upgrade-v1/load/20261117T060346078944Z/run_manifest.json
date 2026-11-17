@@ -1,0 +1,21 @@
+{
+  "generated_at_utc": "20261117T060346078944Z",
+  "python": "3.11.15",
+  "machine": "arm64",
+  "os": "Darwin",
+  "source_sha256": {
+    "src/project4_agent/__init__.py": "e9ce37b163b6b6f30aad98c1444f929e82d926751cf7bdf335494eb1376171c9",
+    "src/project4_agent/action_service.py": "8a9b9b952c67825d95880882d63c3476c505a4a06b18be182dad300bb3004fcb",
+    "src/project4_agent/config.py": "0dad03ea444c2be3842f493e97ac4708d1beb39643919fdb8a29d57adef2e2d3",
+    "src/project4_agent/dataset.py": "ffc8c7e6c5c57ea8b3f5df2ebcc85f5f98d483d26b82eb5564fdcac8bad084ff",
+    "src/project4_agent/evaluation.py": "e758bad8413dda4d81ecd9922f1472778aac4bf7a5868968d052d9ec88599c03",
+    "src/project4_agent/load_test.py": "a8823fec024516ac9f0b83abbff3a0896645c95f88686f5cd4a3e627e288aa34",
+    "src/project4_agent/planners.py": "274b4654a674061c095d7e680765d53b5f6a32e8483d24f95a53a9f4f8a2b022",
+    "src/project4_agent/policy.py": "3126e63f7383f620bb350ded87dfe69b28c45e6d967c79876c0a9d44d12049fa",
+    "src/project4_agent/schemas.py": "8f8f980efe6acd88f1575c234614445f84a1e7ccfab629db6b10a648cda352a7",
+    "src/project4_agent/simulator.py": "f82eb8a57c56e50dc5bac704ad0c616256e091d40d7d3fe360c2ea532d01a01d",
+    "src/project4_agent/telemetry.py": "05db712d09f82f06b38e8a4b8a15bc603e797bbd6503f5b4f927e93d8d700abc",
+    "src/project4_agent/workflow.py": "23af8321f93a519f2085fc81ab77ba48f29f147ffa3922667f8ff61d87448dc8"
+  },
+  "model_calls": 0
+}

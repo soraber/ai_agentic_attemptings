@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from enum import Enum
+import hashlib
+import json
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -123,6 +125,10 @@ class ActionPlan(BaseModel):
     idempotency_key: str = Field(min_length=12, max_length=80)
     rationale: str = Field(min_length=1, max_length=600)
 
+    def action_digest(self) -> str:
+        payload = self.model_dump(mode="json", include={"incident_id", "action", "target_service", "parameters", "idempotency_key"})
+        return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
 
 class PolicyDecision(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -138,6 +144,8 @@ class ApprovalDecision(BaseModel):
     approved: bool
     reviewer: str = "simulated-operator"
     reason: str
+    plan_digest: str | None = None
+    expires_at: float | None = None
 
 
 class ExecutionResult(BaseModel):
@@ -174,6 +182,7 @@ class CaseResult(BaseModel):
     approved: bool | None = None
     terminal_status: str
     crash_injected: bool
+    crash_observed: bool = False
     crash_recovered: bool
     duplicate_effects: int
     compensation_used: bool

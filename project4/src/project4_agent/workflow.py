@@ -9,6 +9,7 @@ from typing import Annotated, Any, TypedDict
 from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.graph import END, START, StateGraph
 from langgraph.types import Command, interrupt
+from .policy import approval_is_valid
 
 from .planners import Planner
 from .policy import coarse_baseline_policy, evaluate_policy
@@ -84,7 +85,7 @@ class DurableIncidentWorkflow:
             item["event_id"] for item in state["evidence"]["logs"]
         } | {item["span_id"] for item in state["evidence"]["traces"]}
         valid_refs |= {f"metric:{key}" for key in state["evidence"]["metrics"]}
-        grounded = bool(set(diagnosis.evidence_refs) & valid_refs)
+        grounded = bool(diagnosis.evidence_refs) and set(diagnosis.evidence_refs).issubset(valid_refs)
         identity_matches = (
             diagnosis.incident_id == state["evidence"]["incident_id"]
             and diagnosis.target_service.value == state["evidence"]["service"]
@@ -123,11 +124,16 @@ class DurableIncidentWorkflow:
             }
         )
         decision = ApprovalDecision.model_validate(response)
+        if decision.approved and (not approval_is_valid(decision, plan) or not evaluate_policy(plan, state["evidence"]).allowed):
+            decision = decision.model_copy(update={"approved":False, "reason":"Expired, mismatched, or unauthorized approval"})
         self._record("approval", state, approved=decision.approved)
         return {"approval": decision.model_dump(mode="json"), "trajectory": ["approval"]}
 
     def _execute(self, state: AgentState) -> AgentState:
         plan = ActionPlan.model_validate(state["plan"])
+        if not approval_is_valid(ApprovalDecision.model_validate(state["approval"]), plan) or not evaluate_policy(plan, state["evidence"]).allowed:
+            self._record("execute", state, status="blocked_approval")
+            return {"terminal_status":"blocked_approval", "error":"Approval or policy changed before execution", "trajectory":["execute"]}
         try:
             result = self.executor.execute(
                 plan,
@@ -194,7 +200,7 @@ class DurableIncidentWorkflow:
 
     @staticmethod
     def _after_execute(state: AgentState) -> str:
-        return "close" if state.get("terminal_status") == "tool_timeout" else "validate"
+        return "close" if state.get("terminal_status") in {"tool_timeout", "blocked_approval"} else "validate"
 
     @staticmethod
     def _after_validate(state: AgentState) -> str:
@@ -202,15 +208,13 @@ class DurableIncidentWorkflow:
 
     def _build_graph(self):
         builder = StateGraph(AgentState)
-        builder.add_node("diagnose", self._diagnose)
-        builder.add_node("verify", self._verify)
-        builder.add_node("plan", self._plan)
-        builder.add_node("policy", self._policy)
-        builder.add_node("approval", self._approval)
-        builder.add_node("execute", self._execute)
-        builder.add_node("validate", self._validate)
-        builder.add_node("compensate", self._compensate)
-        builder.add_node("close", self._close)
+        def measured(name, action):
+            def invoke(state: AgentState):
+                with self.trace.span("workflow." + name, incident_id=state["evidence"]["incident_id"]):
+                    return action(state)
+            return invoke
+        for name in ["diagnose", "verify", "plan", "policy", "approval", "execute", "validate", "compensate", "close"]:
+            builder.add_node(name, measured(name, getattr(self, "_" + name)))
         builder.add_edge(START, "diagnose")
         builder.add_edge("diagnose", "verify")
         builder.add_conditional_edges("verify", self._after_verify)
@@ -278,6 +282,7 @@ def run_stateless_baseline(
     trajectory.append("coarse_policy")
     execution: ExecutionResult | None = None
     crash_recovered = False
+    crash_observed = False
     error: str | None = None
     if policy.allowed:
         try:
@@ -290,6 +295,7 @@ def run_stateless_baseline(
             )
             trajectory.append("execute")
         except InjectedCrash:
+            crash_observed = True
             trajectory.append("crash")
             execution = executor.execute(
                 plan,
@@ -323,6 +329,7 @@ def run_stateless_baseline(
         "execution": execution,
         "terminal_status": terminal_status,
         "crash_recovered": crash_recovered,
+        "crash_observed": crash_observed,
         "trajectory": trajectory,
         "workflow_latency_ms": (time.perf_counter() - started) * 1000,
         "error": error,

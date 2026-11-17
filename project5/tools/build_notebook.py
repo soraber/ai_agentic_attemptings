@@ -22,7 +22,12 @@ CELLS = [
 
 Compare one-shot SQL with schema retrieval, typed planning, SQLGlot AST policy,
 read-only DuckDB execution, bounded repair, PII controls, and export approval.
-All data is synthetic and final figures must come from saved measured output."""),
+All data is synthetic and final figures must come from saved measured output.
+
+Upgrade v1: both execution paths use tenant-filtered, PII-free snapshots. Earlier
+outputs describe the historical implementation, not the upgraded comparison.
+Final evaluation reports strict result hashes separately from alias-insensitive
+value equivalence on the fixed fixture. Gold SQL never feeds planner repair."""),
     cell("P05-C01", "code", """from pathlib import Path
 import os, subprocess, sys
 candidates = [Path.cwd(), Path.cwd()/"project5", Path("/content/ai_agentic_attemptings/project5")]
@@ -82,12 +87,14 @@ case = next(case for case in development_cases if case.first_attempt_sql)
 print(run_baseline(case, database_path).model_dump())"""),
     cell("P05-C06", "code", """from project5_agent.analyst import DeterministicSQLPlanner, SCHEMA_CATALOG, run_governed
 from project5_agent.local_models import EmbeddingSchemaRetriever
+from project5_agent.execution import describe_authorized_schema
+schema_catalog = describe_authorized_schema(database_path, config.authorized_regions)
 repair_case = next(case for case in cases if case.category == "repair")
 result = run_governed(repair_case, database_path, config, DeterministicSQLPlanner())
 assert result.repaired and result.result_correct
 schema_retriever = None
 if RUN_LOCAL_GPU_EVAL:
-    schema_retriever = EmbeddingSchemaRetriever(SCHEMA_CATALOG, config.embedding_model, config.local_device)
+    schema_retriever = EmbeddingSchemaRetriever(schema_catalog, config.embedding_model, config.local_device)
     print({"dense_schema_matches": schema_retriever.retrieve(repair_case.question, config.schema_top_k)})
 print(result.model_dump())"""),
     cell("P05-C07", "code", """import os, subprocess, sys
@@ -100,26 +107,29 @@ print(result.stdout)
 if result.returncode: print(result.stderr); raise RuntimeError("Project 5 tests failed")"""),
     cell("P05-C08", "code", """from project5_agent.analyst import DeterministicSQLPlanner, LocalSQLPlanner, OpenAISQLPlanner
 from project5_agent.evaluation import evaluate_project5
+from datetime import datetime, timezone
+import json
 if not RUN_FULL_EVAL:
     print("Set RUN_FULL_EVAL=True in P05-C02 after deterministic tests pass.")
 else:
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    result_dir = PROJECT_ROOT/"output/runs/upgrade-v1"/EVAL_BACKEND/run_id
+    result_dir.mkdir(parents=True, exist_ok=False)
+    (result_dir/"run_config.json").write_text(json.dumps(config.model_dump(), indent=2))
     if RUN_LOCAL_GPU_EVAL:
-        source_planner = LocalSQLPlanner(config, retriever=schema_retriever)
-        result_dir = PROJECT_ROOT/"output/gpu"
+        source_planner = LocalSQLPlanner(config, retriever=schema_retriever, schema_catalog=schema_catalog)
     elif RUN_API_EVAL:
-        source_planner = OpenAISQLPlanner(config)
-        result_dir = PROJECT_ROOT/"output"
+        source_planner = OpenAISQLPlanner(config, schema_catalog=schema_catalog)
     else:
         source_planner = DeterministicSQLPlanner()
-        result_dir = PROJECT_ROOT/"output/deterministic"
     summary = evaluate_project5(cases, database_path, config, result_dir, source_planner)
     print(summary)"""),
     cell("P05-C09", "code", """import json
-result_dir = PROJECT_ROOT/("output/gpu" if RUN_LOCAL_GPU_EVAL else ("output" if RUN_API_EVAL else "output/deterministic"))
+if "result_dir" not in globals(): raise RuntimeError("Run P05-C08 first; historical runs are not reused")
 path = result_dir/"project5_representative_samples.json"
 print(json.loads(path.read_text()) if path.exists() else "Run P05-C08 first.")"""),
     cell("P05-C10", "code", """import subprocess, sys
-result_dir = PROJECT_ROOT/("output/gpu" if RUN_LOCAL_GPU_EVAL else ("output" if RUN_API_EVAL else "output/deterministic"))
+if "result_dir" not in globals(): raise RuntimeError("Run P05-C08 first; historical runs are not reused")
 summary_path = result_dir/"project5_final_summary.json"
 if summary_path.exists():
     subprocess.run([sys.executable, "tools/generate_report.py", "--summary", str(summary_path), "--output", str(result_dir/"project5_report.pdf")], check=True)

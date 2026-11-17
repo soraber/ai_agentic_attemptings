@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any
+import time
 
 from .schemas import ActionPlan, ApprovalDecision, IncidentCase, PolicyDecision, Remediation
 
@@ -56,7 +57,14 @@ def simulated_operator_decision(plan: ActionPlan, case: IncidentCase) -> Approva
     correct_target = plan.target_service == case.evidence.service.value
     approved = correct_action and correct_target
     reason = "matches the approved remediation" if approved else "plan does not match the approved remediation"
-    return ApprovalDecision(approved=approved, reason=reason)
+    return ApprovalDecision(approved=approved, reason=reason, plan_digest=plan.action_digest(), expires_at=time.time()+300)
+
+
+def approval_is_valid(decision: ApprovalDecision, plan: ActionPlan) -> bool:
+    # This project still simulates reviewer authentication; production adapters must verify it.
+    return (decision.approved and decision.reviewer == "simulated-operator"
+            and decision.plan_digest == plan.action_digest()
+            and decision.expires_at is not None and decision.expires_at > time.time())
 
 
 def adversarial_plans(case: IncidentCase) -> list[ActionPlan]:

@@ -1,38 +1,77 @@
 #!/usr/bin/env python3
-import argparse,json
+"""Render measured results without assuming which memory strategy wins."""
+import argparse
+import json
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1]
+
+ROOT = Path(__file__).resolve().parents[1]
+SYSTEMS = ["window", "episodic", "hybrid"]
+LABELS = ["Recent window", "Episodic", "Hybrid"]
+
+
+def report_values(summary):
+    if summary.get("result_status") != "measured":
+        raise ValueError("Refusing placeholder results")
+    scores = [100 * summary[s]["mean_token_f1"] for s in SYSTEMS]
+    # Historical "tokens" were whitespace-word counts, not tokenizer measurements.
+    words = [summary[s].get("mean_context_words", summary[s].get("mean_context_tokens")) for s in SYSTEMS]
+    if any(value is None for value in words):
+        raise ValueError("Context word measurements are missing")
+    best = [label for label, score in zip(LABELS, scores) if score == max(scores)]
+    interpretation = f"Highest observed token F1: {', '.join(best)} ({max(scores):.1f}%). This is a descriptive ranking, not a significance claim."
+    if "model_calls" in summary:
+        interpretation += f" This evaluation recorded {summary['model_calls']} model calls; estimated API cost was ${summary.get('estimated_cost_usd', 0):.3f}. Local GPU usage is not free merely because API cost is zero."
+    else:
+        interpretation += " This is a deterministic lifecycle fixture, not a natural-language model benchmark."
+    return scores, words, interpretation
 
 
 def main():
-    parser=argparse.ArgumentParser(); parser.add_argument("--summary",type=Path,default=ROOT/"output/project8_final_summary.json"); parser.add_argument("--output",type=Path,default=ROOT/"output/project8_report.pdf"); args=parser.parse_args()
-    if not args.summary.exists(): raise SystemExit("Run P08-C08 before report generation.")
-    summary=json.loads(args.summary.read_text());
-    if summary.get("result_status")!="measured": raise SystemExit("Refusing placeholder results.")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--summary", type=Path, default=ROOT / "output/project8_final_summary.json")
+    parser.add_argument("--output", type=Path, default=ROOT / "output/project8_report.pdf")
+    args = parser.parse_args()
+    summary = json.loads(args.summary.read_text())
+    scores, words, interpretation = report_values(summary)
+    import matplotlib.pyplot as plt
     from reportlab.lib import colors
     from reportlab.lib.pagesizes import letter
     from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.lib.units import inch
-    from reportlab.platypus import Image,Paragraph,SimpleDocTemplate,Spacer,Table,TableStyle
-    assets=args.output.parent/"project8_report_assets"; assets.mkdir(parents=True,exist_ok=True); systems=["window","episodic","hybrid"]; labels=["Recent window","Episodic","Hybrid"]; chart=assets/"quality_context_tradeoff.png"
-    try: import matplotlib.pyplot as plt
-    except ModuleNotFoundError:
-        if not chart.exists(): raise
-    else:
-        from PIL import Image as PILImage
-        x=range(len(systems)); fig,axes=plt.subplots(1,2,figsize=(11,4.8)); axes[0].bar([i-.18 for i in x],[100*summary[s]["mean_token_f1"] for s in systems],.36,label="Token F1",color="#708c99"); axes[0].bar([i+.18 for i in x],[100*summary[s]["mean_evidence_recall"] for s in systems],.36,label="Evidence recall",color="#c84b31"); axes[0].set_xticks(list(x),labels); axes[0].set_ylim(0,30); axes[0].set_ylabel("Percent"); axes[0].set_title("Answer and Evidence Quality"); axes[0].legend(frameon=False); axes[1].bar(labels,[summary[s]["mean_context_tokens"] for s in systems],color=["#708c99","#d49a3a","#c84b31"]); axes[1].set_ylabel("Mean context tokens"); axes[1].set_title("Context Cost"); fig.tight_layout(); fig.savefig(chart,dpi=180,facecolor="white",transparent=False); plt.close(fig)
-        with PILImage.open(chart) as image: image.convert("RGB").save(chart)
-    (assets/"procedure_diagram.svg").write_text('<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="210"><rect width="100%" height="100%" fill="white"/><text x="700" y="105" text-anchor="middle" font-family="Arial" font-size="25">Sessions -> Working + Episodic + Semantic / Temporal Stores -> Hybrid Retrieval -> Cited Answer / Abstain -> Delete</text></svg>\n',encoding="utf-8")
-    dense_retrieval=summary.get("retrieval_model","lexical")!="lexical"
-    if dense_retrieval:
-        interpretation=f"Dense episodic retrieval led in this local-model run ({100*summary['episodic']['mean_token_f1']:.1f}% token F1). Adding lexical and recency signals in the hybrid ranker reduced relevance, so its fusion weights need tuning. The run used {summary['model_calls']} model calls at an estimated ${summary['estimated_cost_usd']:.3f}."
-        limits="The fixed LoCoMo subset is compact, exact match is strict, and the 7B local answer model limits answer quality even when dense retrieval finds relevant evidence. Model-grounded QA does not establish provider-level deletion guarantees."
-    else:
-        interpretation=f"Episodic retrieval led on this lexical baseline ({100*summary['episodic']['mean_token_f1']:.1f}% token F1). The hybrid recency term reduced relevance, so temporal weighting needs tuning rather than being assumed beneficial. The run used {summary['model_calls']} model calls at an estimated ${summary['estimated_cost_usd']:.3f}."
-        limits="The fixed LoCoMo subset is compact, exact match is strict, and lexical retrieval limits semantic recall. Model-grounded QA does not establish provider-level deletion guarantees."
-    styles=getSampleStyleSheet(); story=[Paragraph("Long-Term Memory Agent",styles["Title"]),Paragraph("Measured recent-window, episodic, and hybrid comparison",styles["Heading2"]),Spacer(1,10),Image(str(chart),width=7*inch,height=3.05*inch)]; data=[["Metric",*labels],["Exact match",*[f"{summary[s]['exact_match_pct']:.1f}%" for s in systems]],["Token F1",*[f"{100*summary[s]['mean_token_f1']:.1f}%" for s in systems]],["Evidence recall",*[f"{100*summary[s]['mean_evidence_recall']:.1f}%" for s in systems]],["Context tokens",*[f"{summary[s]['mean_context_tokens']:.1f}" for s in systems]]]; table=Table(data,colWidths=[2.1*inch,1.35*inch,1.35*inch,1.35*inch]); table.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.HexColor("#1f4e5f")),("TEXTCOLOR",(0,0),(-1,0),colors.white),("GRID",(0,0),(-1,-1),.5,colors.grey),("PADDING",(0,0),(-1,-1),6)])); story.extend([Spacer(1,10),table,Spacer(1,10),Paragraph("Interpretation",styles["Heading2"]),Paragraph(interpretation,styles["BodyText"]),Paragraph("Deletion compliance",styles["Heading2"]),Paragraph(f"Verified deletion across events, derived facts, retrieval, and tombstones: {summary['deletion_compliance_pct']:.1f}%.",styles["BodyText"]),Paragraph("Limits",styles["Heading2"]),Paragraph(limits,styles["BodyText"])])
-    def page(canvas,doc): canvas.saveState(); canvas.setFillColor(colors.white); canvas.rect(0,0,letter[0],letter[1],fill=1,stroke=0); canvas.setFillColor(colors.HexColor("#526971")); canvas.setFont("Helvetica",8); canvas.drawString(45,18,"Project 8 - measured artifact report"); canvas.drawRightString(letter[0]-45,18,f"Page {doc.page}"); canvas.restoreState()
-    SimpleDocTemplate(str(args.output),pagesize=letter,leftMargin=45,rightMargin=45,topMargin=42,bottomMargin=38).build(story,onFirstPage=page,onLaterPages=page); print(f"Wrote {args.output.name}")
+    from reportlab.platypus import Image, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+
+    assets = args.output.parent / "project8_report_assets"
+    assets.mkdir(parents=True, exist_ok=True)
+    chart = assets / "quality_context_tradeoff.png"
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.5))
+    palette = ["#527c89", "#bb8b23", "#a84454"]
+    axes[0].bar(LABELS, scores, color=palette)
+    axes[0].set(ylabel="Token F1 (%)", ylim=(0, 100), title="Answer Overlap")
+    axes[1].bar(LABELS, words, color=palette)
+    axes[1].set(ylabel="Mean context words", title="Context Size")
+    fig.tight_layout()
+    fig.savefig(chart, dpi=180, facecolor="white")
+    plt.close(fig)
+    styles = getSampleStyleSheet()
+    data = [["Metric", *LABELS], ["Exact match (%)", *[f"{summary[s]['exact_match_pct']:.1f}" for s in SYSTEMS]],
+            ["Token F1 (%)", *[f"{value:.1f}" for value in scores]],
+            ["Context words", *[f"{value:.1f}" for value in words]]]
+    table = Table(data, colWidths=[145, 120, 120, 120])
+    table.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#e6edef")),
+                               ("GRID", (0, 0), (-1, -1), .4, colors.grey),
+                               ("PADDING", (0, 0), (-1, -1), 6)]))
+    deletion = summary.get("deletion_compliance_pct")
+    deletion_text = (f"Deletion fixture checks passed for {deletion:.1f}% of requested cases."
+                     if deletion is not None else "No lifecycle deletion measurement was supplied.")
+    story = [Paragraph("Long-Term Memory Agent", styles["Title"]),
+             Paragraph(f"Evaluation: {summary.get('evaluation_mode', 'deterministic lifecycle fixtures')}", styles["BodyText"]),
+             Spacer(1, 12), Image(str(chart), width=505, height=207), table,
+             Paragraph("Interpretation", styles["Heading2"]), Paragraph(interpretation, styles["BodyText"]),
+             Paragraph("Deletion And Limits", styles["Heading2"]),
+             Paragraph(deletion_text + " Retrieved evidence and cited evidence are separate metrics; valid citation IDs do not establish claim support. Compact subsets, answer-overlap metrics, and authored lifecycle cases limit generalization. These checks do not verify provider retention or backup deletion.", styles["BodyText"])]
+    SimpleDocTemplate(str(args.output), pagesize=letter, leftMargin=45, rightMargin=45,
+                      topMargin=40, bottomMargin=40).build(story)
+    print(f"Wrote {args.output.name}")
 
 
-if __name__=="__main__": main()
+if __name__ == "__main__":
+    main()

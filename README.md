@@ -4,10 +4,34 @@ Compact, evaluation-driven AI agent engineering projects spanning workflow
 reliability, governed data access, coding agents, protocol
 security, and long-term memory.
 
-> **Version:** ver 0.11: complete A100 comparisons for Projects 5, 6, and 8<br>
-> **Updated:** 2026-08-03 07:02 EDT
+> **Version:** ver 0.16: completed GPU ablations and evidence review<br>
+> **Updated:** 2026-11-17 02:35 EST
 
-## Portfolio Summary
+## Upgrade Status
+
+The [prioritized upgrade checklist](upgrade_plan.md) now tracks enforced SQL data
+boundaries, isolated code-execution requirements, real MCP transport, durable
+recovery, consent/provenance, and persistent memory deletion. New CPU control runs
+are stored separately under each project's `output/runs/upgrade-v1/` directory.
+New API runs are recorded for Projects 4, 6, and 7, including real Docker execution
+and a model-to-MCP tool loop. Project 6's repair loop did not outperform one-shot
+in the new run; small synthetic security tests do not establish production safety.
+SQL planning failures and memory cache hits now have separate accounting. Project
+5's new GPU comparison completed with weak planning despite enforced data boundaries;
+strict result hashes and alias-insensitive value checks are reported separately.
+Project 8's same-answerer retrieval ablation is complete: dense episodic retrieval
+scored higher on this slice, but paired F1 intervals include zero and absolute
+accuracy remains low. The completed GPU queue is idle; remaining research and
+deployment steps stay unchecked.
+See [projects_info.md](projects_info.md#upgrade-evidence) for
+verified evidence, execution requirements, and remaining gates.
+
+## Historical Portfolio Summary
+
+The following values describe the pre-upgrade experiments. Evaluation limitations
+and revised interpretations are documented in [projects_info.md](projects_info.md#upgrade-evidence).
+In particular, the old code-repair result is not a blind hidden-test estimate,
+and the old gateway attack score measures included fixtures, not adaptive attacks.
 
 | Project | Status | Summary |
 | --- | --- | --- |

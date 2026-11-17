@@ -1,0 +1,37 @@
+{
+  "defended": {
+    "attack_success_pct": 0.0,
+    "benign_success_pct": 100.0,
+    "cases": 32,
+    "duplicate_effect_cases_pct": 0.0,
+    "median_latency_ms": 1.1282709892839193,
+    "secret_leak_pct": 0.0,
+    "trace_complete_pct": 100.0,
+    "unsafe_write_pct": 0.0
+  },
+  "evaluation_scope": "authored deterministic controls; not model quality",
+  "evaluation_version": "upgrade-v1",
+  "policy_review": {
+    "accuracy_pct": null,
+    "cases": 0,
+    "estimated_cost_usd": 0.0,
+    "input_tokens": 0,
+    "mode": "not_run",
+    "model_calls": 0,
+    "output_tokens": 0
+  },
+  "project": "Secure Interoperable Agent Gateway",
+  "result_status": "measured",
+  "runtime_seconds": 0.04815708304522559,
+  "test_cases": 32,
+  "undefended": {
+    "attack_success_pct": 59.25925925925926,
+    "benign_success_pct": 100.0,
+    "cases": 32,
+    "duplicate_effect_cases_pct": 9.375,
+    "median_latency_ms": 0.050645467126742005,
+    "secret_leak_pct": 11.11111111111111,
+    "trace_complete_pct": 100.0,
+    "unsafe_write_pct": 37.03703703703704
+  }
+}

@@ -28,7 +28,10 @@ def evaluate_project7(cases:list[GatewayCase],output_dir:str|Path,reviewer:objec
     for case in test:
         recommendation: PolicyRecommendation | None = reviewer.review(case) if reviewer is not None else None
         for defended in (False,True):
-            result=SecureGateway().process(case,defended); row=result.model_dump(mode="json")
+            gateway=SecureGateway()
+            try: result=gateway.process(case,defended)
+            finally: gateway.close()
+            row=result.model_dump(mode="json")
             if recommendation is not None:
                 row["policy_recommendation"]=recommendation.model_dump(mode="json")
                 row["recommendation_correct"]=recommendation.action==_expected_recommendation(case)
@@ -41,6 +44,6 @@ def evaluate_project7(cases:list[GatewayCase],output_dir:str|Path,reviewer:objec
     if review_rows:
         usage=reviewer.usage_summary() if hasattr(reviewer,"usage_summary") else {"model_calls":getattr(reviewer,"calls",len(review_rows)),"input_tokens":0,"output_tokens":0,"estimated_cost_usd":0.0}
         review_summary={"mode":"openai","cases":len(review_rows),"accuracy_pct":_pct(sum(r["recommendation_correct"] for r in review_rows),len(review_rows)),**usage}
-    summary={"project":"Secure Interoperable Agent Gateway","result_status":"measured","test_cases":len(test),"undefended":_summary(undefended,mapping),"defended":_summary(defended,mapping),"policy_review":review_summary,"runtime_seconds":time.perf_counter()-started}
+    summary={"project":"Secure Interoperable Agent Gateway","result_status":"measured","evaluation_version":"upgrade-v1","evaluation_scope":"deterministic policy fixtures; not model prompt-injection resistance","test_cases":len(test),"undefended":_summary(undefended,mapping),"defended":_summary(defended,mapping),"policy_review":review_summary,"runtime_seconds":time.perf_counter()-started}
     samples={"blocked":[r for r in defended if r["status"].startswith("blocked")][:6],"attacks":[r for r in undefended if r["attack_succeeded"]][:6],"traces":defended[:2]}
     (output_dir/"project7_case_results.json").write_text(json.dumps(rows,indent=2,sort_keys=True)+"\n",encoding="utf-8"); (output_dir/"project7_final_summary.json").write_text(json.dumps(summary,indent=2,sort_keys=True)+"\n",encoding="utf-8"); (output_dir/"project7_representative_samples.json").write_text(json.dumps(samples,indent=2,sort_keys=True)+"\n",encoding="utf-8"); return summary

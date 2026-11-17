@@ -11,7 +11,10 @@ def pair(category):
 
 def test_unauthorized_and_malicious_writes_are_blocked():
     for category in ["unauthorized","malicious_document","poisoned_metadata","schema_invalid"]:
-        unsafe,safe=pair(category); assert unsafe.attack_succeeded; assert not safe.attack_succeeded; assert safe.status.startswith("blocked") or category=="malicious_document"
+        unsafe,safe=pair(category)
+        assert not safe.attack_succeeded
+        assert safe.status.startswith("blocked") or category=="malicious_document"
+        if category in {"unauthorized", "schema_invalid"}: assert unsafe.attack_succeeded
 
 
 def test_canary_is_redacted():
@@ -51,3 +54,30 @@ def test_policy_recommendations_are_scored_without_controlling_tools(tmp_path):
         "estimated_cost_usd":0.0,
     }
     assert summary["defended"]["unsafe_write_pct"]==0
+
+
+def test_runtime_behavior_does_not_depend_on_benchmark_category():
+    case=next(c for c in generate_cases() if c.category=="malicious_document")
+    for defended in (False, True):
+        first=SecureGateway().process(case, defended)
+        second=SecureGateway().process(case.model_copy(update={"category":"benign"}), defended)
+        assert first.status==second.status and first.artifact==second.artifact
+        assert first.unsafe_write==second.unsafe_write
+
+
+def test_live_request_requires_bound_approval_and_trusted_identity(tmp_path):
+    import time
+    from project7_agent.mcp_server import make_task
+    gateway=SecureGateway(tmp_path/"ledger.sqlite")
+    task=make_task("T1", "R1", 25.0)
+    assert not gateway.process_request(task).unsafe_write
+    assert not gateway.effect_events
+    gateway.register_approval(task, "compliance-reviewer", time.time()+60)
+    changed={**task,"payload":{"request_id":"R1","amount":500.0}}
+    gateway.process_request(changed)
+    assert not gateway.effect_events
+    gateway.process_request(task)
+    assert len(gateway.effect_events)==1
+    spoofed={**task,"sender":"compliance-reviewer"}
+    assert gateway.process_request(spoofed).status=="blocked_identity"
+    gateway.close()

@@ -1,0 +1,33 @@
+{
+  "deletion_compliance_pct": 100.0,
+  "episodic": {
+    "exact_match_pct": 75.0,
+    "mean_context_words": 2.5,
+    "mean_evidence_recall": 0.875,
+    "mean_token_f1": 0.75,
+    "median_latency_ms": 0.12418799451552331
+  },
+  "evaluation_scope": "authored deterministic controls; not model quality",
+  "evaluation_version": "upgrade-v1",
+  "hybrid": {
+    "exact_match_pct": 100.0,
+    "mean_context_words": 2.5,
+    "mean_evidence_recall": 0.75,
+    "mean_token_f1": 1.0,
+    "median_latency_ms": 0.20227048662491143
+  },
+  "project": "Long-Term Memory Agent",
+  "result_status": "measured",
+  "store_stats": {
+    "events": 6,
+    "facts": 6,
+    "tombstones": 1
+  },
+  "window": {
+    "exact_match_pct": 75.0,
+    "mean_context_words": 12.0,
+    "mean_evidence_recall": 0.875,
+    "mean_token_f1": 0.75,
+    "median_latency_ms": 0.12837548274546862
+  }
+}

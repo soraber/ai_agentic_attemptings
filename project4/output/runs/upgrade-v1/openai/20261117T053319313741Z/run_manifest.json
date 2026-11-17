@@ -1,0 +1,46 @@
+{
+  "status": "complete",
+  "generated_at_utc": "20261117T053319313741Z",
+  "python": "3.11.15",
+  "config": {
+    "project_id": "project4",
+    "seed": 20260802,
+    "planner_mode": "openai",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "max_model_calls": 120,
+    "max_output_tokens": 2048,
+    "max_retries": 2,
+    "max_estimated_cost_usd": 5.0,
+    "input_usd_per_million": 0.2,
+    "output_usd_per_million": 1.2,
+    "development_case_count": 8,
+    "test_case_count": 16,
+    "evaluation_repetitions": 2,
+    "crash_case_fraction": 0.5,
+    "tool_timeout_seconds": 5.0,
+    "report_title": "Durable Incident-Response Agent"
+  },
+  "pricing_source": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+  "pricing_checked": "2026-11-17",
+  "credentials_saved": false,
+  "source_sha256": {
+    "src/project4_agent/__init__.py": "e9ce37b163b6b6f30aad98c1444f929e82d926751cf7bdf335494eb1376171c9",
+    "src/project4_agent/action_service.py": "8a9b9b952c67825d95880882d63c3476c505a4a06b18be182dad300bb3004fcb",
+    "src/project4_agent/config.py": "0dad03ea444c2be3842f493e97ac4708d1beb39643919fdb8a29d57adef2e2d3",
+    "src/project4_agent/dataset.py": "ffc8c7e6c5c57ea8b3f5df2ebcc85f5f98d483d26b82eb5564fdcac8bad084ff",
+    "src/project4_agent/evaluation.py": "32a97a90eb8b0e96aa71bf2e3ee7c1179b122b48bbb13e19c743d0472da208a1",
+    "src/project4_agent/planners.py": "274b4654a674061c095d7e680765d53b5f6a32e8483d24f95a53a9f4f8a2b022",
+    "src/project4_agent/policy.py": "3126e63f7383f620bb350ded87dfe69b28c45e6d967c79876c0a9d44d12049fa",
+    "src/project4_agent/schemas.py": "8f8f980efe6acd88f1575c234614445f84a1e7ccfab629db6b10a648cda352a7",
+    "src/project4_agent/simulator.py": "f82eb8a57c56e50dc5bac704ad0c616256e091d40d7d3fe360c2ea532d01a01d",
+    "src/project4_agent/telemetry.py": "a48eaed491a67aed90c2703be29185aa1ae4d53207bfdf143ee5c59a53c600f1",
+    "src/project4_agent/workflow.py": "4d9ed9dde0b6e0a16ac09482678c040daeda742353d0881d3da3f63545060ab2"
+  },
+  "usage": {
+    "model_calls": 64,
+    "input_tokens": 48086,
+    "output_tokens": 13407,
+    "estimated_cost_usd": 0.025705600000000002
+  }
+}
