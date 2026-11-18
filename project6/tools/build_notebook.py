@@ -9,10 +9,15 @@ ROOT=Path(__file__).resolve().parents[1]; OUTPUT=ROOT/"project6_test_driven_code
 
 
 def cell(cell_id,kind,source):
+    if cell_id == 'P06-C08':
+        source = runpy.run_path(str(ROOT.parent/'tools/notebook_run_metadata.py'))['wrap'](source, 6)
     item={"cell_type":kind,"id":cell_id,"metadata":{},"source":source.strip("\n").splitlines(keepends=True)}
     if kind=="code": item.update({"execution_count":None,"outputs":[]})
     return item
 
+
+import runpy
+environment_source = runpy.run_path(str(ROOT.parent / "tools/notebook_environment.py"))["source"]
 
 CELLS=[
 cell("P06-C00","markdown","""# Project 6: Test-Driven Code-Repair Agent
@@ -24,30 +29,8 @@ exact rollback. Gold corrected programs never enter planner context.
 Upgrade v1: generated code requires Docker isolation. Hidden tests are used only
 once after public-test candidate selection. Historical scores are not new results.
 Build the executor on a Docker-enabled host: `docker build -f tools/Dockerfile.sandbox
--t project6-test-runner:upgrade-v1 .`. Standard Colab may not provide this runtime."""),
-cell("P06-C01","code","""from pathlib import Path
-import os,subprocess,sys
-candidates=[Path.cwd(),Path.cwd()/"project6",Path("/content/ai_agentic_attemptings/project6")]
-PROJECT_ROOT=next((p.resolve() for p in candidates if (p/"config/default.json").exists()),None)
-if PROJECT_ROOT is None:
-    repo=Path("/content/ai_agentic_attemptings")
-    if not repo.exists(): subprocess.run(["git","clone","https://github.com/soraber/ai_agentic_attemptings.git",str(repo)],check=True)
-    else: subprocess.run(["git","-C",str(repo),"pull","--ff-only"],check=True)
-    PROJECT_ROOT=repo/"project6"
-os.chdir(PROJECT_ROOT)
-if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
-    subprocess.run([sys.executable,"-m","pip","install","--upgrade-strategy","only-if-needed","-r","requirements-colab.txt"],check=True)
-    subprocess.run([sys.executable,"-m","pip","install","-e",".","--no-deps"],check=True)
-source_root=PROJECT_ROOT/"src"
-if str(source_root) not in sys.path: sys.path.insert(0,str(source_root))
-if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
-    check=subprocess.run([sys.executable,"-m","pip","check"],text=True,capture_output=True)
-    if check.returncode: print(check.stdout or check.stderr)
-from project6_agent.agent import RepairAgent
-try: import torch
-except ImportError: torch=None
-print("Project 6 imports passed")
-print({"cuda":bool(torch and torch.cuda.is_available()),"gpu":torch.cuda.get_device_name(0) if torch and torch.cuda.is_available() else None})"""),
+-t project6-test-runner:p0-20261117 .`. Standard Colab may not provide this runtime."""),
+cell("P06-C01", "code", environment_source(6)),
 cell("P06-C02","code","""import getpass,os,sys
 from project6_agent.config import load_config
 EVAL_BACKEND="local_gpu"  # openai | local_gpu
@@ -150,13 +133,34 @@ if RUN_EDIT_FORMAT_DEVELOPMENT:
     from project6_agent.edit_comparison import compare_development_edits
     if not os.getenv("OPENAI_API_KEY"):
         raise RuntimeError("Use the hidden API-key prompt in the configuration cell; never paste a key into source")
-    development_output = PROJECT_ROOT/"output/runs/upgrade-v1/development_edits"/datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    development_output = PROJECT_ROOT/"output/runs/upgrade-v2/development_edits"/datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     development_config = config.model_copy(update={"max_output_tokens": 2048, "reasoning_effort": "low", "max_retries": 0})
     with OpenAI(max_retries=0, timeout=60) as api:
         development_summary = compare_development_edits(api, development_config, PROJECT_ROOT, development_output)
     print(development_summary)
 else:
     print("Development-only comparison not requested; no API calls.")""")])
+
+
+CELLS.extend([
+cell('P06-C13','markdown','''## Real-Repository Benchmark Preparation (v2)
+
+The optional SWE-bench Lite slice contains four upstream development tasks and
+eight test tasks. Only issue text, repository and base revision enter planner
+context; patches and evaluator tests stay in ignored evaluator-only files. See
+`BENCHMARKS.md`. Preparation is not a model or official-harness score.
+'''),
+cell('P06-C14','code','''from project6_agent.swebench import PUBLIC_FIELDS
+import json
+public_tasks_path = PROJECT_ROOT / "data/cache/swebench-v2/test_public.json"
+if public_tasks_path.exists():
+    real_repository_tasks = json.loads(public_tasks_path.read_text())
+    assert all(set(task) == set(PUBLIC_FIELDS) for task in real_repository_tasks)
+    print({"prepared_test_tasks": len(real_repository_tasks), "model_calls": 0,
+           "repositories": sorted({task["repo"] for task in real_repository_tasks})})
+else:
+    print("Prepare the pinned SWE-bench input using BENCHMARKS.md; no download or model call was started.")
+''')])
 
 
 def main():

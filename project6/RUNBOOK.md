@@ -25,7 +25,7 @@ Never switch to trusted-fixture execution for model-generated code.
 From the project directory, with Docker running:
 
 ```bash
-docker build -f tools/Dockerfile.sandbox -t project6-test-runner:upgrade-v1 tools
+docker build -f tools/Dockerfile.sandbox -t project6-test-runner:p0-20261117 tools
 PROJECT6_DOCKER_TESTS=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest tests/test_docker_integration.py -q -p no:cacheprovider
 ```
 

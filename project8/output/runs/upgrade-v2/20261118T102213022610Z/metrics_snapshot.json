@@ -1,0 +1,96 @@
+{
+  "run_id": "20261118T102213022610Z",
+  "runtime_seconds": 122.68513515900122,
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "source": "Original Project 08 notebook cell 15, from LongMemEval results/summary.json",
+  "cases": 6,
+  "version": "longmemeval-s-v1",
+  "dataset": "xiaowu0162/longmemeval-cleaned",
+  "revision": "98d7416c24c778c2fee6e6f3006e7a073259d48f",
+  "seed": 2026,
+  "tokenizer": "Qwen/Qwen2.5-7B-Instruct@a09a35458c702b33eeacc393d103063234e8bc28",
+  "context_token_budget": 2048,
+  "summary": {
+    "window": {
+      "temporal-reasoning": {
+        "count": 2,
+        "errors": 0,
+        "token_f1_proxy": 0,
+        "abstention_correct": null,
+        "session_recall": 0,
+        "retrieved_event_recall": 0
+      },
+      "knowledge-update": {
+        "count": 2,
+        "errors": 0,
+        "token_f1_proxy": 0,
+        "abstention_correct": null,
+        "session_recall": 0,
+        "retrieved_event_recall": 0
+      },
+      "abstention": {
+        "count": 2,
+        "errors": 0,
+        "token_f1_proxy": null,
+        "abstention_correct": 1,
+        "session_recall": 0,
+        "retrieved_event_recall": 0
+      }
+    },
+    "episodic": {
+      "temporal-reasoning": {
+        "count": 2,
+        "errors": 0,
+        "token_f1_proxy": 0,
+        "abstention_correct": null,
+        "session_recall": 0.25,
+        "retrieved_event_recall": 0
+      },
+      "knowledge-update": {
+        "count": 2,
+        "errors": 0,
+        "token_f1_proxy": 0.3333333333333333,
+        "abstention_correct": null,
+        "session_recall": 1,
+        "retrieved_event_recall": 0.75
+      },
+      "abstention": {
+        "count": 2,
+        "errors": 0,
+        "token_f1_proxy": null,
+        "abstention_correct": 1,
+        "session_recall": 1,
+        "retrieved_event_recall": 1
+      }
+    },
+    "hybrid": {
+      "temporal-reasoning": {
+        "count": 2,
+        "errors": 0,
+        "token_f1_proxy": 0,
+        "abstention_correct": null,
+        "session_recall": 0.25,
+        "retrieved_event_recall": 0
+      },
+      "knowledge-update": {
+        "count": 2,
+        "errors": 0,
+        "token_f1_proxy": 0.3333333333333333,
+        "abstention_correct": null,
+        "session_recall": 1,
+        "retrieved_event_recall": 0.75
+      },
+      "abstention": {
+        "count": 2,
+        "errors": 0,
+        "token_f1_proxy": null,
+        "abstention_correct": 1,
+        "session_recall": 1,
+        "retrieved_event_recall": 1
+      }
+    }
+  },
+  "official_semantic_accuracy": null,
+  "official_scoring_rule": "Join grader outputs to per_case.json; any non-null error scores zero, including abstention tasks",
+  "scope": "same-answerer retrieval comparison; lexical F1 is a proxy, not official LongMemEval accuracy"
+}

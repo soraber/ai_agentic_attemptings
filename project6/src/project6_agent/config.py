@@ -20,7 +20,7 @@ class Project6Config(BaseModel):
     test_timeout_seconds: float = Field(default=20, gt=0)
     max_test_output_chars: int = Field(default=12000, ge=1000)
     execution_backend: Literal["docker", "trusted_fixture"] = "docker"
-    sandbox_image: str = "project6-test-runner:upgrade-v1"
+    sandbox_image: str = "project6-test-runner:p0-20261117"
     edit_format: Literal["unified_diff", "structured_edits"] = "unified_diff"
     max_model_calls: int = Field(default=220, ge=1)
     max_output_tokens: int = Field(default=900, ge=128)

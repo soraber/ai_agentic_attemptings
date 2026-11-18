@@ -6,8 +6,91 @@ documentation pattern used in `ai_project_artifacts`: portfolio summary,
 repository map, methods, compute settings, results and judgment, future work, and
 debugging notes.
 
-> **Version:** ver 0.12: completed memory ablation and paired analysis<br>
-> **Updated:** 2026-11-17 02:35 EST
+> **Version:** ver 0.15: verified A100 SQL and LongMemEval comparisons<br>
+> **Updated:** 2026-11-18 05:25 EST
+
+## P0 Security Follow-Up
+
+The CPU regression and full CPU/API notebook environments now have hash-locked
+dependencies. The 2026-11-17 pip-audit scan reports no known advisories for these
+locks after upgrading pytest to 9.0.3. This is a point-in-time dependency check,
+not proof of application security. All five setup cells pass in a fresh Python
+3.11 venv. macOS and offline Linux ARM64 checks pass 144 tests, with two Docker-only checks
+handled separately. No API calls or new model-quality claims were made in this step.
+
+Project 7 now verifies signed, short-lived access tokens against configured public
+keys, issuer, audience, subject and client bindings. Permissions come from verified
+identity and tool scopes, not model-selected sender fields. Approvals are bound to
+that actor and survive restart. Eighteen new authentication tests include a real
+MCP Streamable HTTP socket exchange. Deployment behind TLS and a real identity
+provider, key rotation operations, and provider login are not claimed tested.
+
+Notebook cells changed in this follow-up: Project 4 cells 2/9 (`P04-C01`, `P04-C08`);
+Project 5 cells 2/9 (`P05-C01`, `P05-C08`); Project 6 cells 1/2/9/13
+(`P06-C00`, `P06-C01`, `P06-C08`, `P06-C12`) plus new 14/15 (`P06-C13`, `P06-C14`);
+Project 7 cells 1/2/9 (`P07-C00`, `P07-C01`, `P07-C08`); Project 8 cells 2/9
+(`P08-C01`, `P08-C08`) plus new 12/13 (`P08-C11`, `P08-C12`). Setup no longer installs into the shared
+interpreter or automatically pulls repository changes. Historical GPU locks have
+new advisory findings and must not be reused for new runs; shared P0 remains open
+until their replacements have passed GPU validation.
+The sibling repository's approved LangGraph migration removes the unused
+CrewAI/Chroma packages. MyPro has validated the patched inference lock with
+the Project 5 matched model comparison.
+
+Project 6's patched sandbox also passed both real-container integration tests
+([new evidence](project6/output/runs/upgrade-v2/docker/20261117T165406957329Z/sandbox_validation.json)).
+Its tag is `project6-test-runner:p0-20261117`, with a pinned Python base digest and
+hash-verified pytest 9.0.3 dependencies. Historical sandbox results retain the old
+image ID. The current macOS CPU suite passes 144 tests; both Docker tests are
+additional, not counted as CPU passes. See [security setup](SECURITY_UPGRADE.md)
+and [Project 7 HTTP boundary](project7/HTTP_AUTH.md) for execution details.
+
+### Non-Training Follow-Up
+
+| Project | New Local Work | Verification And Pending Experiments |
+| --- | --- | --- |
+| 4 | Main evaluation records versioned source/data/config hashes, packages, timing, and failures | 23 CPU tests; prior recovery/load evidence is unchanged. No new API run. |
+| 5 | Isolated notebook setup and common v2 run manifest | 25 CPU tests. On the same 40-case holdout, Qwen3-4B improved governed value matches from 2/27 to 13/27. See the v2 results below. |
+| 6 | Patched executor plus frozen SWE-bench Lite public/evaluator views and official prediction interface | 24 tests including two real Docker tests. SWE-bench 5.0.2 CLI preflight passed. Official scoring remains open because the stock evaluator requests `SYS_ADMIN`. [Procedure](project6/BENCHMARKS.md). |
+| 7 | Authenticated HTTP, live binding revocation, model/tool/case deadlines, real MCP cancellation, correlated payload-free server traces, hostile tool-result controls | 43 CPU tests including shared preflight/provenance checks. Async model harness retains unknown-cost reservations. No new model-quality run; cancellation cannot undo a committed effect. |
+| 8 | Gold-separated LongMemEval-S adapter, tokenizer-bounded contexts, per-case failure retention, optional notebook experiment | 31 CPU tests plus a six-case A100 pilot across temporal reasoning, updates, and abstention. See the v2 results below. |
+
+All five main evaluation cells write new `upgrade-v2` outputs with
+`run_manifest.json`. The manifests capture source-only notebook fingerprints,
+configuration/dataset hashes, package versions, runtime, status, and observed
+model metadata where available. They do not collect environment variables or
+credentials. Actual API aliases are not asserted to be immutable model revisions.
+Shared S4 stays open until a new end-to-end run verifies all usage/provenance fields.
+Public benchmark preparation manifests contain hashes and IDs, not gold patches,
+full histories, or credentials. Historical figures/PDFs are not regenerated from
+these local checks.
+
+### Project 5 Matched Local Model Comparison
+
+The original notebook's cells 12-13 launched and verified a 910.66-second run on
+one A100-SXM4-40GB. Both models used BF16, the same 40-case holdout, the same
+schema retriever, a 500-token output cap and at most two repair attempts.
+
+| Planner | Baseline Value Matches | Governed Value Matches | Model Calls | Governed p50 |
+| --- | ---: | ---: | ---: | ---: |
+| Qwen2.5-Coder-7B-Instruct | 5/27 | 2/27 | 84 | 11.61 s |
+| Qwen3-4B-Instruct-2507 | 23/27 | 13/27 | 41 | 8.25 s |
+
+Both planners had zero observed PII leaks on this fixture. The candidate's
+governed result is ten more value matches than the earlier model. The gap
+between its baseline and governed results remains a separate area to diagnose.
+[Metrics snapshot](project5/output/runs/upgrade-v2/20261118T100123095228Z/metrics_snapshot.json).
+
+### Project 8 LongMemEval-S Pilot
+
+Cells 13-15 selected, launched, and verified the six-case comparison in 122.69
+seconds on one A100-SXM4-40GB. All three retrievers used the same pinned
+Qwen2.5-7B-Instruct answerer and 2,048-token context cap. Episodic and hybrid
+retrieval both scored 0.3333 lexical F1 on the two knowledge-update cases.
+The recent window scored zero. Every arm scored zero lexical F1 on the two
+temporal cases and abstained correctly on both absence cases. The narrow pilot
+checks integration and the saved hypotheses still need official semantic grading.
+[Metrics snapshot](project8/output/runs/upgrade-v2/20261118T102213022610Z/metrics_snapshot.json).
 
 ## Upgrade Evidence
 
@@ -21,7 +104,7 @@ for implementation issues. No historical outputs were overwritten or pushed.
 | 4 | Parameter-bound expiring approvals; atomic idempotency; whole-workflow process restart; separate local action process with reconciliation before retry | 23 CPU tests. [New API run](project4/output/runs/upgrade-v1/openai/20261117T053319313741Z/project4_final_summary.json): root-cause accuracy 100%, remediation accuracy 65.6%; no durable duplicate effects. Only five durable crash trials actually executed, all recovered. Reviewer/actions remain simulated; no distributed exactly-once guarantee. |
 | 5 | Physical authorized-row/PII-free snapshots, disabled external I/O, query timeout/row cap, introspected schema, bounded failed calls, final value scoring separate from exact hashes | 25 CPU tests; 22 then-current tests also passed on Colab. [New GPU run](project5/output/runs/upgrade-v1/local_gpu/20261117T064159242835Z/): no observed PII exposure, but weak planning. [Frozen-SQL value scoring](project5/output/runs/upgrade-v1/local_gpu/20261117T064159242835Z/value_scoring_v2/summary.json) matched 5/27 baseline vs 2/27 governed answerable cases. Three otherwise correct queries were blocked because model table metadata omitted nested references. Strict alias-sensitive hash scores remain 0%. |
 | 6 | Generated code requires Docker; secrets/network restricted; hidden tests used once after selection; localization enters planner context; optional exact source edits and shared API budget | [Two real-container checks](project6/output/runs/upgrade-v1/docker/20261117T054654314647Z/sandbox_validation.json) passed. [API/Docker test run](project6/output/runs/upgrade-v1/openai/20261117T053902107808Z/project6_final_summary.json): one-shot 7/8 vs repair-loop 6/8. [Separate development comparison](project6/output/runs/upgrade-v1/development_edits/20261117T055338129249Z/development_summary.json): structured edits 4/4 versus unified diffs 2/4; not a new holdout score. |
-| 7 | Real MCP v2.3 stdio server/client, trusted launch identity, persisted approvals and idempotency, strict API schema conversion, bounded model/tool loop | [New model-to-MCP run](project7/output/runs/upgrade-v1/model_mcp/20261117T054505255155Z/model_mcp_summary.json): two benign tasks passed; six synthetic attack cases with one heuristic adaptive escalation each produced no observed leaks/unauthorized effects. Small authored set, not general injection resistance. Remote authentication remains pending. |
+| 7 | Real MCP v2.3 stdio server/client, trusted launch identity, persisted approvals and idempotency, strict API schema conversion, bounded model/tool loop | [Historical model-to-MCP run](project7/output/runs/upgrade-v1/model_mcp/20261117T054505255155Z/model_mcp_summary.json): two benign tasks passed; six synthetic attack cases with one heuristic adaptive escalation each produced no observed leaks/unauthorized effects. Small authored set, not general injection resistance. The later authenticated HTTP and lifecycle controls are independently tested above; production deployment remains pending. |
 | 8 | Tombstones survive replay/cache-format changes; dependent caches are invalidated; source-bound consent; bounded neighboring turns; fresh/cached timing and retrieved/cited recall separated | 26 CPU tests; 23 then-current tests passed in Colab. [Same-answerer GPU ablation](project8/output/runs/upgrade-v1/local_gpu/20261117T064159242835Z/) is complete with 50 questions and 250 fresh calls. Dense episodic F1 0.1565 versus lexical 0.1159; paired interval includes zero. Authored lifecycle tests validate deletion behavior, not natural-language extraction quality or provider retention. |
 
 The CPU checks run in an isolated Python 3.11 environment captured in
@@ -34,8 +117,8 @@ queue uses a separate inference environment because CrewAI's MCP 1.x requirement
 conflicts with Project 7's tested MCP 2.x transport. Both GPU runs are complete,
 and the A100 is idle. Historical reports/runbooks describe their
 original stacks; consult the upgrade checklist for the new execution boundaries.
-The full CPU run passes 107 tests with all notebook syntax checks. Two Docker-only
-checks are skipped in that suite but passed separately in real containers.
+That earlier CPU run passed 107 tests. The current suite passes 144 with all
+notebook syntax checks; two Docker-only checks are skipped there but pass separately.
 
 ### New Run Resources And Judgment
 

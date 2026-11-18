@@ -36,7 +36,7 @@ def test_boundary():
             connection.connect(("192.0.2.1", 80))
 '''
     (tmp_path / "test_boundary.py").write_text(probe)
-    assert sandbox_preflight("project6-test-runner:upgrade-v1")["image_id"].startswith("sha256:")
+    assert sandbox_preflight("project6-test-runner:p0-20261117")["image_id"].startswith("sha256:")
     result = run_tests(tmp_path, ["test_boundary.py"], timeout_seconds=30)
     assert result.passed, result.output
     assert not (tmp_path / "forbidden").exists()

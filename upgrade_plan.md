@@ -1,7 +1,7 @@
 # Upgrade Plan: Projects 4-8
 
-> **Updated:** 2026-11-17 02:35 EST<br>
-> **Version:** 1.4: completed GPU evaluations and paired memory analysis<br>
+> **Updated:** 2026-11-18 05:25 EST<br>
+> **Version:** 1.7: verified A100 SQL and memory comparisons<br>
 > **Status:** Implementation started; unchecked items are not completed or validated.
 
 ## Scope And Rules
@@ -25,12 +25,20 @@ local models are secondary to these correctness and evidence issues.
 ## Shared Checklist
 
 - [x] **S1 / P0:** Capture changed-cell maps and preserve historical artifacts.
-- [ ] **S2 / P0:** Use isolated, locked, tested environments and security checks.
+- [x] **S2 / P0:** Use isolated, locked, tested environments and security checks.
   In particular, Project 4's `langgraph-checkpoint-sqlite>=2,<4` permits known
   vulnerable releases; this is not proof the installed version is vulnerable.
+  CPU/API locks now use distribution hashes and pass the advisory audit. All five
+  notebook setup cells pass in a fresh isolated kernel environment; 144 CPU tests
+  pass locally (two Docker-only tests are separate). Projects 5 and 8 completed
+  on MyPro in the sibling project's hash-locked CUDA inference environment.
 - [x] **S3 / P1:** Add deterministic CI regression checks and notebook validation.
 - [ ] **S4 / P1:** Version prompts/models/datasets/caches and record paired task
   metrics, model versus harness failures, latency, tokens, and cost.
+  Shared credential-free run manifests now wrap all five main evaluation cells,
+  including failures, source/data/config hashes, packages, hardware, and runtime.
+  New outputs use upgrade-v2. Three local metadata tests pass; completeness of
+  observed model revisions/usage still requires the deferred end-to-end runs.
 - [ ] **S5 / P2:** Benchmark newer small local models after schema/formatting
   failures are diagnosed. Retain structured Responses API paths already present.
 
@@ -61,8 +69,12 @@ retrieval provides table descriptions instead of full columns/types/relationship
   cases. Report semantic result correctness separately from SQL execution success.
   Completed for the local model and deterministic boundary controls; a fresh API
   model comparison remains a separate optional run, not implied by these results.
-- [ ] **P5-07 / P2:** Compare newer local models under equal budgets after the
+- [x] **P5-07 / P2:** Compare newer local models under equal budgets after the
   zero-correct-result local baseline's schema/formatting failures are understood.
+  MyPro run `20261118T100123095228Z` verified a matched 40-case holdout and
+  equal settings apart from the model. Governed result-value matches increased
+  from 2/27 to 13/27 with Qwen3-4B-Instruct-2507, and model calls fell from
+  84 to 41. Both models recorded zero observed PII leakage on this suite.
 
 **Acceptance:** Incorrect metadata cannot expand access; restricted data never
 reaches the planner/output; leak metrics come from observations, not assumptions.
@@ -95,7 +107,12 @@ are computed without being incorporated into planner context.
 - [ ] **P6-06 / P2:** Expand beyond eight compact bugs to a manageable real-repo
   benchmark subset; compare models/edit interfaces under a matched attempt budget.
   Partial: development-only structured-edit comparison is implemented and measured
-  (4/4 vs 2/4 verified). A fresh real-repository holdout and model comparison remain.
+  (4/4 vs 2/4 verified). Four SWE-bench Lite development tasks and eight test tasks
+  are now frozen, with public planner views separated from evaluator gold and
+  official prediction/harness interfaces tested. Real-repository repair, official
+  container scoring, and matched model comparisons remain pending; see BENCHMARKS.md.
+  SWE-bench 5.0.2's isolated, audited CLI preflight passed. Its stock executor
+  adds `SYS_ADMIN`, so it was held at preflight for generated patches.
 
 **Acceptance:** No ambient credential inheritance or unrestricted host access;
 held-out evaluation cannot steer patch selection; accepted patches have real tests.
@@ -115,8 +132,12 @@ names must not serve as authenticated identity; the model review is advisory.
 
 - [x] **P7-01 / P0:** Remove benchmark-label-dependent decision logic; separate
   evaluator gold labels from runtime requests and mark fixture-only metrics.
-- [ ] **P7-02 / P0:** Bind policy to an authenticated principal rather than a
+- [x] **P7-02 / P0:** Bind policy to an authenticated principal rather than a
   caller-selected recipient/card. Persist idempotency across gateway restarts.
+  Verified signed JWT issuer/audience/expiry/client/subject binding, per-tool
+  scopes, actor-bound approvals, and restart deduplication through real MCP
+  Streamable HTTP. Production identity-provider login and TLS deployment remain
+  outside this local resource-server test; stdio retains trusted launch identity.
 - [x] **P7-03 / P1:** Implement and test a real MCP client/server with a supported
   SDK/transport and versioned tool contracts. Use A2A only for genuine cross-service
   task handoff; do not imply it is implemented by a similar JSON envelope.
@@ -125,8 +146,13 @@ names must not serve as authenticated identity; the model review is advisory.
   Completed for a small authored set and one heuristic adaptive escalation;
   broad/adversarial robustness and independent final-answer grading remain unmeasured.
 - [x] **P7-05 / P1:** Update notebook and run independent policy/protocol tests.
-- [ ] **P7-06 / P2:** Add end-to-end cancellation, timeouts, correlated traces,
+- [x] **P7-06 / P2:** Add end-to-end cancellation, timeouts, correlated traces,
   permission changes, and malicious tool-result tests.
+  Real stdio cancellation/deadline tests, correlated client/server spans, live
+  binding revocation, async model deadlines, and hostile tool-result controls
+  pass. Cancellation is cooperative and does not undo committed effects or
+  guarantee provider-side cancellation. These are authored control tests, not
+  general injection-resistance measurements or a production key-rotation service.
 
 **Acceptance:** Safety does not depend on knowing the attack category; identities
 are verified; real interoperability and model-injection resistance have separate tests.
@@ -187,6 +213,28 @@ generated citations, and reported context tokens are whitespace-word counts.
   with neighboring-turn context and separate lifecycle versus QA evaluation.
 - [ ] **P8-06 / P2:** Add LongMemEval tasks for temporal reasoning, knowledge
   updates, and abstention; adopt reranking only if matched-budget results improve.
+  The pinned cleaned S file is validated, with six balanced tasks prepared, gold
+  fields removed from planner inputs, true-tokenizer context budgeting, failure
+  retention, and five adapter tests. The six-case A100 run completed with zero
+  errors across three arms in 122.69 s. Episodic and hybrid tied at 0.3333 lexical
+  F1 on the two update tasks versus 0 for the recent window. All arms abstained
+  correctly on both abstention tasks. Official semantic grading, larger-sample
+  uncertainty, and reranking comparisons remain open. See project8/BENCHMARKS.md.
+
+## Current Follow-Up Cells
+
+| Project | Changed Cells (1-Based) | Purpose |
+| --- | --- | --- |
+| 4 | 2 `P04-C01`, 9 `P04-C08` | Isolated setup and versioned run provenance |
+| 5 | 2 `P05-C01`, 9 `P05-C08` | Isolated setup and versioned run provenance; data cell unchanged |
+| 6 | 1 `P06-C00`, 2 `P06-C01`, 9 `P06-C08`, 13 `P06-C12`; added 14 `P06-C13`, 15 `P06-C14` | Patched sandbox, provenance, v2 development output, frozen real-repo preparation |
+| 7 | 1 `P07-C00`, 2 `P07-C01`, 9 `P07-C08` | Authenticated boundary, isolated setup, async bounded model calls and provenance |
+| 8 | 2 `P08-C01`, 9 `P08-C08`; added 12 `P08-C11`, 13 `P08-C12` | Isolated setup, provenance, opt-in LongMemEval adapter; data cell unchanged |
+
+Project 5 cells 12-13 launch and check the matched local model runs in the
+isolated CUDA environment. Project 8 cells 13-15 select, launch, and check the
+LongMemEval run. The checks use the same original notebook datasets and use
+no paid API services. Historical output directories retain their original versions.
 
 **Acceptance:** Deleted facts stay deleted; lifecycle fixtures are not presented
 as natural-language memory quality; retriever effects are isolated from model changes.

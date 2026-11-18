@@ -35,9 +35,10 @@ class TransformersAnswerBackend:
         self.model = AutoModelForCausalLM.from_pretrained(
             model_name,
             revision=self.model_revision,
-            torch_dtype=torch.bfloat16 if device.startswith("cuda") else torch.float32,
+            dtype=torch.bfloat16 if device.startswith("cuda") else torch.float32,
             device_map="auto" if device.startswith("cuda") else None,
-            low_cpu_mem_usage=True,
+            trust_remote_code=False,
+            use_safetensors=True,
         )
         if not device.startswith("cuda"):
             self.model.to(device)

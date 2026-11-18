@@ -1,0 +1,50 @@
+{
+  "status": "prepared_only",
+  "dataset": "princeton-nlp/SWE-bench_Lite",
+  "revision": "6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2",
+  "source_sha256": {
+    "dev": "8312f321838051849d2fa7c6ca071244733a3e90bb517ff6ca8186f722199b5c",
+    "test": "7a21f37b8bc179c7db5beeb14e88ac538ba283455c776e6b2535bbfb6e3551b4"
+  },
+  "task_ids": {
+    "dev": [
+      "marshmallow-code__marshmallow-1343",
+      "pylint-dev__astroid-1196",
+      "marshmallow-code__marshmallow-1359",
+      "pylint-dev__astroid-1333"
+    ],
+    "test": [
+      "pallets__flask-5063",
+      "psf__requests-1963",
+      "pytest-dev__pytest-8365",
+      "sphinx-doc__sphinx-8435",
+      "pallets__flask-4992",
+      "psf__requests-2317",
+      "pytest-dev__pytest-5692",
+      "sphinx-doc__sphinx-7975"
+    ]
+  },
+  "base_commits": {
+    "marshmallow-code__marshmallow-1343": "2be2d83a1a9a6d3d9b85804f3ab545cecc409bb0",
+    "pylint-dev__astroid-1196": "39c2a9805970ca57093d32bbaf0e6a63e05041d8",
+    "marshmallow-code__marshmallow-1359": "b40a0f4e33823e6d0f341f7e8684e359a99060d1",
+    "pylint-dev__astroid-1333": "d2a5b3c7b1e203fec3c7ca73c30eb1785d3d4d0a",
+    "pallets__flask-5063": "182ce3dd15dfa3537391c3efaf9c3ff407d134d4",
+    "psf__requests-1963": "110048f9837f8441ea536804115e80b69f400277",
+    "pytest-dev__pytest-8365": "4964b468c83c06971eb743fbc57cc404f760c573",
+    "sphinx-doc__sphinx-8435": "5d8d6275a54f2c5fb72b82383b5712c22d337634",
+    "pallets__flask-4992": "4c288bc97ea371817199908d0d9b12de9dae327e",
+    "psf__requests-2317": "091991be0da19de9108dbe5e3752917fea3d7fdc",
+    "pytest-dev__pytest-5692": "29e336bd9bf87eaef8e2683196ee1975f1ad4088",
+    "sphinx-doc__sphinx-7975": "4ec6cbe341fd84468c448e20082c778043bbea4b"
+  },
+  "input_sha256": {
+    "dev_public.json": "5ae5b2436330d8c0222c861e168e1bba3f5c5ee80fd22e35e2f7c8b385db3785",
+    "dev_sealed_evaluator.json": "04da52ec7cddd5f30eb32e360d1c29a827a3fb90a4bbb612630bb47b07a51f97",
+    "test_public.json": "8b59b10c80485bca943fd78b824e9d9520365bb2c946331e667de7c5f8371635",
+    "test_sealed_evaluator.json": "d610db503abb4b8828edc066c649f896c50e47da1df330f4a2f6524f857c57f3"
+  },
+  "model_calls": 0,
+  "official_harness_executed": false,
+  "limits": "Public benchmark may be contaminated; no correctness or model-comparison result yet."
+}

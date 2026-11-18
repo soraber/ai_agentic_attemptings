@@ -6,10 +6,15 @@ ROOT=Path(__file__).resolve().parents[1]; OUTPUT=ROOT/"project8_long_term_memory
 
 
 def cell(i,k,s):
+    if i == 'P08-C08':
+        s = runpy.run_path(str(ROOT.parent/'tools/notebook_run_metadata.py'))['wrap'](s, 8)
     v={"cell_type":k,"id":i,"metadata":{},"source":s.strip("\n").splitlines(keepends=True)}
     if k=="code": v.update({"execution_count":None,"outputs":[]})
     return v
 
+
+import runpy
+environment_source = runpy.run_path(str(ROOT.parent / "tools/notebook_environment.py"))["source"]
 
 CELLS=[
 cell("P08-C00","markdown","""# Project 8: Long-Term Memory Agent
@@ -21,29 +26,7 @@ Upgrade v1 prevents deleted-event replay, versions answer caches, and separates
 retrieval recall from cited-evidence recall. Context size is measured in words.
 An optional validated natural-language extractor has event-bound consent and provenance checks.
 Model extraction accuracy and provider-level deletion are not established by fixtures."""),
-cell("P08-C01","code","""from pathlib import Path
-import os,subprocess,sys
-candidates=[Path.cwd(),Path.cwd()/"project8",Path("/content/ai_agentic_attemptings/project8")]
-PROJECT_ROOT=next((p.resolve() for p in candidates if (p/"config/default.json").exists()),None)
-if PROJECT_ROOT is None:
-    repo=Path("/content/ai_agentic_attemptings")
-    if not repo.exists(): subprocess.run(["git","clone","https://github.com/soraber/ai_agentic_attemptings.git",str(repo)],check=True)
-    else: subprocess.run(["git","-C",str(repo),"pull","--ff-only"],check=True)
-    PROJECT_ROOT=repo/"project8"
-os.chdir(PROJECT_ROOT)
-if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
-    subprocess.run([sys.executable,"-m","pip","install","--upgrade-strategy","only-if-needed","-r","requirements-colab.txt"],check=True)
-    subprocess.run([sys.executable,"-m","pip","install","-e",".","--no-deps"],check=True)
-source_root=PROJECT_ROOT/"src"
-if str(source_root) not in sys.path: sys.path.insert(0,str(source_root))
-if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
-    check=subprocess.run([sys.executable,"-m","pip","check"],text=True,capture_output=True)
-    if check.returncode: print(check.stdout or check.stderr)
-from project8_agent.memory import MemoryStore
-try: import torch
-except ImportError: torch=None
-print("Project 8 imports passed")
-print({"cuda":bool(torch and torch.cuda.is_available()),"gpu":torch.cuda.get_device_name(0) if torch and torch.cuda.is_available() else None})"""),
+cell("P08-C01", "code", environment_source(8)),
 cell("P08-C02","code","""import getpass,os,sys
 from project8_agent.config import load_config
 EVAL_BACKEND="local_gpu"  # deterministic | openai | local_gpu
@@ -148,6 +131,42 @@ summary_path=result_dir/"project8_final_summary.json"
 if summary_path.exists():
     subprocess.run([sys.executable,"tools/generate_report.py","--summary",str(summary_path),"--output",str(result_dir/"project8_report.pdf")],check=True); subprocess.run([sys.executable,"tools/validate_project.py"]+([] if RUN_LOCAL_GPU_EVAL else ["--require-results"]),check=True)
 else: print("Measured summary absent; report generation skipped.")""")]
+
+
+CELLS.extend([
+cell('P08-C11','markdown','''## LongMemEval-S: Temporal Reasoning, Updates And Abstention
+
+The prepared cleaned-S slice is checksum-verified and stratified before model
+evaluation. Oracle flags, answer-session IDs and answer-revealing ID prefixes
+never enter retrieval/generation. All arms use the same answerer and context-token
+cap. Lexical F1 is only a proxy; official semantic grading is separate and not run.
+See `BENCHMARKS.md`. Model execution below remains disabled by default.
+'''),
+cell('P08-C12','code','''RUN_LONGMEMEVAL = os.environ.get("PORTFOLIO_LONGMEMEVAL") == "1"
+if RUN_LONGMEMEVAL:
+    import json
+    from datetime import datetime, timezone
+    from runpy import run_path
+    from project8_agent.longmemeval import evaluate as evaluate_longmemeval
+    from project8_agent.locomo import CachedLocalAnswerer, retrieve
+    if not RUN_LOCAL_GPU_EVAL:
+        raise RuntimeError("This cell needs the explicitly selected local answerer and its actual tokenizer")
+    longmem_rows = json.loads((PROJECT_ROOT / "data/cache/longmemeval-v2/selected.json").read_text())
+    longmem_run = PROJECT_ROOT / "output/runs/upgrade-v2/longmemeval" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+    RunManifest = run_path(str(PROJECT_ROOT.parent / "tools/run_manifest.py"))["RunManifest"]
+    with RunManifest(PROJECT_ROOT, longmem_run, config.model_dump()) as provenance:
+        answerer = CachedLocalAnswerer(config, longmem_run / "runtime/answer_cache.json")
+        tokenizer = answerer.backend.tokenizer
+        count_context_tokens = lambda context: len(tokenizer.encode(json.dumps(context), add_special_tokens=False))
+        retrievers = {mode: (lambda events, question, mode=mode: retrieve(events, question, mode, top_k=12))
+                      for mode in ["window", "episodic", "hybrid"]}
+        longmem_summary = evaluate_longmemeval(longmem_rows, answerer, retrievers, count_context_tokens,
+            config.local_model + "@" + answerer.backend.model_revision, longmem_run / "results")
+        provenance.record(longmem_summary, {"model_revision": answerer.backend.model_revision})
+    print(longmem_summary)
+else:
+    print("LongMemEval model evaluation is deferred; preparation and parser tests need no GPU or API key.")
+''')])
 
 
 def main():

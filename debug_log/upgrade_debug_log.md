@@ -1,5 +1,62 @@
 # Upgrade Debug Log
 
+## Local Follow-Up: 2026-11-17 12:40 EST
+
+- Added shared v2 run manifests to all five main evaluation cells. An initial
+  test used the wrong parent index for the tools directory; corrected it once.
+  Tests cover redaction, failure-only error types, non-overwrite, source hashes,
+  and disabled evaluation gates. No API calls are made by these tests.
+- MCP SDK inspection showed Context was not a public server export and request
+  metadata was a TypedDict rather than a Pydantic model. Read the installed SDK
+  and implemented supported middleware instead of continuing guessed imports.
+  Real stdio deadline/cancellation tests now pass, with correlated payload-free
+  traces. HTTP bindings can be revoked by the trusted operator before execution.
+- Switched the model loop to AsyncOpenAI for bounded calls. Timed-out/cancelled
+  model requests retain a cost reservation. A fake model deliberately follows a
+  hostile tool result; the real MCP gateway still rejects the changed amount.
+  This deterministic boundary test is not new general injection-resistance evidence.
+- Prepared pinned real SWE-bench Lite data (four development/eight test tasks)
+  and LongMemEval-S data (six cases). Gold annotations stay out of planner views;
+  raw evaluator/history caches remain git-ignored. System Python 3.9 lacks
+  hashlib.file_digest; preparation uses the isolated Python 3.11 runtime.
+- Review caught a scoring risk: failed generation must not be exported as a
+  successful abstention. The LongMemEval adapter now validates returned fields,
+  retains malformed/empty-answer failures, exports empty failed hypotheses, and
+  requires the official grader join to force failures to zero. Five tests pass.
+- Final macOS and offline Linux ARM64 suites: P4 23, P5 25, P6 22, P7 43,
+  P8 31, total 144 passed. Two Docker-only tests skip there and both pass separately
+  against the patched image. All notebook code cells compile.
+- Changed cells: P4/P5 2/9; P6 1/2/9/13 plus new 14/15; P7 1/2/9;
+  P8 2/9 plus new 12/13. Full IDs are recorded in upgrade_plan.md/projects_info.md.
+  P5/P8 data cells and historical model outputs remain unchanged.
+- Training/GPU runs are deferred by the user. No paid calls, new model-quality
+  claims, commits, or pushes in this follow-up; no unresolved three-attempt issue.
+
+## P0 Security Follow-Up: 2026-11-17
+
+- Upgraded pytest to 9.0.3 after an advisory finding; added distribution-hash locks,
+  CI auditing, and a complete CPU/API notebook-kernel environment. All five setup
+  cells pass without changing shared Colab packages or auto-pulling a checkout.
+- The first Linux reproduction lacked git; installed it in the isolated validation
+  image, then all 126 CPU checks passed with network disabled. Docker's credential
+  helper initially was absent from PATH; using Docker Desktop's own CLI directory
+  fixed the pull without changing host configuration.
+- Project 7 HTTP tests first used a Host header without the permitted port. The
+  configured Host/Origin list now explicitly matches the loopback test port while
+  retaining DNS-rebinding protection. SDK extra arguments are ignored, not rejected;
+  the test now checks the security invariant: spoofed identity cannot authorize an
+  effect. The server obtains identity only from the verified token context.
+- The host sandbox initially denied the loopback test listener; an approved local
+  socket run passed. Seventeen auth tests cover signed-token verification, scope,
+  actor-bound approvals, restart idempotency, request limits, and real MCP transport.
+- Project 6's new image uses a pinned base digest and hash-locked pytest 9.0.3.
+  The build and both real-container boundary tests pass; the prior image and old
+  evidence remain unchanged. Public-package DNS access required the approved
+  network context, not a dependency or code workaround.
+- Notebook edits: P4/P5/P8 cell 2; P6/P7 cells 1-2. Full macOS CPU suite: 126 passed,
+  two Docker-only skips; those two pass separately in real containers. No paid API
+  calls or new model-quality results were produced by these checks.
+
 > **Updated:** 2026-11-17 02:35 EST<br>
 > **Scope:** Prioritized upgrades and separately versioned measured runs; no push.
 
@@ -139,3 +196,21 @@ All five notebooks compile. Project 1's protected dataset cell hash is unchanged
   metric distinction; its builder matches. The imported evaluator performs the
   new final scoring automatically. Project 8 passed 23 Colab tests and entered
   its local-model ablation; final scores were still pending at this log entry.
+
+## MyPro Model Follow-Up: 2026-11-18
+
+- Project 5 cells 12-13 launched and checked the two-model run
+  `20261118T100123095228Z`. The run verified the same test-case hash and
+  settings apart from the model. Both arms saved their scopes, revisions,
+  usage, and per-case results under the Project 5 Drive folder.
+- A macOS lock briefly prevented VS Code operations while the candidate ran.
+  The background worker saved both sets of results. After unlocking, cell 13
+  verified exit code zero before Project 8 was launched.
+- Project 8 cells 13-15 enabled, ran, and checked the fixed six-case
+  LongMemEval pilot `20261118T102213022610Z`. The worker completed in 122.69
+  seconds. Its lexical proxies and official-format hypotheses are saved in
+  the Project 8 folder. Official semantic grading remains open.
+- All 24 Project 6 regression tests passed with the local Docker daemon.
+  SWE-bench 5.0.2 installed from the checked lock and its CLI help passed.
+  The stock harness adds `SYS_ADMIN` to its evaluator container, so it was
+  held at preflight instead of executing generated patches.

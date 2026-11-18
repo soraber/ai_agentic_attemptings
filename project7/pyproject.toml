@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "secure-interoperable-agent-gateway"
 version = "0.1.0"
 requires-python = ">=3.11"
-dependencies = ["pydantic>=2.7,<3", "jsonschema>=4.23,<5", "openai>=2,<3", "mcp==2.3.0"]
+dependencies = ["pydantic>=2.7,<3", "jsonschema>=4.23,<5", "openai>=2,<3", "mcp==2.3.0", "PyJWT[crypto]==2.15.1"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

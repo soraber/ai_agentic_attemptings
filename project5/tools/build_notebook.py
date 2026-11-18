@@ -11,11 +11,16 @@ OUTPUT = ROOT / "project5_governed_text_to_sql.ipynb"
 
 
 def cell(cell_id: str, kind: str, source: str) -> dict:
+    if cell_id == 'P05-C08':
+        source = runpy.run_path(str(ROOT.parent/'tools/notebook_run_metadata.py'))['wrap'](source, 5)
     value = {"cell_type": kind, "id": cell_id, "metadata": {}, "source": source.strip("\n").splitlines(keepends=True)}
     if kind == "code":
         value.update({"execution_count": None, "outputs": []})
     return value
 
+
+import runpy
+environment_source = runpy.run_path(str(ROOT.parent / "tools/notebook_environment.py"))["source"]
 
 CELLS = [
     cell("P05-C00", "markdown", """# Project 5: Governed Text-to-SQL Analyst
@@ -28,29 +33,7 @@ Upgrade v1: both execution paths use tenant-filtered, PII-free snapshots. Earlie
 outputs describe the historical implementation, not the upgraded comparison.
 Final evaluation reports strict result hashes separately from alias-insensitive
 value equivalence on the fixed fixture. Gold SQL never feeds planner repair."""),
-    cell("P05-C01", "code", """from pathlib import Path
-import os, subprocess, sys
-candidates = [Path.cwd(), Path.cwd()/"project5", Path("/content/ai_agentic_attemptings/project5")]
-PROJECT_ROOT = next((p.resolve() for p in candidates if (p/"config/default.json").exists()), None)
-if PROJECT_ROOT is None:
-    repo = Path("/content/ai_agentic_attemptings")
-    if not repo.exists(): subprocess.run(["git", "clone", "https://github.com/soraber/ai_agentic_attemptings.git", str(repo)], check=True)
-    else: subprocess.run(["git", "-C", str(repo), "pull", "--ff-only"], check=True)
-    PROJECT_ROOT = repo/"project5"
-os.chdir(PROJECT_ROOT)
-if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
-    subprocess.run([sys.executable, "-m", "pip", "install", "--upgrade-strategy", "only-if-needed", "-r", "requirements-colab.txt"], check=True)
-    subprocess.run([sys.executable, "-m", "pip", "install", "-e", ".", "--no-deps"], check=True)
-source_root = PROJECT_ROOT/"src"
-if str(source_root) not in sys.path: sys.path.insert(0, str(source_root))
-if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
-    check = subprocess.run([sys.executable, "-m", "pip", "check"], text=True, capture_output=True)
-    if check.returncode: print(check.stdout or check.stderr)
-from project5_agent.analyst import run_governed
-try: import torch
-except ImportError: torch=None
-print("Project 5 imports passed", sys.version.split()[0])
-print({"cuda": bool(torch and torch.cuda.is_available()), "gpu": torch.cuda.get_device_name(0) if torch and torch.cuda.is_available() else None})"""),
+    cell("P05-C01", "code", environment_source(5)),
     cell("P05-C02", "code", """import getpass, os, sys
 from project5_agent.config import load_config
 EVAL_BACKEND = "local_gpu"  # deterministic | openai | local_gpu

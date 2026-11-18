@@ -13,14 +13,21 @@ TASK_SCHEMA={"type":"object","properties":{"task_id":{"type":"string"},"correlat
 
 
 class SecureGateway:
-    def __init__(self, database_path: str | Path = ":memory:", principal: str = REQUESTER_CARD.name):
+    def __init__(self, database_path: str | Path = ":memory:", principal: str = REQUESTER_CARD.name,
+                 actor_id: str | None = None):
         if principal not in {REQUESTER_CARD.name, REVIEWER_CARD.name}:
             raise PermissionError("Unknown trusted transport principal")
         self.principal = principal
+        self.actor_id = actor_id or principal
         self.effects:dict[str,dict[str,Any]]={}; self.effect_events:list[str]=[]
         if str(database_path) != ":memory:": Path(database_path).parent.mkdir(parents=True, exist_ok=True)
         self.ledger = sqlite3.connect(str(database_path))
-        self.ledger.executescript("CREATE TABLE IF NOT EXISTS effects(key TEXT PRIMARY KEY, payload_hash TEXT, artifact TEXT); CREATE TABLE IF NOT EXISTS approvals(task_id TEXT PRIMARY KEY, payload_hash TEXT, expires_at REAL);")
+        self.ledger.executescript("CREATE TABLE IF NOT EXISTS effects(key TEXT PRIMARY KEY, payload_hash TEXT, artifact TEXT); CREATE TABLE IF NOT EXISTS approvals(task_id TEXT PRIMARY KEY, payload_hash TEXT, expires_at REAL, actor_id TEXT);")
+        # Legacy approvals remain usable only by their original local launch identity.
+        with self.ledger:
+            self.ledger.execute('BEGIN IMMEDIATE')
+            if 'actor_id' not in {row[1] for row in self.ledger.execute('PRAGMA table_info(approvals)')}:
+                self.ledger.execute('ALTER TABLE approvals ADD COLUMN actor_id TEXT')
 
     def close(self): self.ledger.close()
 
@@ -33,21 +40,25 @@ class SecureGateway:
         if reviewer != REVIEWER_CARD.name or expires_at <= time.time():
             raise PermissionError("Approval requires a trusted reviewer and future expiry")
         with self.ledger:
-            self.ledger.execute("INSERT OR REPLACE INTO approvals VALUES (?,?,?)",
-                (task["task_id"], self.payload_hash(task), expires_at))
+            self.ledger.execute("INSERT OR REPLACE INTO approvals (task_id,payload_hash,expires_at,actor_id) VALUES (?,?,?,?)",
+                (task["task_id"], self.payload_hash(task), expires_at, self.actor_id))
 
     def process_request(self, task: dict, retrieved_text: str = "") -> GatewayResult:
         """Live boundary: transport supplies identity; model cannot supply approval or gold labels."""
-        grant = self.ledger.execute("SELECT payload_hash,expires_at FROM approvals WHERE task_id=?",
+        grant = self.ledger.execute("SELECT payload_hash,expires_at,actor_id FROM approvals WHERE task_id=?",
                                     (task.get("task_id"),)).fetchone()
-        approved = bool(grant and grant[0] == self.payload_hash(task) and grant[1] > time.time())
+        approved = bool(grant and grant[0] == self.payload_hash(task) and grant[1] > time.time()
+                        and (grant[2] or REQUESTER_CARD.name) == self.actor_id)
         case = GatewayCase(case_id=str(task.get("task_id", "missing")), category="benign",
             task=task, retrieved_text=retrieved_text, human_approved=approved, split="test")
         return self.process(case, True)
 
     def _effect(self, task, artifact, defended):
         key = task.task_id if defended else task.task_id + ":" + uuid.uuid4().hex
-        digest = self.payload_hash({"sender": self.principal, "action": task.action, "payload": task.payload})
+        identity_payload = {"sender": self.principal, "action": task.action, "payload": task.payload}
+        if self.actor_id != self.principal:
+            identity_payload['actor_id'] = self.actor_id
+        digest = self.payload_hash(identity_payload)
         try:
             self.ledger.execute("BEGIN IMMEDIATE")
             prior = self.ledger.execute("SELECT payload_hash,artifact FROM effects WHERE key=?", (key,)).fetchone()

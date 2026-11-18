@@ -51,7 +51,7 @@ def sandbox_preflight(image: str) -> dict:
 
 def run_tests(root: str | Path, targets: list[str], timeout_seconds: float = 20,
               max_output_chars: int = 12000, *, backend: str = "docker",
-              image: str = "project6-test-runner:upgrade-v1") -> TestOutcome:
+              image: str = "project6-test-runner:p0-20261117") -> TestOutcome:
     root = Path(root).resolve()
     started = time.perf_counter()
     name = "project6-" + uuid.uuid4().hex

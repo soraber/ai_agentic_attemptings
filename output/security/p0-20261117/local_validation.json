@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-17",
+  "scope": "Local regression results observed by the execution tools; not model-performance measurements",
+  "macos_arm64_cpu": {"passed": 144, "skipped": 2},
+  "offline_linux_arm64_cpu": {"passed": 144, "skipped": 2},
+  "project_pass_counts": {"project4": 23, "project5": 25, "project6": 22, "project7": 43, "project8": 31},
+  "skip_reason": "Real Docker tests require explicit opt-in and pass separately",
+  "real_docker_tests": {"passed": 2, "image": "project6-test-runner:p0-20261117"},
+  "linux_test_image_id": "sha256:0ea819ed39d406757b99232ce13914022d09a22f19a00e88c75f7ae5680e5696",
+  "notebook_syntax": "passed",
+  "paid_api_calls": 0,
+  "gpu_validation": "deferred_by_user",
+  "github_ci_executed": false
+}

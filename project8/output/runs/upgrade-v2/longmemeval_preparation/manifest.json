@@ -1,0 +1,32 @@
+{
+  "status": "prepared_and_schema_validated",
+  "dataset": "xiaowu0162/longmemeval-cleaned",
+  "revision": "98d7416c24c778c2fee6e6f3006e7a073259d48f",
+  "source_sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+  "source_examples": 500,
+  "selected_ids": [
+    "6e984302",
+    "eac54add",
+    "dfde3500",
+    "e493bb7c",
+    "e5ba910e_abs",
+    "gpt4_93159ced_abs"
+  ],
+  "strata": {
+    "temporal-reasoning": 2,
+    "abstention": 2,
+    "knowledge-update": 2
+  },
+  "selected_sha256": "a2e261ed038eaabb3659e183da1e57de36fe4cd3b7bff0a6fd111a7b0a8b2724",
+  "history_events": [
+    460,
+    476,
+    480,
+    506,
+    522,
+    608
+  ],
+  "model_calls": 0,
+  "quality_result": null,
+  "raw_data_committed": false
+}

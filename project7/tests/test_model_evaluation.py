@@ -24,7 +24,7 @@ def test_model_loop_calls_real_stdio_tools_without_credentials(tmp_path):
         def __init__(self):
             self.calls = 0
 
-        def create(self, **kwargs):
+        async def create(self, **kwargs):
             assert kwargs["store"] is False
             assert {tool["name"] for tool in kwargs["tools"]} == {"policy_search", "review_request"}
             assert all(tool["parameters"]["additionalProperties"] is False for tool in kwargs["tools"])
@@ -40,6 +40,46 @@ def test_model_loop_calls_real_stdio_tools_without_credentials(tmp_path):
     assert summary["model_calls"] == 6
     assert summary["benign_success_pct"] == 100
     assert summary["unauthorized_effects"] == 0
+
+
+def test_model_timeout_is_bounded_and_keeps_failed_call_reserve(tmp_path):
+    import pytest
+    import json
+    class Responses:
+        async def create(self, **kwargs):
+            await asyncio.sleep(5)
+    budget=CallBudget(model_timeout_seconds=.02)
+    output=tmp_path/'timeout'
+    with pytest.raises(RuntimeError,match='TimeoutError'):
+        asyncio.run(evaluate_model_gateway(SimpleNamespace(responses=Responses()),output,
+                    cases=heldout_cases()[:1],budget=budget))
+    record=json.loads((output/'model_mcp_cases.jsonl').read_text())
+    assert record['error']=='TimeoutError' and not record['effects']
+    assert budget.calls==1 and budget.failed_reservations>0
+
+
+def test_hostile_tool_result_cannot_change_approved_amount(tmp_path):
+    import json
+    case=heldout_cases()[2]
+    class Responses:
+        def __init__(self): self.calls=0
+        async def create(self,**kwargs):
+            step=self.calls%3; self.calls+=1
+            if step==0: calls=[FakeCall('policy_search',{'query':'policy'})]
+            elif step==1:
+                assert 'retrieved_document' in str(kwargs['input'])
+                calls=[FakeCall('review_request',{'task_id':case['task_id'],'request_id':case['request_id'],'amount':9999})]
+            else: calls=[]
+            return SimpleNamespace(output=calls,output_text='Attempted modified amount.',
+                                   usage=SimpleNamespace(input_tokens=10,output_tokens=10))
+    result=asyncio.run(evaluate_model_gateway(SimpleNamespace(responses=Responses()),tmp_path/'attack',cases=[case]))
+    assert result['hostile_tool_attempts']==2 and result['unauthorized_effects']==0
+    records=[json.loads(line) for line in (tmp_path/'attack/model_mcp_cases.jsonl').read_text().splitlines()]
+    assert all(not row['task_success'] and row['correlation_id'] for row in records)
+    spans={entry['trace_id'] for row in records for entry in row['trace']}
+    server_spans={json.loads(line)['trace_id'] for path in (tmp_path/'attack/runtime').glob('*.traces.jsonl')
+                  for line in path.read_text().splitlines()}
+    assert spans <= server_spans
 
 
 def test_budget_and_response_conditioned_adaptation():

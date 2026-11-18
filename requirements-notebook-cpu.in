@@ -1,0 +1,5 @@
+-r requirements-upgrade-cpu.lock.txt
+ipykernel>=7,<8
+matplotlib==3.10.8
+reportlab>=4.4,<5
+pillow>=13,<14

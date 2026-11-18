@@ -10,6 +10,8 @@ OUTPUT = ROOT / "project4_durable_incident_response_agent.ipynb"
 
 
 def cell(cell_id: str, cell_type: str, source: str) -> dict:
+    if cell_id == 'P04-C08':
+        source = runpy.run_path(str(ROOT.parent/'tools/notebook_run_metadata.py'))['wrap'](source, 4)
     payload = {
         "cell_type": cell_type,
         "id": cell_id,
@@ -20,6 +22,9 @@ def cell(cell_id: str, cell_type: str, source: str) -> dict:
         payload.update({"execution_count": None, "outputs": []})
     return payload
 
+
+import runpy
+environment_source = runpy.run_path(str(ROOT.parent / "tools/notebook_environment.py"))["source"]
 
 CELLS = [
     cell(
@@ -41,55 +46,7 @@ exit; a separately deployed action service and reviewer authentication remain pe
 `debug_log/project4_debug_log.md`.
 """,
     ),
-    cell(
-        "P04-C01",
-        "code",
-        """
-# Environment bootstrap: clone once in Colab, then install the project's bounded dependencies.
-from pathlib import Path
-import os, platform, subprocess, sys
-
-candidates = [
-    Path.cwd(),
-    Path.cwd() / "project4",
-    Path("/content/ai_agentic_attemptings/project4"),
-]
-PROJECT_ROOT = next((path.resolve() for path in candidates if (path / "config/default.json").exists()), None)
-repo_root = Path("/content/ai_agentic_attemptings")
-if PROJECT_ROOT is None:
-    if not repo_root.exists():
-        subprocess.run(
-            ["git", "clone", "https://github.com/soraber/ai_agentic_attemptings.git", str(repo_root)],
-            check=True,
-        )
-    PROJECT_ROOT = repo_root / "project4"
-if (repo_root / ".git").exists() and repo_root in PROJECT_ROOT.parents:
-    subprocess.run(["git", "-C", str(repo_root), "pull", "--ff-only"], check=True)
-
-os.chdir(PROJECT_ROOT)
-subprocess.run(
-    [sys.executable, "-m", "pip", "install", "--upgrade-strategy", "only-if-needed", "-r", "requirements-colab.txt"],
-    check=True,
-)
-subprocess.run([sys.executable, "-m", "pip", "install", "-e", ".", "--no-deps"], check=True)
-source_root = PROJECT_ROOT / "src"
-if str(source_root) not in sys.path:
-    sys.path.insert(0, str(source_root))
-import importlib
-for module_name in [name for name in sys.modules if name == "project4_agent" or name.startswith("project4_agent.")]:
-    del sys.modules[module_name]
-importlib.invalidate_caches()
-dependency_check = subprocess.run(
-    [sys.executable, "-m", "pip", "check"], text=True, capture_output=True
-)
-if dependency_check.returncode:
-    print("pip check reported preinstalled-runtime conflicts; inspect before changing packages:")
-    print(dependency_check.stdout or dependency_check.stderr)
-from project4_agent.config import load_config as _import_smoke_config
-from project4_agent.workflow import DurableIncidentWorkflow as _import_smoke_workflow
-print({"python": sys.version.split()[0], "platform": platform.platform(), "project_root": str(PROJECT_ROOT)})
-""",
-    ),
+    cell("P04-C01", "code", environment_source(4)),
     cell(
         "P04-C02",
         "code",

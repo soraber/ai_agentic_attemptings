@@ -5,10 +5,15 @@ ROOT=Path(__file__).resolve().parents[1]; OUTPUT=ROOT/"project7_secure_agent_gat
 
 
 def cell(i,k,s):
+    if i == 'P07-C08':
+        s = runpy.run_path(str(ROOT.parent/'tools/notebook_run_metadata.py'))['wrap'](s, 7)
     v={"cell_type":k,"id":i,"metadata":{},"source":s.strip("\n").splitlines(keepends=True)}
     if k=="code": v.update({"execution_count":None,"outputs":[]})
     return v
 
+
+import runpy
+environment_source = runpy.run_path(str(ROOT.parent / "tools/notebook_environment.py"))["source"]
 
 CELLS=[
 cell("P07-C00","markdown","""# Project 7: Secure Interoperable Agent Gateway
@@ -18,26 +23,11 @@ benign and attack cases. Credentials, records, effects, and canaries are synthet
 
 Upgrade v1 adds a real MCP v2 stdio server/client and persistent, approval-bound
 effects. Fixture attack metrics do not measure adaptive model prompt injection.
-A2A envelopes remain illustrative; no remote authentication or A2A conformance is claimed."""),
-cell("P07-C01","code","""from pathlib import Path
-import os,subprocess,sys
-candidates=[Path.cwd(),Path.cwd()/"project7",Path("/content/ai_agentic_attemptings/project7")]
-PROJECT_ROOT=next((p.resolve() for p in candidates if (p/"config/default.json").exists()),None)
-if PROJECT_ROOT is None:
-    repo=Path("/content/ai_agentic_attemptings")
-    if not repo.exists(): subprocess.run(["git","clone","https://github.com/soraber/ai_agentic_attemptings.git",str(repo)],check=True)
-    PROJECT_ROOT=repo/"project7"
-os.chdir(PROJECT_ROOT)
-if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
-    subprocess.run([sys.executable,"-m","pip","install","--upgrade-strategy","only-if-needed","-r","requirements-colab.txt"],check=True)
-    subprocess.run([sys.executable,"-m","pip","install","-e",".","--no-deps"],check=True)
-source_root=PROJECT_ROOT/"src"
-if str(source_root) not in sys.path: sys.path.insert(0,str(source_root))
-if not os.getenv("AI_PROJECT_SKIP_INSTALL"):
-    check=subprocess.run([sys.executable,"-m","pip","check"],text=True,capture_output=True)
-    if check.returncode: print(check.stdout or check.stderr)
-from project7_agent.gateway import SecureGateway
-print("Project 7 imports passed")"""),
+Upgrade v2 verifies issuer/audience-bound signed access tokens over HTTP, checks
+tool scopes, and binds durable approvals to the authenticated subject and client.
+Tests use ephemeral synthetic identities; a production identity provider and TLS
+deployment are not claimed. A2A envelopes remain illustrative."""),
+cell("P07-C01", "code", environment_source(7)),
 cell("P07-C02","code","""import getpass,os,sys
 from project7_agent.config import load_config
 RUN_API_EVAL=False
@@ -95,8 +85,8 @@ else:
     summary=evaluate_project7(cases,result_dir,reviewer=None)
     print(summary)
     if RUN_API_EVAL:
-        from openai import OpenAI
-        with OpenAI(max_retries=0, timeout=60) as api:
+        from openai import AsyncOpenAI
+        async with AsyncOpenAI(max_retries=0, timeout=60) as api:
             model_summary = await evaluate_model_gateway(api, result_dir/"model_mcp", model=config.model,
                 budget=CallBudget(max_calls=config.max_model_calls, max_cost=config.max_estimated_cost_usd,
                     input_price=config.input_price_per_million_usd, output_price=config.output_price_per_million_usd))

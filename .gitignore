@@ -1,4 +1,5 @@
 .DS_Store
+.venv*/
 /tmp/
 **/__pycache__/
 **/.pytest_cache/
@@ -13,3 +14,6 @@ colab_tool.py
 *.pem
 *.key
 *.code-workspace
+**/data/cache/longmemeval-v2/
+**/data/cache/swebench-v2/
+**/data/cache/benchmark-downloads/

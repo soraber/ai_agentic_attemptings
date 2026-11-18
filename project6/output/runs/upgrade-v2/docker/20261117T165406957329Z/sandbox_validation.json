@@ -1,0 +1,25 @@
+{
+  "generated_at_utc": "20261117T165406957329Z",
+  "tests_passed": 2,
+  "tests": [
+    {
+      "name": "test_real_container_boundary",
+      "seconds": 0.448
+    },
+    {
+      "name": "test_real_container_timeout_and_output_bound",
+      "seconds": 2.392
+    }
+  ],
+  "image": "project6-test-runner:p0-20261117",
+  "image_id": "sha256:b78f50cc707f03abde510697c2dbc1e9b74a14cf5071f3427a23130203618e97",
+  "architecture": "arm64",
+  "os": "linux",
+  "junit_sha256": "d6624bab598e6b49e2e840115ceccfee3415c8e5abec8ee7c63d9d184edae2cd",
+  "source_sha256": {
+    "tests/test_docker_integration.py": "f1552eaecf821a5595e526599090b75d9c008a11a3fd108d20c56335761cf04a",
+    "src/project6_agent/runner.py": "47a0bd12bf6a9d8a54f07a955d5b2ea34c44964e03049e9c59b48768a0b1e740",
+    "tools/Dockerfile.sandbox": "650aa0e9f17109955632cc71c0990ce681644899a1c80d802889c7bff45841d0"
+  },
+  "scope": "real no-network/read-only/nonroot/secret-isolation/resource/timeout/output checks; not proof against container escapes"
+}

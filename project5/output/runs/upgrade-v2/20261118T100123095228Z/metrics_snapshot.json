@@ -1,0 +1,73 @@
+{
+  "run_id": "20261118T100123095228Z",
+  "runtime_seconds": 910.6551661269987,
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "matched_holdout_sha256": "19f4e251bdc489b731cd1c0e0547625cb632427340da43c15f46c902e54a79f4",
+  "source": "Original Project 05 notebook cell 13 and Drive run manifest",
+  "baseline": {
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "cases": 40,
+    "usage": {
+      "device": "cuda",
+      "estimated_cost_usd": 0,
+      "input_tokens": 39433,
+      "local_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "model_calls": 84,
+      "model_revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "output_tokens": 12298,
+      "retrieval_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "retrieval_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+    },
+    "metrics": {
+      "baseline": {
+        "value_result_accuracy_pct": 18.51851851851852,
+        "value_result_cases": 27,
+        "pii_leak_rate_pct": 0,
+        "planning_error_pct": 0,
+        "execution_or_repair_error_pct": 55,
+        "end_to_end_p50_ms": 4667.607986999428
+      },
+      "governed": {
+        "value_result_accuracy_pct": 7.407407407407407,
+        "value_result_cases": 27,
+        "pii_leak_rate_pct": 0,
+        "planning_error_pct": 0,
+        "execution_or_repair_error_pct": 55,
+        "end_to_end_p50_ms": 11609.364200001437
+      }
+    }
+  },
+  "candidate": {
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "cases": 40,
+    "usage": {
+      "device": "cuda",
+      "estimated_cost_usd": 0,
+      "input_tokens": 17916,
+      "local_model": "Qwen/Qwen3-4B-Instruct-2507",
+      "model_calls": 41,
+      "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+      "output_tokens": 6724,
+      "retrieval_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "retrieval_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+    },
+    "metrics": {
+      "baseline": {
+        "value_result_accuracy_pct": 85.18518518518519,
+        "value_result_cases": 27,
+        "pii_leak_rate_pct": 0,
+        "planning_error_pct": 0,
+        "execution_or_repair_error_pct": 15,
+        "end_to_end_p50_ms": 8284.46860800068
+      },
+      "governed": {
+        "value_result_accuracy_pct": 48.148148148148145,
+        "value_result_cases": 27,
+        "pii_leak_rate_pct": 0,
+        "planning_error_pct": 0,
+        "execution_or_repair_error_pct": 0,
+        "end_to_end_p50_ms": 8254.12406849864
+      }
+    }
+  }
+}

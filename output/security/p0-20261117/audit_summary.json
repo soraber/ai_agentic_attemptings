@@ -1,0 +1,70 @@
+{
+  "captured_at_utc": "2026-11-17T17:36:09.547494+00:00",
+  "scanner": "pip-audit==2.10.1",
+  "scope": "public package advisory queries, not application exploit testing",
+  "audits": {
+    "agentic-cpu-before.json": {
+      "dependency_records": 76,
+      "affected_packages": 1,
+      "distinct_advisory_ids": [
+        "PYSEC-2026-1845"
+      ],
+      "note": "IDs may alias the same vulnerability; this is not a unique-CVE count",
+      "sha256": "4c82804511e1387bcdfbc33a0089d11b8c546bbe42bf835f5e1a1e646a1e3dcc"
+    },
+    "agentic-cpu-after.json": {
+      "dependency_records": 76,
+      "affected_packages": 0,
+      "distinct_advisory_ids": [],
+      "note": "IDs may alias the same vulnerability; this is not a unique-CVE count",
+      "sha256": "cc4280f97fd69acc07ea8581345a3587df131063c66e329d120050e486defe23"
+    },
+    "notebook-cpu-after.json": {
+      "dependency_records": 108,
+      "affected_packages": 0,
+      "distinct_advisory_ids": [],
+      "note": "IDs may alias the same vulnerability; this is not a unique-CVE count",
+      "sha256": "6d58ea0a212e299749a1a50fd43cfdde15fc191b298f8a558b0e8fbf2e2925d0"
+    },
+    "sandbox-after.json": {
+      "dependency_records": 5,
+      "affected_packages": 0,
+      "distinct_advisory_ids": [],
+      "note": "IDs may alias the same vulnerability; this is not a unique-CVE count",
+      "sha256": "63e30b5ede1414f77bd631c838550ce13e1be07bba2e32e7b1d529bf91cbb35c"
+    },
+    "inference-before.json": {
+      "dependency_records": 203,
+      "affected_packages": 5,
+      "distinct_advisory_ids": [
+        "PYSEC-2025-217",
+        "PYSEC-2026-1845",
+        "PYSEC-2026-2288",
+        "PYSEC-2026-2289",
+        "PYSEC-2026-2290",
+        "PYSEC-2026-311",
+        "PYSEC-2026-3716",
+        "PYSEC-2026-3813",
+        "PYSEC-2026-3814",
+        "PYSEC-2026-3815",
+        "PYSEC-2026-3929",
+        "PYSEC-2026-4174",
+        "PYSEC-2026-4217"
+      ],
+      "note": "IDs may alias the same vulnerability; this is not a unique-CVE count",
+      "sha256": "fda6c1b190674b8741f0a5df7e4a19c87d41d43acf87d488e3d70a088076b200"
+    },
+    "inference-v2-langgraph-after.json": {
+      "dependency_records": 160,
+      "affected_packages": 0,
+      "distinct_advisory_ids": [],
+      "note": "IDs may alias the same vulnerability; this is not a unique-CVE count",
+      "sha256": "c6b3e0180eeecf30c777f3677b6a6c0137d22b113e0e63c253ae1c822d0b7964"
+    }
+  },
+  "locks_sha256": {
+    "requirements-upgrade-cpu.hashes.txt": "e55ba0787757b6c1430ad1fdf8b2bdda2d91d76268bba04823062d901e787ba7",
+    "requirements-notebook-cpu.hashes.txt": "785c33847915593f6a99c099ad31cdda9647867f10f65627421d5c1328d9f7e0",
+    "project6/tools/requirements-sandbox.hashes.txt": "6e16420209af5f96d9399eecdb914099856531aba0fa1f4e7b6e08e952fb4f84"
+  }
+}
